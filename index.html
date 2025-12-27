@@ -258,88 +258,195 @@
             color: #374054;
         }
 
+        /* Advanced Experience Timeline */
         #experience-timeline {
-            margin: 30px auto 0 auto;
+            margin: 50px auto;
             position: relative;
-            max-width: 1000px;
+            max-width: 1200px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        #experience-timeline:before {
-            position: absolute;
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-years {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .timeline-year {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .timeline-year::after {
             content: '';
-            top: 0;
-            bottom: 0;
-            left: 303px;
-            right: auto;
-            height: 100%;
-            width: 3px;
-            background: #3498db;
-            z-index: 0;
-        }
-
-        .vtimeline-point {
-            position: relative;
-            display: block;
-            vertical-align: top;
-            margin-bottom: 30px;
-        }
-
-        .vtimeline-icon {
-            position: relative;
-            color: #fff;
-            width: 50px;
-            height: 50px;
-            background: #3498db;
-            border-radius: 50%;
-            float: left;
-            z-index: 99;
-            margin-left: 280px;
-        }
-
-        .vtimeline-icon i {
-            display: block;
-            font-size: 2em;
-            margin-top: 10px;
-        }
-
-        .vtimeline-date {
-            width: 260px;
-            text-align: right;
             position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: #bdc3c7;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 40px 10px 60px 10px;
+        }
+
+        .experience-item {
+            position: absolute;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: white;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            z-index: 20;
+        }
+
+        .experience-item.academic {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            top: -70px;
+        }
+
+        .experience-item.industry {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            top: -130px;
+        }
+
+        .experience-item.research {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            top: -10px;
+        }
+
+        .experience-item.postdoc {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            top: -190px;
+        }
+
+        .experience-details {
+            position: absolute;
+            top: 70px;
             left: 0;
-            top: 10px;
-            font-weight: 300;
-            color: #374054;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 30;
+            border-left: 4px solid currentColor;
         }
 
-        .vtimeline-content {
-            margin-left: 350px;
-            background: #fff;
-            border: 1px solid #e6e6e6;
-            padding: 15px;
-            border-radius: 3px;
-            text-align: left;
+        .experience-item:hover .experience-details {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        .vtimeline-content h3 {
-            font-size: 1.5em;
-            font-weight: 300;
-            color: #374054;
-            display: inline-block;
-            margin: 0;
+        .experience-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
         }
 
-        .vtimeline-content h4 {
-            font-size: 1.2em;
-            font-weight: 300;
-            color: #7e8890;
-            margin: 0 0 15px 0;
+        .experience-company {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 15px;
         }
 
-        .vtimeline-content p {
-            color: #74808a;
-            font-size: 0.9em;
-            margin: 0;
+        .experience-description {
+            color: #5a6c7d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .timeline-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-color.academic { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .legend-color.industry { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .legend-color.research { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .legend-color.postdoc { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            #experience-timeline {
+                padding: 20px 15px;
+                margin: 30px auto;
+            }
+            
+            .timeline-years {
+                font-size: 12px;
+            }
+            
+            .experience-item {
+                height: 40px;
+                font-size: 11px;
+                padding: 0 10px;
+            }
+            
+            .experience-item.academic { top: -50px; }
+            .experience-item.industry { top: -90px; }
+            .experience-item.research { top: -10px; }
+            .experience-item.postdoc { top: -130px; }
+            
+            .timeline-legend {
+                gap: 15px;
+            }
+            
+            .legend-item {
+                font-size: 12px;
+            }
         }
 
         /* Education Section */
@@ -929,54 +1036,115 @@
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div id="experience-timeline">
-            <div data-date="2025 – Present">
-                <h3>Postdoctoral Fellow</h3>
-                <h4>Acceleration Consortium</h4>
-                <p>
-					• Developed a self-driving lab for high-throughput liquid/powder dispenser, integrating machine learning for optimization and uncertainty reduction in experimental parameter space.
-					• Designed and fabricated custom hardware and prototypes for precise mechanical/chemical/electrical/pharmaceutical synthesis and characterization.
-					• Applied advanced imaging techniques to assess homogeneity, defects, and thermal properties (Inverse Heat Transfer).
-					• Collaborated with multidisciplinary teams to develop methodologies for self-driving lab with autonomous synthesis and characterization and enhance functionality.
-					• Optimized polymer synthesis conditions, including molecular weight, concentration, and crosslinking.
-					• Implemented machine learning algorithms to refine experimental designs and improve data reproducibility.
+            <div class="timeline-container">
+                <div class="timeline-years">
+                    <span class="timeline-year">2013</span>
+                    <span class="timeline-year">2015</span>
+                    <span class="timeline-year">2017</span>
+                    <span class="timeline-year">2019</span>
+                    <span class="timeline-year">2021</span>
+                    <span class="timeline-year">2023</span>
+                    <span class="timeline-year">2025</span>
+                </div>
+                
+                <div class="timeline-track">
+                    <!-- Postdoctoral Fellow 2025-Present -->
+                    <div class="experience-item postdoc" style="left: 83.33%; width: 16.67%;">
+                        <span>Postdoc Fellow</span>
+                        <div class="experience-details">
+                            <div class="experience-title">Postdoctoral Fellow</div>
+                            <div class="experience-company">Acceleration Consortium</div>
+                            <div class="experience-description">
+                                • Developed self-driving lab for high-throughput liquid/powder dispenser<br>
+                                • Integrated machine learning for optimization and uncertainty reduction<br>
+                                • Designed custom hardware and prototypes for synthesis and characterization<br>
+                                • Applied advanced imaging techniques for thermal properties assessment<br>
+                                • Implemented ML algorithms to refine experimental designs
+                            </div>
+                        </div>
+                    </div>
                     
-                </p>
-            </div>
-
-            <div data-date="2024 – 2025">
-                <h3>Research Assistant</h3>
-                <h4>University Health Network (UHN)</h4>
-                <p>
-                    Description of your previous role and key contributions to the organization. 
-                    Focus on accomplishments and skills developed during this period.
-                </p>
-            </div>
-
-            <div data-date="2021 – 2024">
-                <h3>Research Assistant</h3>
-                <h4>Smart Materials & Structures</h4>
-                <p>
-                    Details about earlier professional experience and how it contributed to your growth. 
-                    Mention key projects and learning experiences.
-                </p>
-            </div>
-
-			 	<div data-date="2019 – 2020">
-                <h3>Mechanical Engineer</h3>
-                <h4>TECHNE KIROW GmbH</h4>
-                <p>
-                    Details about earlier professional experience and how it contributed to your growth. 
-                    Mention key projects and learning experiences.
-                </p>
-            </div>
-
-			<div data-date="2013 – 2019">
-                <h3>Research Assistant</h3>
-                <h4>Solar-Electrical Vehicle</h4>
-                <p>
-                    Details about earlier professional experience and how it contributed to your growth. 
-                    Mention key projects and learning experiences.
-                </p>
+                    <!-- Research Assistant UHN 2024-2025 -->
+                    <div class="experience-item research" style="left: 75%; width: 8.33%;">
+                        <span>Research Assistant</span>
+                        <div class="experience-details">
+                            <div class="experience-title">Research Assistant</div>
+                            <div class="experience-company">University Health Network (UHN)</div>
+                            <div class="experience-description">
+                                • Advanced biomedical research in clinical settings<br>
+                                • Collaborated with medical professionals on innovative solutions<br>
+                                • Applied engineering principles to healthcare challenges<br>
+                                • Contributed to translational research projects
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PhD Research 2021-2024 -->
+                    <div class="experience-item academic" style="left: 58.33%; width: 25%;">
+                        <span>PhD Researcher</span>
+                        <div class="experience-details">
+                            <div class="experience-title">Research Assistant - PhD</div>
+                            <div class="experience-company">Smart Materials & Structures Lab</div>
+                            <div class="experience-description">
+                                • Multifunctional Porous Fluoropolymer Films for Triboelectric Applications<br>
+                                • Advanced materials characterization and synthesis<br>
+                                • Published research in high-impact journals<br>
+                                • Supervised undergraduate research projects<br>
+                                • Collaborated on interdisciplinary research initiatives
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Industry Experience 2019-2020 -->
+                    <div class="experience-item industry" style="left: 50%; width: 8.33%;">
+                        <span>Mechanical Engineer</span>
+                        <div class="experience-details">
+                            <div class="experience-title">Mechanical Engineer</div>
+                            <div class="experience-company">TECHNE KIROW GmbH</div>
+                            <div class="experience-description">
+                                • Industrial automation and machinery design<br>
+                                • Process optimization and quality control<br>
+                                • Project management and client relations<br>
+                                • Technical documentation and specification development
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Long-term Research 2013-2019 -->
+                    <div class="experience-item research" style="left: 0%; width: 50%;">
+                        <span>Research Assistant - Solar Vehicle</span>
+                        <div class="experience-details">
+                            <div class="experience-title">Research Assistant</div>
+                            <div class="experience-company">Solar-Electrical Vehicle Project</div>
+                            <div class="experience-description">
+                                • Renewable energy systems design and optimization<br>
+                                • Electric vehicle powertrain development<br>
+                                • Solar panel integration and energy management<br>
+                                • Competition team leadership and project coordination<br>
+                                • Sustainable technology innovation and testing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-legend">
+                    <div class="legend-item">
+                        <div class="legend-color postdoc"></div>
+                        <span>Postdoctoral</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color academic"></div>
+                        <span>Academic Research</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color industry"></div>
+                        <span>Industry</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color research"></div>
+                        <span>Research Projects</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1237,31 +1405,6 @@
                 $('html, body').animate({
                     scrollTop: scrollDistance + 'px'
                 }, 500);
-            });
-
-            // Create timeline
-            $('#experience-timeline').each(function() {
-                $this = $(this); // Store reference to this
-                $userContent = $this.children('div'); // user content
-
-                // Create each timeline block
-                $userContent.each(function() {
-                    $(this).addClass('vtimeline-content').wrap('<div class="vtimeline-point"><div class="vtimeline-block"></div></div>');
-                });
-
-                // Add icons to each block
-                $this.find('.vtimeline-point').each(function() {
-                    $(this).prepend('<div class="vtimeline-icon"><i class="fa fa-map-marker"></i></div>');
-                });
-
-                // Add dates to the timeline if data-date is specified
-                $this.find('.vtimeline-content').each(function() {
-                    var date = $(this).data('date');
-                    if (date) { // Prepend if exists
-                        $(this).parent().prepend('<span class="vtimeline-date">' + date + '</span>');
-                    }
-                });
-
             });
 
             // Open mobile menu

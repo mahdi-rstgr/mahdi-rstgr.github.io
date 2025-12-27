@@ -31,6 +31,28 @@
             color: #374054;
         }
 
+        /* Enhanced section headings */
+        .heading {
+            font-size: 2.5em !important;
+            font-weight: 700;
+            color: #374054;
+            margin-bottom: 50px;
+            position: relative;
+            text-align: center;
+        }
+
+        .heading::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+
         p {
             color: #74808a;
             font-size: 16px;
@@ -442,6 +464,68 @@
             font-size: 1.2em;
         }
 
+        /* Publications Section */
+        .publication-block {
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            padding: 20px;
+            border: 1px solid #dcd9d9;
+            text-align: center;
+            background: #fff;
+            border-radius: 4px;
+        }
+
+        .publication-block h3 {
+            font-weight: 500;
+            margin: 0 0 10px 0;
+            color: #374054;
+            font-size: 1.3em;
+        }
+
+        .publication-block h4 {
+            color: #74808a;
+            font-weight: 400;
+            margin: 0 0 15px 0;
+            font-size: 1em;
+        }
+
+        .publication-block p {
+            margin: 0 0 15px 0;
+            color: #74808a;
+            font-size: 0.9em;
+        }
+
+        /* Awards Section */
+        .award-block {
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            padding: 20px;
+            border: 1px solid #dcd9d9;
+            text-align: center;
+            background: #fff;
+            border-radius: 4px;
+        }
+
+        .award-block h3 {
+            font-weight: 500;
+            margin: 0 0 10px 0;
+            color: #374054;
+            font-size: 1.3em;
+        }
+
+        .award-block h4 {
+            color: #74808a;
+            font-weight: 400;
+            margin: 0 0 15px 0;
+            font-size: 1em;
+        }
+
+        .award-block p {
+            margin: 0;
+            color: #74808a;
+            font-size: 0.9em;
+        }
+
         /* Contact Section */
         #contact {
             padding: 50px 15px;
@@ -646,10 +730,12 @@
         </div>
         <ul id="menu" class="shadow">
             <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
             <li><a href="#education">Education</a></li>
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#publications">Publications</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#awards">Awards</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </header>
@@ -699,6 +785,33 @@
     </div>
     <!-- End #about -->
 
+    <div id="education">
+        <h2 class="heading">Education</h2>
+        <div class="education-block">
+            <h3>University Name</h3>
+            <span class="education-date">Year - Year</span>
+            <h4>Degree in Field of Study</h4>
+            <p>
+                Description of your academic achievements, relevant coursework, thesis work, or significant projects. 
+                Mention any honors, awards, or special recognition received.
+            </p>
+        </div>
+        <!-- End .education-block -->
+
+        <div class="education-block">
+            <h3>Previous Institution</h3>
+            <span class="education-date">Year - Year</span>
+            <h4>Previous Degree or Certification</h4>
+            <ul>
+                <li>Relevant coursework or achievements</li>
+                <li>Special projects or research</li>
+                <li>Academic honors or recognition</li>
+            </ul>
+        </div>
+        <!-- End .education-block -->
+    </div>
+    <!-- End #education -->
+
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div id="experience-timeline">
@@ -732,34 +845,35 @@
     </div>
     <!-- End #experience -->
 
-    <div id="education">
-        <h2 class="heading">Education</h2>
-        <div class="education-block">
-            <h3>University Name</h3>
-            <span class="education-date">Year - Year</span>
-            <h4>Degree in Field of Study</h4>
-            <p>
-                Description of your academic achievements, relevant coursework, thesis work, or significant projects. 
-                Mention any honors, awards, or special recognition received.
-            </p>
+    <div id="publications">
+        <h2 class="heading">Publications</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="publication-block">
+                        <h3>Publication Title 1</h3>
+                        <h4>Journal/Conference Name, Year</h4>
+                        <p>
+                            Brief description of your publication, its significance, and key contributions to the field.
+                        </p>
+                        <a href="#" class="btn">View Publication</a>
+                    </div>
+                    
+                    <div class="publication-block">
+                        <h3>Publication Title 2</h3>
+                        <h4>Journal/Conference Name, Year</h4>
+                        <p>
+                            Brief description of your publication, its significance, and key contributions to the field.
+                        </p>
+                        <a href="#" class="btn">View Publication</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- End .education-block -->
-
-        <div class="education-block">
-            <h3>Previous Institution</h3>
-            <span class="education-date">Year - Year</span>
-            <h4>Previous Degree or Certification</h4>
-            <ul>
-                <li>Relevant coursework or achievements</li>
-                <li>Special projects or research</li>
-                <li>Academic honors or recognition</li>
-            </ul>
-        </div>
-        <!-- End .education-block -->
     </div>
-    <!-- End #education -->
+    <!-- End #publications -->
 
-    <div id="projects" class="background-alt">
+    <div id="skills" class="background-alt">
         <h2 class="heading">Projects</h2>
         <div class="container">
             <div class="row">
@@ -825,6 +939,74 @@
         </ul>
     </div>
     <!-- End #skills -->
+
+    <div id="projects">
+        <h2 class="heading">Projects</h2>
+        <div class="container">
+            <div class="row">
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/pic04.jpg" style="width: 300px; height: 200px; object-fit: cover;" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Project Name One</h3>
+                        <p>
+                            Detailed description of your most significant project, including the problem solved, 
+                            technologies used, and impact achieved. Highlight your role and contributions.
+                        </p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/pic05.jpg" style="width: 300px; height: 200px; object-fit: cover;" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Project Name Two</h3>
+                        <p>
+                            Description of another important project, highlighting unique challenges and innovative 
+                            solutions implemented. Focus on technologies used and results achieved.
+                        </p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+            </div>
+        </div>
+    </div>
+    <!-- End #projects -->
+
+    <div id="awards" class="background-alt">
+        <h2 class="heading">Awards & Recognition</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="award-block">
+                        <h3>Award Name 1</h3>
+                        <h4>Organization Name, Year</h4>
+                        <p>
+                            Description of the award, what it recognizes, and why you received it.
+                        </p>
+                    </div>
+                    
+                    <div class="award-block">
+                        <h3>Award Name 2</h3>
+                        <h4>Organization Name, Year</h4>
+                        <p>
+                            Description of the award, what it recognizes, and why you received it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End #awards -->
 
     <div id="contact">
         <h2>Get in Touch</h2>

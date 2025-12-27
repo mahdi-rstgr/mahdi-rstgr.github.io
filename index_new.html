@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mahdi Rastegar - Portfolio</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
+    <style>
+        /*
+            File: styles.css
+            Author: Mahdi Rastegar
+            Description: Portfolio styles based on Dev Portfolio Template
+        */
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            color: #374054;
+        }
+
+        p {
+            color: #74808a;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover, a:focus, a:active {
+            color: #217dbb;
+            text-decoration: none;
+        }
+
+        .btn {
+            display: inline-block;
+            color: #3498db;
+            padding: 15px 25px;
+            border: 3px solid #3498db;
+            border-radius: 4px;
+            text-decoration: none;
+            background: #fff;
+            transition: 0.5s ease all;
+        }
+
+        .btn:hover, .btn:focus, .btn:active {
+            color: #fff;
+            background: #3498db;
+            text-decoration: none;
+        }
+
+        .btn-rounded {
+            border-radius: 30px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 10;
+            animation-name: dropHeader;
+            animation-iteration-count: 1;
+            animation-timing-function: ease;
+            animation-duration: 0.75s;
+        }
+
+        header ul {
+            display: inline-block;
+            background: #fff;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        header li {
+            display: inline-block;
+        }
+
+        header a {
+            display: block;
+            color: #3498db;
+            padding: 10px;
+        }
+
+        header a:hover {
+            color: #217dbb;
+            text-decoration: none;
+            background: #eee;
+            border-radius: 4px;
+        }
+
+        /* Lead Section */
+        #lead {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            max-height: 1080px;
+            background: url('images/damavandmilkyway.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        #lead-overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(33, 125, 187, 0.8);
+            z-index: 1;
+        }
+
+        #lead-content {
+            position: absolute;
+            z-index: 10;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #lead-content h1, #lead-content h2 {
+            margin: 0;
+        }
+
+        #lead-content h1 {
+            color: #fff;
+            font-weight: 900;
+            font-size: 5em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 0.9em;
+        }
+
+        #lead-content h2 {
+            color: #a0cfee;
+            font-weight: 500;
+            font-size: 2.25em;
+            margin-bottom: 15px;
+        }
+
+        #lead-down {
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            bottom: 15px;
+            color: #fff;
+        }
+
+        #lead-down span {
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid #a0cfee;
+            text-align: center;
+        }
+
+        #lead-down i {
+            animation: pulsate 1.5s ease;
+            animation-iteration-count: infinite;
+            padding-top: 5px;
+        }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(1, 1);
+            }
+            50% {
+                transform: scale(1.2, 1.2);
+            }
+            100% {
+                transform: scale(1, 1);
+            }
+        }
+
+        /* About Section */
+        #about {
+            padding: 75px 15px;
+            border-bottom: 1px solid #dcd9d9;
+        }
+
+        #about h2 {
+            color: #374054;
+        }
+
+        #about p {
+            color: #74808a;
+            margin: 0;
+        }
+
+        /* Experience Section */
+        #experience {
+            padding: 50px 15px;
+            text-align: center;
+            border-bottom: 1px solid #dcd9d9;
+        }
+
+        #experience h2 {
+            color: #374054;
+        }
+
+        #experience-timeline {
+            margin: 30px auto 0 auto;
+            position: relative;
+            max-width: 1000px;
+        }
+
+        #experience-timeline:before {
+            position: absolute;
+            content: '';
+            top: 0;
+            bottom: 0;
+            left: 303px;
+            right: auto;
+            height: 100%;
+            width: 3px;
+            background: #3498db;
+            z-index: 0;
+        }
+
+        .vtimeline-point {
+            position: relative;
+            display: block;
+            vertical-align: top;
+            margin-bottom: 30px;
+        }
+
+        .vtimeline-icon {
+            position: relative;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            border-radius: 50%;
+            float: left;
+            z-index: 99;
+            margin-left: 280px;
+        }
+
+        .vtimeline-icon i {
+            display: block;
+            font-size: 2em;
+            margin-top: 10px;
+        }
+
+        .vtimeline-date {
+            width: 260px;
+            text-align: right;
+            position: absolute;
+            left: 0;
+            top: 10px;
+            font-weight: 300;
+            color: #374054;
+        }
+
+        .vtimeline-content {
+            margin-left: 350px;
+            background: #fff;
+            border: 1px solid #e6e6e6;
+            padding: 15px;
+            border-radius: 3px;
+            text-align: left;
+        }
+
+        .vtimeline-content h3 {
+            font-size: 1.5em;
+            font-weight: 300;
+            color: #374054;
+            display: inline-block;
+            margin: 0;
+        }
+
+        .vtimeline-content h4 {
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #7e8890;
+            margin: 0 0 15px 0;
+        }
+
+        .vtimeline-content p {
+            color: #74808a;
+            font-size: 0.9em;
+            margin: 0;
+        }
+
+        /* Education Section */
+        #education {
+            padding: 50px 15px 20px 15px;
+            border-bottom: 1px solid #dcd9d9;
+            text-align: center;
+        }
+
+        #education h2 {
+            color: #374054;
+            margin-bottom: 50px;
+        }
+
+        .education-block {
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            padding: 15px;
+            border: 1px solid #dcd9d9;
+            text-align: left;
+        }
+
+        .education-block h3 {
+            font-weight: 500;
+            float: left;
+            margin: 0;
+            color: #374054;
+        }
+
+        .education-block span {
+            color: #74808a;
+            float: right;
+        }
+
+        .education-block h4 {
+            color: #74808a;
+            clear: both;
+            font-weight: 500;
+            margin: 0 0 15px 0;
+        }
+
+        .education-block p, .education-block ul {
+            margin: 0;
+            color: #74808a;
+            font-size: 0.9em;
+        }
+
+        .education-block ul {
+            padding: 0 0 0 15px;
+        }
+
+        /* Projects Section */
+        #projects {
+            padding: 50px 15px;
+            border-bottom: 1px solid #dcd9d9;
+            text-align: center;
+        }
+
+        #projects h2 {
+            color: #374054;
+            margin-bottom: 50px;
+        }
+
+        .project {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 4px;
+        }
+
+        .project-image {
+            float: left;
+        }
+
+        .project-info {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 300px;
+            padding: 15px;
+        }
+
+        .project-info h3 {
+            font-size: 1.5em;
+            font-weight: 300;
+            color: #374054;
+            margin: 0 0 15px 0;
+        }
+
+        .project-info p {
+            color: #74808a;
+            margin: 0 0 15px 0;
+            font-size: 0.9em;
+        }
+
+        /* Skills Section */
+        #skills {
+            padding: 50px 15px;
+            text-align: center;
+            border-bottom: 1px solid #dcd9d9;
+        }
+
+        #skills h2 {
+            color: #374054;
+            margin-bottom: 50px;
+        }
+
+        #skills ul {
+            display: block;
+            margin: 0 auto;
+            padding: 0;
+            max-width: 800px;
+        }
+
+        #skills li {
+            display: inline-block;
+            margin: 7px;
+            padding: 5px 10px;
+            color: #374054;
+            background: #e4e4ea;
+            list-style: none;
+            cursor: default;
+            font-size: 1.2em;
+        }
+
+        /* Contact Section */
+        #contact {
+            padding: 50px 15px;
+            background: #3498db;
+            text-align: center;
+        }
+
+        #contact h2 {
+            margin: 0 0 15px 0;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        #contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #contact-form input, #contact-form textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-bottom: 10px;
+            background: #1d6fa5;
+            color: #fff;
+            transition: 0.5s ease all;
+        }
+
+        #contact-form input::-webkit-input-placeholder, #contact-form textarea::-webkit-input-placeholder {
+            color: #fff;
+        }
+
+        #contact-form input:-moz-placeholder, #contact-form textarea:-moz-placeholder {
+            color: #fff;
+            opacity: 1;
+        }
+
+        #contact-form input::-moz-placeholder, #contact-form textarea::-moz-placeholder {
+            color: #fff;
+            opacity: 1;
+        }
+
+        #contact-form input:-ms-input-placeholder, #contact-form textarea:-ms-input-placeholder {
+            color: #fff;
+        }
+
+        #contact-form input:focus, #contact-form textarea:focus {
+            outline: none;
+            background: #16527a;
+        }
+
+        #contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        #contact-form button {
+            display: block;
+            width: 100%;
+            background: #fff;
+            border-radius: 4px;
+            padding: 5px 10px;
+            border: none;
+            color: #3498db;
+            font-weight: 700;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            transition: 0.5s ease all;
+        }
+
+        #contact-form button:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 0;
+        }
+
+        #to-top {
+            display: block;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #3498db;
+            text-align: center;
+            color: #fff;
+            line-height: 46px;
+            text-decoration: none;
+            transition: 0.5s ease all;
+            z-index: 999;
+        }
+
+        #to-top:hover {
+            background: #217dbb;
+        }
+
+        .social {
+            text-align: right;
+        }
+
+        .social ul {
+            margin: 5px 0 0 0;
+            padding: 0;
+        }
+
+        .social li {
+            display: inline-block;
+            font-size: 1.25em;
+            list-style: none;
+        }
+
+        .social a {
+            display: block;
+            color: #74808a;
+            padding: 10px;
+        }
+
+        .social a:hover {
+            color: #3498db;
+        }
+
+        /* Mobile Styles */
+        @media only screen and (max-width: 768px) {
+            #lead-content h1 {
+                font-size: 3em;
+            }
+
+            #lead-content h2 {
+                font-size: 1.75em;
+            }
+
+            #about {
+                text-align: center;
+            }
+
+            .project-image {
+                display: none;
+            }
+
+            .project-info {
+                position: relative;
+                margin: 0;
+                padding: 30px 15px;
+                top: auto;
+                transform: none;
+            }
+
+            footer {
+                text-align: center;
+            }
+
+            .social {
+                text-align: center;
+            }
+
+            #experience-timeline:before, .vtimeline-date, .vtimeline-icon {
+                display: none;
+            }
+
+            .vtimeline-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Animation */
+        @keyframes dropHeader {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mobile-menu-open" class="shadow-large">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <!-- End #mobile-menu-toggle -->
+    <header>
+        <div id="mobile-menu-close">
+            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+        <ul id="menu" class="shadow">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </header>
+    <!-- End header -->
+
+    <div id="lead">
+        <div id="lead-overlay"></div>
+        <div id="lead-content">
+            <h1>Mahdi Rastegar</h1>
+            <h2>Technology Enthusiast & Innovation Driver</h2>
+            <a href="#about" class="btn-rounded btn">Learn More</a>
+        </div>
+        <!-- End #lead-content -->
+
+        <div id="lead-down">
+            <span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </span>
+        </div>
+        <!-- End #lead-down -->
+    </div>
+    <!-- End #lead -->
+
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2 class="heading">About Me</h2>
+                </div>
+                <div class="col-md-8">
+                    <p>
+                        Hello! I'm Mahdi Rastegar, a dedicated professional with a passion for technology and innovation. 
+                        I believe in the power of continuous learning and strive to make meaningful contributions to every project I work on.
+                    </p>
+                    <p>
+                        My journey has taken me through various challenges and opportunities, each shaping my perspective and enhancing my skills. 
+                        I'm committed to excellence and always eager to explore new technologies and methodologies that can drive positive change.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End #about -->
+
+    <div id="experience" class="background-alt">
+        <h2 class="heading">Experience</h2>
+        <div id="experience-timeline">
+            <div data-date="2023 – Present">
+                <h3>Current Position</h3>
+                <h4>Company Name</h4>
+                <p>
+                    Description of your current or most recent role, key responsibilities, and achievements. 
+                    Highlight the impact you've made and technologies you've worked with.
+                </p>
+            </div>
+
+            <div data-date="2021 – 2023">
+                <h3>Previous Position</h3>
+                <h4>Previous Company</h4>
+                <p>
+                    Description of your previous role and key contributions to the organization. 
+                    Focus on accomplishments and skills developed during this period.
+                </p>
+            </div>
+
+            <div data-date="2019 – 2021">
+                <h3>Earlier Experience</h3>
+                <h4>Earlier Company</h4>
+                <p>
+                    Details about earlier professional experience and how it contributed to your growth. 
+                    Mention key projects and learning experiences.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- End #experience -->
+
+    <div id="education">
+        <h2 class="heading">Education</h2>
+        <div class="education-block">
+            <h3>University Name</h3>
+            <span class="education-date">Year - Year</span>
+            <h4>Degree in Field of Study</h4>
+            <p>
+                Description of your academic achievements, relevant coursework, thesis work, or significant projects. 
+                Mention any honors, awards, or special recognition received.
+            </p>
+        </div>
+        <!-- End .education-block -->
+
+        <div class="education-block">
+            <h3>Previous Institution</h3>
+            <span class="education-date">Year - Year</span>
+            <h4>Previous Degree or Certification</h4>
+            <ul>
+                <li>Relevant coursework or achievements</li>
+                <li>Special projects or research</li>
+                <li>Academic honors or recognition</li>
+            </ul>
+        </div>
+        <!-- End .education-block -->
+    </div>
+    <!-- End #education -->
+
+    <div id="projects" class="background-alt">
+        <h2 class="heading">Projects</h2>
+        <div class="container">
+            <div class="row">
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/pic04.jpg" style="width: 300px; height: 200px; object-fit: cover;" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Project Name One</h3>
+                        <p>
+                            Detailed description of your most significant project, including the problem solved, 
+                            technologies used, and impact achieved. Highlight your role and contributions.
+                        </p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+
+                <div class="project shadow-large">
+                    <div class="project-image">
+                        <img src="images/pic05.jpg" style="width: 300px; height: 200px; object-fit: cover;" />
+                    </div>
+                    <!-- End .project-image -->
+                    <div class="project-info">
+                        <h3>Project Name Two</h3>
+                        <p>
+                            Description of another important project, highlighting unique challenges and innovative 
+                            solutions implemented. Focus on technologies used and results achieved.
+                        </p>
+                        <a href="#" class="btn">View Project</a>
+                    </div>
+                    <!-- End .project-info -->
+                </div>
+                <!-- End .project -->
+            </div>
+        </div>
+    </div>
+    <!-- End #projects -->
+
+    <div id="skills">
+        <h2 class="heading">Skills</h2>
+        <ul>
+            <li>Python</li>
+            <li>JavaScript</li>
+            <li>Java</li>
+            <li>C++</li>
+            <li>React</li>
+            <li>Node.js</li>
+            <li>Django</li>
+            <li>Flask</li>
+            <li>SQL</li>
+            <li>PostgreSQL</li>
+            <li>MongoDB</li>
+            <li>Docker</li>
+            <li>Kubernetes</li>
+            <li>AWS</li>
+            <li>Azure</li>
+            <li>Git</li>
+            <li>Machine Learning</li>
+            <li>Data Analysis</li>
+        </ul>
+    </div>
+    <!-- End #skills -->
+
+    <div id="contact">
+        <h2>Get in Touch</h2>
+        <div id="contact-form">
+            <form method="POST" action="https://formspree.io/email@email.com">
+                <input type="hidden" name="_subject" value="Contact request from personal website" />
+                <input type="email" name="_replyto" placeholder="Your email" required>
+                <textarea name="message" placeholder="Your message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <!-- End #contact-form -->
+    </div>
+    <!-- End #contact -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 copyright">
+                    <p>
+                        Copyright &copy; <span id="current-year">2024</span> Mahdi Rastegar
+                    </p>
+                </div>
+                <div class="col-sm-2 top">
+                    <span id="to-top">
+                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="col-sm-5 social">
+                    <ul>
+                        <li>
+                            <a href="https://github.com/" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://stackoverflow.com/" target="_blank"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        /*
+            Scripts for Dev Portfolio Template
+        */
+        (function($) {
+            // Remove no-js class
+            $('html').removeClass('no-js');
+
+            // Animate to section when nav is clicked
+            $('header a').click(function(e) {
+                // Treat as normal link if no-scroll class
+                if ($(this).hasClass('no-scroll')) return;
+                e.preventDefault();
+                var heading = $(this).attr('href');
+                var scrollDistance = $(heading).offset().top;
+                $('html, body').animate({
+                    scrollTop: scrollDistance + 'px'
+                }, Math.abs(window.pageYOffset - $(heading).offset().top) / 1);
+                // Hide the menu once clicked if mobile
+                if ($('header').hasClass('active')) {
+                    $('header, body').removeClass('active');
+                }
+            });
+
+            // Scroll to top
+            $('#to-top').click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // Scroll to first element
+            $('#lead-down span').click(function() {
+                var scrollDistance = $('#lead').next().offset().top;
+                $('html, body').animate({
+                    scrollTop: scrollDistance + 'px'
+                }, 500);
+            });
+
+            // Create timeline
+            $('#experience-timeline').each(function() {
+                $this = $(this); // Store reference to this
+                $userContent = $this.children('div'); // user content
+
+                // Create each timeline block
+                $userContent.each(function() {
+                    $(this).addClass('vtimeline-content').wrap('<div class="vtimeline-point"><div class="vtimeline-block"></div></div>');
+                });
+
+                // Add icons to each block
+                $this.find('.vtimeline-point').each(function() {
+                    $(this).prepend('<div class="vtimeline-icon"><i class="fa fa-map-marker"></i></div>');
+                });
+
+                // Add dates to the timeline if data-date is specified
+                $this.find('.vtimeline-content').each(function() {
+                    var date = $(this).data('date');
+                    if (date) { // Prepend if exists
+                        $(this).parent().prepend('<span class="vtimeline-date">' + date + '</span>');
+                    }
+                });
+
+            });
+
+            // Open mobile menu
+            $('#mobile-menu-open').click(function() {
+                $('header, body').addClass('active');
+            });
+
+            // Close mobile menu
+            $('#mobile-menu-close').click(function() {
+                $('header, body').removeClass('active');
+            });
+
+        })(jQuery);
+    </script>
+</body>
+
+</html>

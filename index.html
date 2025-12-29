@@ -247,149 +247,348 @@
             margin: 0;
         }
 
-        /* Experience Section */
-        #experience {
-            padding: 50px 15px;
-            text-align: center;
-            border-bottom: 1px solid #dcd9d9;
-        }
-
-        #experience h2 {
-            color: #374054;
-        }
-
-        /* Clean Academic Experience Section */
+        /* Enhanced Experience Section with Timeline */
         #experience {
             padding: 80px 0;
-            background: #fff;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="0.3" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="0.4" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.3;
+            z-index: 1;
         }
 
         #experience .heading {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #374054;
-            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+            font-size: 3em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 60px;
             text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .experience-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 2;
         }
 
-        .experience-block {
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #eee;
+        /* Enhanced Timeline Styles */
+        #experience-timeline {
+            position: relative;
+            padding: 20px 0;
         }
 
-        .experience-block:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
+        #experience-timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #3498db, #2980b9, #3498db);
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+            border-radius: 2px;
         }
 
-        .experience-header {
+        .vtimeline-point {
+            position: relative;
+            margin-bottom: 60px;
             display: flex;
-            justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 5px;
-            flex-wrap: wrap;
         }
 
-        .experience-company {
-            font-size: 1.4em;
+        .vtimeline-point:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .vtimeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            border: 6px solid #fff;
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .vtimeline-icon:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 12px 35px rgba(52, 152, 219, 0.4);
+        }
+
+        .vtimeline-block {
+            width: calc(50% - 40px);
+            background: #fff;
+            padding: 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .vtimeline-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .vtimeline-point:nth-child(even) .vtimeline-block {
+            margin-left: 40px;
+        }
+
+        .vtimeline-point:nth-child(odd) .vtimeline-block {
+            margin-right: 40px;
+        }
+
+        .vtimeline-block::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+        }
+
+        .vtimeline-point:nth-child(odd) .vtimeline-block::before {
+            right: -30px;
+            border-left-color: #fff;
+        }
+
+        .vtimeline-point:nth-child(even) .vtimeline-block::before {
+            left: -30px;
+            border-right-color: #fff;
+        }
+
+        .vtimeline-date {
+            position: absolute;
+            top: -15px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 0.9em;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            z-index: 5;
+        }
+
+        .vtimeline-point:nth-child(odd) .vtimeline-date {
+            right: 20px;
+        }
+
+        .vtimeline-point:nth-child(even) .vtimeline-date {
+            left: 20px;
+        }
+
+        .vtimeline-content {
+            padding: 30px;
+            position: relative;
+        }
+
+        .vtimeline-content h3 {
             color: #2c3e50;
-            margin: 0;
-            flex: 1;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            line-height: 1.2;
         }
 
-        .experience-date {
-            font-size: 1em;
-            color: #7f8c8d;
-            font-weight: 400;
-            white-space: nowrap;
-            margin-left: 20px;
-        }
-
-        .experience-title {
-            font-size: 1.1em;
-            font-weight: 500;
-            color: #34495e;
-            margin: 5px 0 15px 0;
+        .vtimeline-content h4 {
+            color: #3498db;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .experience-description {
-            color: #5a6c7d;
+            color: #7f8c8d;
             font-size: 1em;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-style: italic;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
         }
 
-        .experience-highlights {
+        .vtimeline-content ul {
             list-style: none;
             padding: 0;
-            margin: 0;
+            margin: 0 0 20px 0;
         }
 
-        .experience-highlights li {
+        .vtimeline-content ul li {
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
+            padding-left: 30px;
+            margin-bottom: 12px;
             color: #34495e;
             font-size: 0.95em;
-            line-height: 1.5;
+            line-height: 1.6;
+            transition: all 0.2s ease;
         }
 
-        .experience-highlights li::before {
-            content: '•';
+        .vtimeline-content ul li:hover {
+            color: #2c3e50;
+            transform: translateX(5px);
+        }
+
+        .vtimeline-content ul li::before {
+            content: '▶';
             position: absolute;
             left: 0;
             color: #3498db;
-            font-weight: bold;
+            font-size: 0.8em;
+            top: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .vtimeline-content ul li:hover::before {
+            color: #2980b9;
+            transform: scale(1.2);
         }
 
         .experience-skills {
             margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #ecf0f1;
         }
 
         .skill-tag {
             display: inline-block;
-            background: #ecf0f1;
-            color: #2c3e50;
-            padding: 4px 10px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 25px;
             font-size: 0.8em;
-            margin: 3px 5px 3px 0;
-            font-weight: 500;
+            margin: 4px 6px 4px 0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
         }
 
-        /* Mobile Responsive for Vertical Timeline */
-        @media (max-width: 768px) {
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+        }
+
+        /* Enhanced Mobile Responsive Styles */
+        @media (max-width: 992px) {
             #experience-timeline:before {
-                left: 20px;
+                left: 30px;
+                width: 3px;
+            }
+
+            .vtimeline-point {
+                flex-direction: row !important;
+                margin-bottom: 40px;
             }
 
             .vtimeline-icon {
-                left: 5px;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
+                position: absolute;
+                left: 30px;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .vtimeline-block {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+                margin-right: 0 !important;
+            }
+
+            .vtimeline-block::before {
+                left: -15px !important;
+                right: auto !important;
+                border-right-color: #fff !important;
+                border-left-color: transparent !important;
             }
 
             .vtimeline-date {
-                width: auto;
-                text-align: left;
                 position: static;
-                margin-bottom: 10px;
-                padding: 5px 0;
+                display: inline-block;
+                margin: 0 0 15px 0;
+                left: auto !important;
+                right: auto !important;
             }
 
             .vtimeline-content {
-                margin-left: 50px;
-                padding: 15px;
+                padding: 25px 20px;
+            }
+
+            .vtimeline-content h3 {
+                font-size: 1.4em;
+            }
+
+            .vtimeline-content h4 {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #experience {
+                padding: 60px 0;
+            }
+
+            #experience .heading {
+                font-size: 2.5em;
+                margin-bottom: 40px;
+            }
+
+            .experience-container {
+                padding: 0 15px;
+            }
+
+            #experience-timeline:before {
+                left: 25px;
+            }
+
+            .vtimeline-icon {
+                left: 25px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                border: 4px solid #fff;
+            }
+
+            .vtimeline-block {
+                width: calc(100% - 70px);
+                margin-left: 70px !important;
+            }
+
+            .vtimeline-content {
+                padding: 20px 15px;
             }
 
             .vtimeline-content h3 {
@@ -400,13 +599,20 @@
                 font-size: 1em;
             }
 
-            .vtimeline-content .experience-description {
+            .experience-description {
                 font-size: 0.9em;
+                padding: 12px;
             }
 
             .vtimeline-content ul li {
                 font-size: 0.85em;
-                line-height: 1.4;
+                padding-left: 25px;
+            }
+
+            .skill-tag {
+                font-size: 0.75em;
+                padding: 5px 10px;
+                margin: 3px 4px 3px 0;
             }
         }
 

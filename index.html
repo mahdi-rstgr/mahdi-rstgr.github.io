@@ -258,163 +258,89 @@
             color: #374054;
         }
 
-        /* Clean Horizontal Experience Timeline */
-        #experience-timeline {
-            margin: 50px auto;
-            position: relative;
-            max-width: 1200px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* Clean Academic Experience Section */
+        #experience {
+            padding: 80px 0;
+            background: #fff;
         }
 
-        .timeline-container {
-            position: relative;
-            padding: 20px 0;
-        }
-
-        .timeline-years {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-bottom: 40px;
-            padding: 0 10px;
-        }
-
-        .timeline-year {
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 14px;
-            position: relative;
-        }
-
-        .timeline-year::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 20px;
-            background: #bdc3c7;
-        }
-
-        .timeline-track {
-            position: relative;
-            height: 8px;
-            background: #ecf0f1;
-            border-radius: 4px;
-            margin: 40px 10px 150px 10px;
-        }
-
-        .experience-item {
-            position: absolute;
-            height: 70px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10;
+        #experience .heading {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #374054;
+            margin-bottom: 50px;
             text-align: center;
         }
 
-        .experience-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            z-index: 20;
+        .experience-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .experience-item.academic {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            top: -80px;
+        .experience-block {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
         }
 
-        .experience-item.industry {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            top: -160px;
+        .experience-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
         }
 
-        .experience-item.research {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            top: -20px;
-        }
-
-        .experience-item.postdoc {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            top: -240px;
-        }
-
-        .experience-details {
-            position: absolute;
-            top: 80px;
-            left: 0;
-            right: 0;
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            z-index: 30;
-            border-left: 4px solid;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .experience-item:hover .experience-details {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .experience-item.postdoc .experience-details { border-left-color: #43e97b; }
-        .experience-item.academic .experience-details { border-left-color: #667eea; }
-        .experience-item.industry .experience-details { border-left-color: #f093fb; }
-        .experience-item.research .experience-details { border-left-color: #4facfe; }
-
-        .experience-title {
-            font-weight: 700;
-            color: #2c3e50;
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 5px;
-            font-size: 16px;
+            flex-wrap: wrap;
         }
 
         .experience-company {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+            flex: 1;
+        }
+
+        .experience-date {
+            font-size: 1em;
             color: #7f8c8d;
-            font-size: 14px;
-            margin-bottom: 12px;
+            font-weight: 400;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        .experience-title {
+            font-size: 1.1em;
             font-weight: 500;
+            color: #34495e;
+            margin: 5px 0 15px 0;
         }
 
         .experience-description {
             color: #5a6c7d;
-            font-size: 13px;
-            line-height: 1.5;
+            font-size: 1em;
+            line-height: 1.6;
             margin-bottom: 15px;
+            font-style: italic;
         }
 
         .experience-highlights {
             list-style: none;
             padding: 0;
-            margin: 0 0 15px 0;
+            margin: 0;
         }
 
         .experience-highlights li {
             position: relative;
-            padding-left: 18px;
-            margin-bottom: 6px;
+            padding-left: 20px;
+            margin-bottom: 8px;
             color: #34495e;
-            font-size: 12px;
-            line-height: 1.4;
+            font-size: 0.95em;
+            line-height: 1.5;
         }
 
         .experience-highlights li::before {
@@ -426,85 +352,47 @@
         }
 
         .experience-skills {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #ecf0f1;
+            margin-top: 20px;
         }
 
         .skill-tag {
             display: inline-block;
             background: #ecf0f1;
             color: #2c3e50;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            margin: 2px 4px 2px 0;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 3px 5px 3px 0;
             font-weight: 500;
         }
-
-        .timeline-legend {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-
-        .legend-color {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-        }
-
-        .legend-color.academic { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .legend-color.industry { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .legend-color.research { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .legend-color.postdoc { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            #experience-timeline {
-                padding: 20px 15px;
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
-            
-            .timeline-years {
-                font-size: 12px;
+
+            .experience-date {
+                margin-left: 0;
+                margin-top: 5px;
+                font-size: 0.9em;
             }
-            
-            .timeline-track {
-                display: none;
+
+            .experience-company {
+                font-size: 1.2em;
             }
-            
-            .experience-item {
-                position: relative !important;
-                width: 100% !important;
-                left: 0 !important;
-                top: 0 !important;
-                margin-bottom: 20px;
-                height: 50px;
-                font-size: 12px;
+
+            .experience-title {
+                font-size: 1em;
             }
-            
-            .experience-details {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                margin-top: 10px;
-                max-height: none;
+
+            #experience {
+                padding: 50px 0;
             }
-            
-            .timeline-legend {
-                gap: 15px;
+
+            .experience-container {
+                padding: 0 15px;
             }
         }
 
@@ -1094,155 +982,133 @@
 
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
-        <div id="experience-timeline">
-            <div class="timeline-container">
-                <div class="timeline-years">
-                    <span class="timeline-year">2013</span>
-                    <span class="timeline-year">2015</span>
-                    <span class="timeline-year">2017</span>
-                    <span class="timeline-year">2019</span>
-                    <span class="timeline-year">2021</span>
-                    <span class="timeline-year">2023</span>
-                    <span class="timeline-year">2025</span>
+        <h2 class="heading">Experience</h2>
+        <div class="experience-container">
+            
+            <div class="experience-block">
+                <div class="experience-header">
+                    <h3 class="experience-company">Acceleration Consortium</h3>
+                    <span class="experience-date">Apr. 2025 – Present</span>
                 </div>
-                
-                <div class="timeline-track">
-                    <!-- Postdoctoral Fellow 2025-Present -->
-                    <div class="experience-item postdoc" style="left: 83.33%; width: 16.67%;">
-                        <span>Postdoc Fellow</span>
-                        <div class="experience-details">
-                            <div class="experience-title">Postdoctoral Fellow</div>
-                            <div class="experience-company">Acceleration Consortium</div>
-                            <div class="experience-description">
-                                Leading cutting-edge research in autonomous laboratory systems, developing self-driving labs.
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Developed self-driving lab for high-throughput liquid/powder dispenser</li>
-                                <li>Designed custom hardware and prototypes for synthesis</li>
-                                <li>Applied advanced imaging techniques for thermal properties</li>
-                                <li>Implemented ML algorithms to refine experimental designs</li>
-                            </ul>
-                            <div class="experience-skills">
-                                <span class="skill-tag">Machine Learning</span>
-                                <span class="skill-tag">Self-Driving Labs</span>
-                                <span class="skill-tag">Hardware Design</span>
-                                <span class="skill-tag">Materials Science</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Research Assistant UHN 2024-2025 -->
-                    <div class="experience-item research" style="left: 75%; width: 8.33%;">
-                        <span>UHN Research</span>
-                        <div class="experience-details">
-                            <div class="experience-title">Research Assistant</div>
-                            <div class="experience-company">University Health Network (UHN)</div>
-                            <div class="experience-description">
-                                Advanced biomedical research in clinical settings.
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Conducted biomedical research bridging engineering and medicine</li>
-                                <li>Collaborated with medical professionals on healthcare solutions</li>
-                                <li>Applied engineering principles to healthcare challenges</li>
-                            </ul>
-                            <div class="experience-skills">
-                                <span class="skill-tag">Biomedical Engineering</span>
-                                <span class="skill-tag">Clinical Research</span>
-                                <span class="skill-tag">Medical Devices</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- PhD Research 2021-2024 -->
-                    <div class="experience-item academic" style="left: 58.33%; width: 25%;">
-                        <span>PhD Research</span>
-                        <div class="experience-details">
-                            <div class="experience-title">Research Assistant - PhD</div>
-                            <div class="experience-company">Smart Materials & Structures Lab, University of Toronto</div>
-                            <div class="experience-description">
-                                Doctoral research on multifunctional porous fluoropolymer films for triboelectric applications.
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Comprehensive research on triboelectric nanogenerator applications</li>
-                                <li>Advanced materials characterization using SEM, XRD, FTIR</li>
-                                <li>Published research in high-impact journals</li>
-                                <li>Supervised undergraduate research students</li>
-                            </ul>
-                            <div class="experience-skills">
-                                <span class="skill-tag">Materials Science</span>
-                                <span class="skill-tag">Polymer Chemistry</span>
-                                <span class="skill-tag">Energy Harvesting</span>
-                                <span class="skill-tag">Research Leadership</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Industry Experience 2019-2020 -->
-                    <div class="experience-item industry" style="left: 50%; width: 8.33%;">
-                        <span>Mechanical Eng.</span>
-                        <div class="experience-details">
-                            <div class="experience-title">Mechanical Engineer</div>
-                            <div class="experience-company">TECHNE KIROW GmbH</div>
-                            <div class="experience-description">
-                                Industrial engineering focused on automation systems and machinery design.
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Designed and optimized industrial automation systems</li>
-                                <li>Developed machinery specifications and documentation</li>
-                                <li>Implemented process optimization strategies</li>
-                            </ul>
-                            <div class="experience-skills">
-                                <span class="skill-tag">Industrial Automation</span>
-                                <span class="skill-tag">Process Optimization</span>
-                                <span class="skill-tag">Project Management</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Long-term Research 2013-2019 -->
-                    <div class="experience-item research" style="left: 0%; width: 50%;">
-                        <span>Solar Vehicle Research</span>
-                        <div class="experience-details">
-                            <div class="experience-title">Research Assistant</div>
-                            <div class="experience-company">Solar-Electrical Vehicle Project, University of Tehran</div>
-                            <div class="experience-description">
-                                Long-term renewable energy and electric vehicle technology research.
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Designed renewable energy systems for EV applications</li>
-                                <li>Developed electric vehicle powertrain systems</li>
-                                <li>Led competition teams in international challenges</li>
-                                <li>Coordinated multi-year sustainable technology projects</li>
-                            </ul>
-                            <div class="experience-skills">
-                                <span class="skill-tag">Renewable Energy</span>
-                                <span class="skill-tag">Electric Vehicles</span>
-                                <span class="skill-tag">Team Leadership</span>
-                                <span class="skill-tag">Competition Management</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="timeline-legend">
-                    <div class="legend-item">
-                        <div class="legend-color postdoc"></div>
-                        <span>Postdoctoral</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color academic"></div>
-                        <span>Academic Research</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color industry"></div>
-                        <span>Industry</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color research"></div>
-                        <span>Research Projects</span>
-                    </div>
+                <h4 class="experience-title">Postdoctoral Fellow</h4>
+                <p class="experience-description">Generative AI and Machine Learning for Materials Discovery</p>
+                <ul class="experience-highlights">
+                    <li>Developed a self-driving lab for high-throughput liquid/powder dispenser, integrating machine learning for optimization and uncertainty reduction in experimental parameter space</li>
+                    <li>Designed and fabricated custom hardware and prototypes for precise mechanical/chemical/electrical/pharmaceutical synthesis and characterization</li>
+                    <li>Applied advanced imaging techniques to assess homogeneity, defects, and thermal properties using Inverse Heat Transfer methods</li>
+                    <li>Collaborated with multidisciplinary teams to develop methodologies for autonomous synthesis and characterization systems</li>
+                    <li>Optimized polymer synthesis conditions, including molecular weight control, concentration parameters, and crosslinking optimization</li>
+                    <li>Implemented machine learning algorithms to refine experimental designs and improve data reproducibility across multiple experimental campaigns</li>
+                </ul>
+                <div class="experience-skills">
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Self-Driving Labs</span>
+                    <span class="skill-tag">Hardware Design</span>
+                    <span class="skill-tag">Image Analysis</span>
+                    <span class="skill-tag">Automation</span>
+                    <span class="skill-tag">Materials Science</span>
                 </div>
             </div>
+
+            <div class="experience-block">
+                <div class="experience-header">
+                    <h3 class="experience-company">University Health Network (UHN)</h3>
+                    <span class="experience-date">Jan. 2024 – Apr. 2025</span>
+                </div>
+                <h4 class="experience-title">Research Assistant</h4>
+                <p class="experience-description">Biomedical Engineering Research</p>
+                <ul class="experience-highlights">
+                    <li>Conducted advanced biomedical research in clinical settings, bridging engineering and medical applications</li>
+                    <li>Collaborated with medical professionals and researchers on innovative healthcare technology solutions</li>
+                    <li>Applied engineering principles to address complex healthcare challenges and improve patient outcomes</li>
+                    <li>Contributed to translational research projects focusing on medical device development and optimization</li>
+                    <li>Participated in interdisciplinary research teams combining engineering expertise with medical knowledge</li>
+                </ul>
+                <div class="experience-skills">
+                    <span class="skill-tag">Biomedical Engineering</span>
+                    <span class="skill-tag">Clinical Research</span>
+                    <span class="skill-tag">Medical Devices</span>
+                    <span class="skill-tag">Translational Research</span>
+                    <span class="skill-tag">Healthcare Innovation</span>
+                </div>
+            </div>
+
+            <div class="experience-block">
+                <div class="experience-header">
+                    <h3 class="experience-company">University of Toronto</h3>
+                    <span class="experience-date">Jan. 2021 – Dec. 2024</span>
+                </div>
+                <h4 class="experience-title">Research Assistant - PhD</h4>
+                <p class="experience-description">Smart Materials & Structures Lab</p>
+                <ul class="experience-highlights">
+                    <li>Conducted comprehensive research on multifunctional porous fluoropolymer films for triboelectric nanogenerator applications</li>
+                    <li>Advanced materials characterization using SEM, XRD, FTIR, and advanced microscopy techniques</li>
+                    <li>Developed novel synthesis methods for porous polymer structures with controlled morphology and properties</li>
+                    <li>Published research findings in high-impact peer-reviewed journals and international conferences</li>
+                    <li>Supervised and mentored undergraduate research students on various materials science projects</li>
+                    <li>Collaborated on interdisciplinary research initiatives with chemistry, physics, and engineering departments</li>
+                    <li>Presented research at international conferences and symposiums on energy harvesting and smart materials</li>
+                </ul>
+                <div class="experience-skills">
+                    <span class="skill-tag">Materials Science</span>
+                    <span class="skill-tag">Triboelectric Generators</span>
+                    <span class="skill-tag">Polymer Chemistry</span>
+                    <span class="skill-tag">Characterization</span>
+                    <span class="skill-tag">Energy Harvesting</span>
+                    <span class="skill-tag">Research Leadership</span>
+                </div>
+            </div>
+
+            <div class="experience-block">
+                <div class="experience-header">
+                    <h3 class="experience-company">TECHNE KIROW GmbH</h3>
+                    <span class="experience-date">Mar. 2019 – Dec. 2020</span>
+                </div>
+                <h4 class="experience-title">Mechanical Engineer</h4>
+                <p class="experience-description">Industrial Automation and Process Optimization</p>
+                <ul class="experience-highlights">
+                    <li>Designed and optimized industrial automation systems for manufacturing processes</li>
+                    <li>Developed machinery specifications and technical documentation for complex industrial equipment</li>
+                    <li>Implemented process optimization strategies resulting in improved efficiency and quality control</li>
+                    <li>Managed engineering projects from concept to implementation, coordinating with cross-functional teams</li>
+                    <li>Maintained client relationships and provided technical support for industrial automation solutions</li>
+                    <li>Created comprehensive technical documentation and specification development for various projects</li>
+                </ul>
+                <div class="experience-skills">
+                    <span class="skill-tag">Industrial Automation</span>
+                    <span class="skill-tag">Machinery Design</span>
+                    <span class="skill-tag">Process Optimization</span>
+                    <span class="skill-tag">Project Management</span>
+                    <span class="skill-tag">Technical Documentation</span>
+                </div>
+            </div>
+
+            <div class="experience-block">
+                <div class="experience-header">
+                    <h3 class="experience-company">University of Tehran</h3>
+                    <span class="experience-date">Sep. 2013 – Aug. 2019</span>
+                </div>
+                <h4 class="experience-title">Research Assistant</h4>
+                <p class="experience-description">Solar-Electrical Vehicle Project</p>
+                <ul class="experience-highlights">
+                    <li>Designed and optimized renewable energy systems for electric vehicle applications</li>
+                    <li>Developed electric vehicle powertrain systems with focus on efficiency and performance optimization</li>
+                    <li>Integrated solar panel systems with energy management solutions for sustainable vehicle operation</li>
+                    <li>Led competition teams in international solar vehicle challenges and engineering competitions</li>
+                    <li>Coordinated multi-year projects involving sustainable technology innovation and testing protocols</li>
+                    <li>Contributed to the development of next-generation sustainable transportation technologies</li>
+                    <li>Mentored junior team members and managed technical aspects of vehicle development projects</li>
+                </ul>
+                <div class="experience-skills">
+                    <span class="skill-tag">Renewable Energy</span>
+                    <span class="skill-tag">Electric Vehicles</span>
+                    <span class="skill-tag">Solar Systems</span>
+                    <span class="skill-tag">Team Leadership</span>
+                    <span class="skill-tag">Sustainable Technology</span>
+                    <span class="skill-tag">Competition Management</span>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- End #experience -->

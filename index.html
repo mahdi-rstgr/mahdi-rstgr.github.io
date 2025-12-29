@@ -646,38 +646,39 @@
         /* Ribbon Styles */
         .pub-ribbon {
             position: absolute;
-            top: 15px;
-            left: -10px;
-            background: #27AE60;
+            bottom: 15px;
+            right: -10px;
+            background: #FFA500;
             color: white;
-            padding: 8px 20px 8px 15px;
-            font-size: 0.75em;
+            padding: 10px 25px 10px 20px;
+            font-size: 0.8em;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             z-index: 10;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            clip-path: polygon(0 0, calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            clip-path: polygon(8px 0%, 100% 0, 100% 100%, 8px 100%, 0 50%);
+            min-width: 100px;
         }
 
         .pub-ribbon.conference {
             background: #4285F4;
         }
 
-        .pub-ribbon:before {
+        .pub-ribbon:after {
             content: '';
             position: absolute;
-            top: 100%;
-            left: 0;
+            bottom: 100%;
+            right: 0;
             width: 0;
             height: 0;
             border: 5px solid transparent;
-            border-top-color: #1e8449;
+            border-bottom-color: #FFA500;
             z-index: -1;
         }
 
-        .pub-ribbon.conference:before {
-            border-top-color: #2c5aa0;
+        .pub-ribbon.conference:after {
+            border-bottom-color: #2c5aa0;
         }
 
         .pub-title {
@@ -707,7 +708,7 @@
         }
 
         .pub-journal em {
-            color: #27AE60;
+            color: #FFA500;
             font-weight: 600;
         }
 

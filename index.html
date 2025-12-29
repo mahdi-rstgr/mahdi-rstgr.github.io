@@ -366,32 +366,45 @@
             font-weight: 500;
         }
 
-        /* Mobile Responsive for Timeline Experience */
+        /* Mobile Responsive for Vertical Timeline */
         @media (max-width: 768px) {
-            .experience-company {
+            #experience-timeline:before {
+                left: 20px;
+            }
+
+            .vtimeline-icon {
+                left: 5px;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+            }
+
+            .vtimeline-date {
+                width: auto;
+                text-align: left;
+                position: static;
+                margin-bottom: 10px;
+                padding: 5px 0;
+            }
+
+            .vtimeline-content {
+                margin-left: 50px;
+                padding: 15px;
+            }
+
+            .vtimeline-content h3 {
                 font-size: 1.2em;
             }
 
-            .experience-position {
+            .vtimeline-content h4 {
                 font-size: 1em;
             }
 
-            .experience-description {
+            .vtimeline-content .experience-description {
                 font-size: 0.9em;
             }
 
-            .experience-date {
-                font-size: 0.9em;
-                text-align: left;
-                margin-top: 5px;
-            }
-
-            .experience-item {
-                margin-bottom: 30px;
-                padding-bottom: 20px;
-            }
-
-            .experience-highlights li {
+            .vtimeline-content ul li {
                 font-size: 0.85em;
                 line-height: 1.4;
             }
@@ -1252,122 +1265,149 @@
     <div id="experience" class="background-alt">
         <h2 class="heading">Experience</h2>
         <div class="experience-container">
-            
-            <div class="experience-item">
-                <div class="experience-header">
-                    <h3 class="experience-company">Acceleration Consortium</h3>
-                    <h4 class="experience-position">Postdoctoral Fellow</h4>
-                    <p class="experience-description">Generative AI and Machine Learning for Materials Discovery</p>
-                    <div class="experience-date">Apr. 2025 – Present</div>
+            <div id="experience-timeline">
+                
+                <div class="vtimeline-point">
+                    <div class="vtimeline-icon">
+                        <i class="fa fa-flask" aria-hidden="true"></i>
+                    </div>
+                    <div class="vtimeline-block">
+                        <span class="vtimeline-date">Apr. 2025 – Present</span>
+                        <div class="vtimeline-content">
+                            <h3>Acceleration Consortium</h3>
+                            <h4>Postdoctoral Fellow</h4>
+                            <p class="experience-description">Generative AI and Machine Learning for Materials Discovery</p>
+                            <ul>
+                                <li>Developed a self-driving lab for high-throughput liquid/powder dispenser, integrating machine learning for optimization and uncertainty reduction in experimental parameter space</li>
+                                <li>Designed and fabricated custom hardware and prototypes for precise mechanical/chemical/electrical/pharmaceutical synthesis and characterization</li>
+                                <li>Applied advanced imaging techniques to assess homogeneity, defects, and thermal properties using Inverse Heat Transfer methods</li>
+                                <li>Collaborated with multidisciplinary teams to develop methodologies for autonomous synthesis and characterization systems</li>
+                            </ul>
+                            <div class="experience-skills">
+                                <span class="skill-tag">Machine Learning</span>
+                                <span class="skill-tag">Self-Driving Labs</span>
+                                <span class="skill-tag">Hardware Design</span>
+                                <span class="skill-tag">Image Analysis</span>
+                                <span class="skill-tag">Automation</span>
+                                <span class="skill-tag">Materials Science</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="experience-highlights">
-                    <li>Developed a self-driving lab for high-throughput liquid/powder dispenser, integrating machine learning for optimization and uncertainty reduction in experimental parameter space</li>
-                    <li>Designed and fabricated custom hardware and prototypes for precise mechanical/chemical/electrical/pharmaceutical synthesis and characterization</li>
-                    <li>Applied advanced imaging techniques to assess homogeneity, defects, and thermal properties using Inverse Heat Transfer methods</li>
-                    <li>Collaborated with multidisciplinary teams to develop methodologies for autonomous synthesis and characterization systems</li>
-                </ul>
-                <div class="experience-skills">
-                    <span class="skill-tag">Machine Learning</span>
-                    <span class="skill-tag">Self-Driving Labs</span>
-                    <span class="skill-tag">Hardware Design</span>
-                    <span class="skill-tag">Image Analysis</span>
-                    <span class="skill-tag">Automation</span>
-                    <span class="skill-tag">Materials Science</span>
-                </div>
-            </div>
 
-            <div class="experience-item">
-                <div class="experience-header">
-                    <h3 class="experience-company">University Health Network (UHN)</h3>
-                    <h4 class="experience-position">Research Assistant</h4>
-                    <p class="experience-description">Biomedical Engineering Research</p>
-                    <div class="experience-date">Jan. 2024 – Apr. 2025</div>
+                <div class="vtimeline-point">
+                    <div class="vtimeline-icon">
+                        <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                    </div>
+                    <div class="vtimeline-block">
+                        <span class="vtimeline-date">Jan. 2024 – Apr. 2025</span>
+                        <div class="vtimeline-content">
+                            <h3>University Health Network (UHN)</h3>
+                            <h4>Research Assistant</h4>
+                            <p class="experience-description">Biomedical Engineering Research</p>
+                            <ul>
+                                <li>Conducted advanced biomedical research in clinical settings, bridging engineering and medical applications</li>
+                                <li>Collaborated with medical professionals and researchers on innovative healthcare technology solutions</li>
+                                <li>Applied engineering principles to address complex healthcare challenges and improve patient outcomes</li>
+                                <li>Contributed to translational research projects focusing on medical device development and optimization</li>
+                            </ul>
+                            <div class="experience-skills">
+                                <span class="skill-tag">Biomedical Engineering</span>
+                                <span class="skill-tag">Clinical Research</span>
+                                <span class="skill-tag">Medical Devices</span>
+                                <span class="skill-tag">Translational Research</span>
+                                <span class="skill-tag">Healthcare Innovation</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="experience-highlights">
-                    <li>Conducted advanced biomedical research in clinical settings, bridging engineering and medical applications</li>
-                    <li>Collaborated with medical professionals and researchers on innovative healthcare technology solutions</li>
-                    <li>Applied engineering principles to address complex healthcare challenges and improve patient outcomes</li>
-                    <li>Contributed to translational research projects focusing on medical device development and optimization</li>
-                </ul>
-                <div class="experience-skills">
-                    <span class="skill-tag">Biomedical Engineering</span>
-                    <span class="skill-tag">Clinical Research</span>
-                    <span class="skill-tag">Medical Devices</span>
-                    <span class="skill-tag">Translational Research</span>
-                    <span class="skill-tag">Healthcare Innovation</span>
-                </div>
-            </div>
 
-            <div class="experience-item">
-                <div class="experience-header">
-                    <h3 class="experience-company">University of Toronto</h3>
-                    <h4 class="experience-position">Research Assistant - PhD</h4>
-                    <p class="experience-description">Smart Materials & Structures Lab</p>
-                    <div class="experience-date">Jan. 2021 – Dec. 2024</div>
+                <div class="vtimeline-point">
+                    <div class="vtimeline-icon">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    </div>
+                    <div class="vtimeline-block">
+                        <span class="vtimeline-date">Jan. 2021 – Dec. 2024</span>
+                        <div class="vtimeline-content">
+                            <h3>University of Toronto</h3>
+                            <h4>Research Assistant - PhD</h4>
+                            <p class="experience-description">Smart Materials & Structures Lab</p>
+                            <ul>
+                                <li>Conducted comprehensive research on multifunctional porous fluoropolymer films for triboelectric nanogenerator applications</li>
+                                <li>Advanced materials characterization using SEM, XRD, FTIR, and advanced microscopy techniques</li>
+                                <li>Developed novel synthesis methods for porous polymer structures with controlled morphology and properties</li>
+                                <li>Published research findings in high-impact peer-reviewed journals and international conferences</li>
+                                <li>Supervised and mentored undergraduate research students on various materials science projects</li>
+                            </ul>
+                            <div class="experience-skills">
+                                <span class="skill-tag">Materials Science</span>
+                                <span class="skill-tag">Triboelectric Generators</span>
+                                <span class="skill-tag">Polymer Chemistry</span>
+                                <span class="skill-tag">Characterization</span>
+                                <span class="skill-tag">Energy Harvesting</span>
+                                <span class="skill-tag">Research Leadership</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="experience-highlights">
-                    <li>Conducted comprehensive research on multifunctional porous fluoropolymer films for triboelectric nanogenerator applications</li>
-                    <li>Advanced materials characterization using SEM, XRD, FTIR, and advanced microscopy techniques</li>
-                    <li>Developed novel synthesis methods for porous polymer structures with controlled morphology and properties</li>
-                    <li>Published research findings in high-impact peer-reviewed journals and international conferences</li>
-                    <li>Supervised and mentored undergraduate research students on various materials science projects</li>
-                </ul>
-                <div class="experience-skills">
-                    <span class="skill-tag">Materials Science</span>
-                    <span class="skill-tag">Triboelectric Generators</span>
-                    <span class="skill-tag">Polymer Chemistry</span>
-                    <span class="skill-tag">Characterization</span>
-                    <span class="skill-tag">Energy Harvesting</span>
-                    <span class="skill-tag">Research Leadership</span>
-                </div>
-            </div>
 
-            <div class="experience-item">
-                <div class="experience-header">
-                    <h3 class="experience-company">TECHNE KIROW GmbH</h3>
-                    <h4 class="experience-position">Mechanical Engineer</h4>
-                    <p class="experience-description">Industrial Automation and Process Optimization</p>
-                    <div class="experience-date">Mar. 2019 – Dec. 2020</div>
+                <div class="vtimeline-point">
+                    <div class="vtimeline-icon">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                    </div>
+                    <div class="vtimeline-block">
+                        <span class="vtimeline-date">Mar. 2019 – Dec. 2020</span>
+                        <div class="vtimeline-content">
+                            <h3>TECHNE KIROW GmbH</h3>
+                            <h4>Mechanical Engineer</h4>
+                            <p class="experience-description">Industrial Automation and Process Optimization</p>
+                            <ul>
+                                <li>Designed and optimized industrial automation systems for manufacturing processes</li>
+                                <li>Developed machinery specifications and technical documentation for complex industrial equipment</li>
+                                <li>Implemented process optimization strategies resulting in improved efficiency and quality control</li>
+                                <li>Managed engineering projects from concept to implementation, coordinating with cross-functional teams</li>
+                            </ul>
+                            <div class="experience-skills">
+                                <span class="skill-tag">Industrial Automation</span>
+                                <span class="skill-tag">Machinery Design</span>
+                                <span class="skill-tag">Process Optimization</span>
+                                <span class="skill-tag">Project Management</span>
+                                <span class="skill-tag">Technical Documentation</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="experience-highlights">
-                    <li>Designed and optimized industrial automation systems for manufacturing processes</li>
-                    <li>Developed machinery specifications and technical documentation for complex industrial equipment</li>
-                    <li>Implemented process optimization strategies resulting in improved efficiency and quality control</li>
-                    <li>Managed engineering projects from concept to implementation, coordinating with cross-functional teams</li>
-                </ul>
-                <div class="experience-skills">
-                    <span class="skill-tag">Industrial Automation</span>
-                    <span class="skill-tag">Machinery Design</span>
-                    <span class="skill-tag">Process Optimization</span>
-                    <span class="skill-tag">Project Management</span>
-                    <span class="skill-tag">Technical Documentation</span>
-                </div>
-            </div>
 
-            <div class="experience-item">
-                <div class="experience-header">
-                    <h3 class="experience-company">University of Tehran</h3>
-                    <h4 class="experience-position">Research Assistant</h4>
-                    <p class="experience-description">Solar-Electrical Vehicle Project</p>
-                    <div class="experience-date">Sep. 2013 – Aug. 2019</div>
+                <div class="vtimeline-point">
+                    <div class="vtimeline-icon">
+                        <i class="fa fa-car" aria-hidden="true"></i>
+                    </div>
+                    <div class="vtimeline-block">
+                        <span class="vtimeline-date">Sep. 2013 – Aug. 2019</span>
+                        <div class="vtimeline-content">
+                            <h3>University of Tehran</h3>
+                            <h4>Research Assistant</h4>
+                            <p class="experience-description">Solar-Electrical Vehicle Project</p>
+                            <ul>
+                                <li>Designed and optimized renewable energy systems for electric vehicle applications</li>
+                                <li>Developed electric vehicle powertrain systems with focus on efficiency and performance optimization</li>
+                                <li>Integrated solar panel systems with energy management solutions for sustainable vehicle operation</li>
+                                <li>Led competition teams in international solar vehicle challenges and engineering competitions</li>
+                                <li>Coordinated multi-year projects involving sustainable technology innovation and testing protocols</li>
+                            </ul>
+                            <div class="experience-skills">
+                                <span class="skill-tag">Renewable Energy</span>
+                                <span class="skill-tag">Electric Vehicles</span>
+                                <span class="skill-tag">Solar Systems</span>
+                                <span class="skill-tag">Team Leadership</span>
+                                <span class="skill-tag">Sustainable Technology</span>
+                                <span class="skill-tag">Competition Management</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="experience-highlights">
-                    <li>Designed and optimized renewable energy systems for electric vehicle applications</li>
-                    <li>Developed electric vehicle powertrain systems with focus on efficiency and performance optimization</li>
-                    <li>Integrated solar panel systems with energy management solutions for sustainable vehicle operation</li>
-                    <li>Led competition teams in international solar vehicle challenges and engineering competitions</li>
-                    <li>Coordinated multi-year projects involving sustainable technology innovation and testing protocols</li>
-                </ul>
-                <div class="experience-skills">
-                    <span class="skill-tag">Renewable Energy</span>
-                    <span class="skill-tag">Electric Vehicles</span>
-                    <span class="skill-tag">Solar Systems</span>
-                    <span class="skill-tag">Team Leadership</span>
-                    <span class="skill-tag">Sustainable Technology</span>
-                    <span class="skill-tag">Competition Management</span>
-                </div>
+                
             </div>
-
         </div>
     </div>
     <!-- End #experience -->

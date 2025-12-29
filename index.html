@@ -93,7 +93,7 @@
             border-radius: 30px;
         }
 
-		        /* Header */
+		        /* Header and Mobile Menu */
         header {
             position: absolute;
             top: 0;
@@ -366,33 +366,35 @@
             font-weight: 500;
         }
 
-        /* Mobile Responsive */
+        /* Mobile Responsive for Experience */
         @media (max-width: 768px) {
             .experience-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 5px;
             }
 
             .experience-date {
-                margin-left: 0;
-                margin-top: 5px;
-                font-size: 0.9em;
+                font-size: 0.85em;
             }
 
             .experience-company {
-                font-size: 1.2em;
+                font-size: 1.1em;
             }
 
             .experience-title {
                 font-size: 1em;
             }
 
-            #experience {
-                padding: 50px 0;
+            .experience-block {
+                margin: 0 auto 20px auto;
+                padding: 15px;
+                max-width: none;
             }
 
-            .experience-container {
-                padding: 0 15px;
+            .experience-highlights li {
+                font-size: 0.85em;
+                line-height: 1.4;
             }
         }
 
@@ -601,6 +603,42 @@
             font-size: 0.9em;
         }
 
+        /* Publications Section */
+        #publications {
+            padding: 50px 15px;
+            text-align: center;
+        }
+
+        .publication-block {
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            padding: 15px;
+            border: 1px solid #dcd9d9;
+            background: #fff;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .publication-block h3 {
+            font-weight: 500;
+            font-size: 1.3em;
+            color: #374054;
+            margin: 0 0 5px 0;
+        }
+
+        .publication-block h4 {
+            color: #74808a;
+            font-weight: 500;
+            font-size: 1em;
+            margin: 0 0 15px 0;
+        }
+
+        .publication-block p {
+            color: #74808a;
+            font-size: 0.9em;
+            margin: 0 0 15px 0;
+        }
+
         /* Awards Section */
         .award-block {
             max-width: 700px;
@@ -707,9 +745,36 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
         }
 
+        /* Background Alt */
+        .background-alt {
+            background: #f2f2f5;
+        }
+
+        /* Responsive Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         /* Footer */
         footer {
             padding: 50px 0;
+            background: #3498db;
+            color: #fff;
+        }
+
+        footer .copyright {
+            color: #fff;
+        }
+
+        footer .copyright p {
+            color: #fff;
         }
 
         #to-top {
@@ -758,22 +823,167 @@
             color: #3498db;
         }
 
-        /* Mobile Styles */
+        /* Mobile Menu */
+        #mobile-menu-open {
+            display: none;
+            cursor: pointer;
+            position: fixed;
+            right: 15px;
+            top: 10px;
+            color: #3498db;
+            font-size: 1.5em;
+            z-index: 20;
+            padding: 0 7px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        #mobile-menu-close {
+            display: none;
+            text-align: right;
+            width: 100%;
+            background: #fff;
+            font-size: 1.5em;
+            padding-right: 15px;
+            padding-top: 10px;
+            cursor: pointer;
+            color: #3498db;
+        }
+
+        /* Background Alt */
+        .background-alt {
+            background: #f2f2f5;
+        }
+
+        /* Responsive Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Enhanced Mobile Responsiveness */
         @media only screen and (max-width: 768px) {
             header {
-                padding: 15px 0;
-                background: rgba(0, 0, 0, 0.3);
+                position: fixed;
+                display: none;
+                z-index: 999;
+                background: #fff;
+                border-bottom: 1px solid #dcd9d9;
+                width: 100%;
+                height: 100%;
+                overflow-y: auto;
+            }
+
+            header.active {
+                display: block;
             }
 
             header ul {
-                padding: 8px 15px;
-                background: rgba(0, 0, 0, 0.2);
+                display: none;
+            }
+
+            header.active ul {
+                display: block;
+                padding: 25px 0;
+                margin: 0;
+                background: #fff;
+                height: auto;
+            }
+
+            header.active ul li {
+                display: block;
+                margin-bottom: 10px;
             }
 
             header a {
-                padding: 8px 12px;
-                font-size: 14px;
+                display: block;
+                color: #3498db;
+                padding: 15px;
+                text-align: center;
+                border-bottom: 1px solid #dcd9d9;
+                text-shadow: none;
             }
+
+            #mobile-menu-open {
+                display: block;
+            }
+
+            header.active #mobile-menu-close {
+                display: block;
+            }
+
+            body.active {
+                overflow: hidden;
+            }
+
+            .heading {
+                font-size: 2em !important;
+                margin-bottom: 30px;
+            }
+
+            #lead-content h1 {
+                font-size: 2.5em;
+            }
+
+            #lead-content h2 {
+                font-size: 1.5em;
+            }
+
+            #about .container {
+                padding: 0 15px;
+            }
+
+            #skills ul {
+                display: block;
+            }
+
+            #skills li {
+                display: block;
+                margin-bottom: 5px;
+                padding: 8px 12px;
+                background: #e4e4ea;
+                border-radius: 4px;
+                text-align: center;
+            }
+
+            .project {
+                flex-direction: column;
+                max-width: none;
+                margin: 0 0 30px 0;
+                padding: 15px;
+            }
+
+            .project-image {
+                max-width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .project-info {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                background: transparent;
+                transform: none;
+            }
+
+            #contact {
+                padding: 50px 15px;
+            }
+
+            #contact-form {
+                max-width: 100%;
+            }
+
+            .social {
+                text-align: center;
+            }
+        }
 
             .education-block {
                 flex-direction: column;
@@ -792,11 +1002,65 @@
             }
 
             #lead-content h1 {
-                font-size: 3em;
+                font-size: 2.5em;
             }
 
             #lead-content h2 {
-                font-size: 1.75em;
+                font-size: 1.5em;
+            }
+
+            .heading {
+                font-size: 2em !important;
+                margin-bottom: 30px;
+            }
+
+            #about .container {
+                padding: 0 15px;
+            }
+
+            #skills ul {
+                display: block;
+            }
+
+            #skills li {
+                display: block;
+                margin-bottom: 5px;
+                padding: 5px 10px;
+                background: #e4e4ea;
+                border-radius: 4px;
+                text-align: center;
+            }
+
+            .project {
+                flex-direction: column;
+                max-width: none;
+                margin: 0 0 30px 0;
+                padding: 15px;
+            }
+
+            .project-image {
+                max-width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .project-info {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                background: transparent;
+                transform: none;
+            }
+
+            #contact {
+                padding: 50px 15px;
+            }
+
+            #contact-form {
+                max-width: 100%;
+            }
+
+            .social {
+                text-align: center;
             }
 
             #about {
@@ -846,9 +1110,15 @@
 
 <body>
 
+    <!-- Mobile menu toggle -->
+    <div id="mobile-menu-open">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
     <!-- End #mobile-menu-toggle -->
+    
     <header>
-        
+        <div id="mobile-menu-close">
+            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
         </div>
         <ul id="menu" class="shadow">
             <li><a href="#about">About</a></li>
@@ -981,7 +1251,6 @@
     <!-- End #education -->
 
     <div id="experience" class="background-alt">
-        <h2 class="heading">Experience</h2>
         <h2 class="heading">Experience</h2>
         <div class="experience-container">
             
@@ -1207,6 +1476,34 @@
         </ul>
     </div>
     <!-- End #skills -->
+
+    <div id="publications" class="background-alt">
+        <h2 class="heading">Publications</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="publication-block">
+                        <h3>Your Publication Title Here</h3>
+                        <h4>Conference/Journal Name, Year</h4>
+                        <p>
+                            Brief description of your publication, its significance, and key findings.
+                        </p>
+                        <a href="#" class="btn">View Publication</a>
+                    </div>
+                    
+                    <div class="publication-block">
+                        <h3>Another Publication Title</h3>
+                        <h4>Conference/Journal Name, Year</h4>
+                        <p>
+                            Brief description of your publication, its significance, and key findings.
+                        </p>
+                        <a href="#" class="btn">View Publication</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End #publications -->
 
     <div id="projects">
         <h2 class="heading">Projects</h2>

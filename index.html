@@ -292,6 +292,8 @@
             padding: 20px 0 20px 80px;
         }
 
+        /* Vertical timeline line positioned to align with center of logos
+           Calculation: padding-left (80px) + date width (130px) + gap (30px) + logo width (90px) / 2 - line width (4px) / 2 = 145px */
         #experience-timeline:before {
             content: '';
             position: absolute;
@@ -507,6 +509,7 @@
                 padding: 20px 0 20px 40px;
             }
 
+            /* Timeline line for tablet: padding-left (40px) + date width (110px) + gap (20px) + logo width (70px) / 2 - line width (3px) / 2 = ~85px */
             #experience-timeline:before {
                 left: 85px;
                 width: 3px;
@@ -569,6 +572,7 @@
                 padding: 20px 0 20px 0;
             }
 
+            /* Timeline line for mobile: logo is positioned absolutely at left: 0, top: 40px with width 60px, so center is at 30px */
             #experience-timeline:before {
                 left: 45px;
                 width: 2px;

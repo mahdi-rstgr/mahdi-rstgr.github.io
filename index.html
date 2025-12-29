@@ -741,37 +741,90 @@
             font-weight: 700;
         }
 
-        .skill-tag.expert {
-            background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+        /* Programming & Analysis Category - Blue Tones */
+        .skill-category:nth-child(1) .skill-tag.expert {
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
             color: white;
-            border: 2px solid #27AE60;
+            border: 2px solid #1565C0;
         }
 
-        .skill-tag.expert .skill-level {
+        .skill-category:nth-child(1) .skill-tag.advanced {
+            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+            color: white;
+            border: 2px solid #1E88E5;
+        }
+
+        .skill-category:nth-child(1) .skill-tag.intermediate {
+            background: linear-gradient(135deg, #64B5F6 0%, #90CAF9 100%);
+            color: white;
+            border: 2px solid #64B5F6;
+        }
+
+        /* Engineering & Simulation Category - Green Tones */
+        .skill-category:nth-child(2) .skill-tag.expert {
+            background: linear-gradient(135deg, #2E7D32 0%, #388E3C 100%);
+            color: white;
+            border: 2px solid #2E7D32;
+        }
+
+        .skill-category:nth-child(2) .skill-tag.advanced {
+            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
+            color: white;
+            border: 2px solid #43A047;
+        }
+
+        .skill-category:nth-child(2) .skill-tag.intermediate {
+            background: linear-gradient(135deg, #81C784 0%, #A5D6A7 100%);
+            color: white;
+            border: 2px solid #81C784;
+        }
+
+        /* Materials & Research Category - Purple Tones */
+        .skill-category:nth-child(3) .skill-tag.expert {
+            background: linear-gradient(135deg, #6A1B9A 0%, #7B1FA2 100%);
+            color: white;
+            border: 2px solid #6A1B9A;
+        }
+
+        .skill-category:nth-child(3) .skill-tag.advanced {
+            background: linear-gradient(135deg, #8E24AA 0%, #AB47BC 100%);
+            color: white;
+            border: 2px solid #8E24AA;
+        }
+
+        .skill-category:nth-child(3) .skill-tag.intermediate {
+            background: linear-gradient(135deg, #BA68C8 0%, #CE93D8 100%);
+            color: white;
+            border: 2px solid #BA68C8;
+        }
+
+        /* Energy & Innovation Category - Orange Tones */
+        .skill-category:nth-child(4) .skill-tag.expert {
+            background: linear-gradient(135deg, #E65100 0%, #F57C00 100%);
+            color: white;
+            border: 2px solid #E65100;
+        }
+
+        .skill-category:nth-child(4) .skill-tag.advanced {
+            background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
+            color: white;
+            border: 2px solid #FF9800;
+        }
+
+        .skill-category:nth-child(4) .skill-tag.intermediate {
+            background: linear-gradient(135deg, #FFCC02 0%, #FFD54F 100%);
+            color: #333;
+            border: 2px solid #FFCC02;
+        }
+
+        /* Universal skill level styling */
+        .skill-tag .skill-level {
             background: rgba(255,255,255,0.2);
-            color: white;
         }
 
-        .skill-tag.advanced {
-            background: linear-gradient(135deg, #4285F4 0%, #5A9BF8 100%);
-            color: white;
-            border: 2px solid #4285F4;
-        }
-
-        .skill-tag.advanced .skill-level {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        .skill-tag.intermediate {
-            background: linear-gradient(135deg, #FF9500 0%, #FFB84D 100%);
-            color: white;
-            border: 2px solid #FF9500;
-        }
-
-        .skill-tag.intermediate .skill-level {
-            background: rgba(255,255,255,0.2);
-            color: white;
+        .skill-category:nth-child(4) .skill-tag.intermediate .skill-level {
+            background: rgba(0,0,0,0.1);
+            color: #333;
         }
 
         @media only screen and (max-width: 768px) {

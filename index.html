@@ -647,22 +647,147 @@
             margin-bottom: 50px;
         }
 
-        #skills ul {
-            display: block;
+        .skills-grid {
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0;
-            max-width: 800px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            text-align: left;
         }
 
-        #skills li {
-            display: inline-block;
-            margin: 7px;
-            padding: 5px 10px;
+        .skill-category {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-title {
             color: #374054;
-            background: #e4e4ea;
-            list-style: none;
-            cursor: default;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-title i {
+            color: #4285F4;
             font-size: 1.2em;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            min-width: 140px;
+        }
+
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-tag:hover::before {
+            opacity: 1;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .skill-name {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .skill-level {
+            font-size: 0.75em;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .skill-tag.expert {
+            background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+            color: white;
+            border: 2px solid #27AE60;
+        }
+
+        .skill-tag.expert .skill-level {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .skill-tag.advanced {
+            background: linear-gradient(135deg, #4285F4 0%, #5A9BF8 100%);
+            color: white;
+            border: 2px solid #4285F4;
+        }
+
+        .skill-tag.advanced .skill-level {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .skill-tag.intermediate {
+            background: linear-gradient(135deg, #FF9500 0%, #FFB84D 100%);
+            color: white;
+            border: 2px solid #FF9500;
+        }
+
+        .skill-tag.intermediate .skill-level {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .skill-category {
+                padding: 20px;
+            }
+            
+            .skill-tag {
+                min-width: 120px;
+                font-size: 0.85em;
+            }
         }
 
         /* Publications Section */
@@ -1739,24 +1864,114 @@
     <!-- End #publications -->
 
     <div id="skills" class="background-alt">
-        <h2 class="heading">Skills</h2>
-        <ul>
-            <li>Python</li>
-            <li>MATLAB</li>
-            <li>Solidworks</li>
-            <li>ANSYS</li>
-            <li>COMSOL</li>
-            <li>Machine Learning</li>
-            <li>Deep Learning</li>
-            <li>Data Analysis</li>
-            <li>Materials Science</li>
-            <li>Nanofabrication</li>
-            <li>Energy Harvesting</li>
-            <li>Triboelectric Nanogenerators</li>
-            <li>Polymer Processing</li>
-            <li>Characterization Techniques</li>
-            <li>Research & Development</li>
-        </ul>
+        <h2 class="heading">Skills & Expertise</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3 class="category-title">
+                                <i class="fa fa-code" aria-hidden="true"></i>
+                                Programming & Analysis
+                            </h3>
+                            <div class="skill-tags">
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">Python</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">MATLAB</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">Machine Learning</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">Deep Learning</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">Data Analysis</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="category-title">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                Engineering & Simulation
+                            </h3>
+                            <div class="skill-tags">
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">COMSOL</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">ANSYS</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">SolidWorks</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                                <div class="skill-tag intermediate">
+                                    <span class="skill-name">CAD Design</span>
+                                    <span class="skill-level">Intermediate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="category-title">
+                                <i class="fa fa-flask" aria-hidden="true"></i>
+                                Materials & Research
+                            </h3>
+                            <div class="skill-tags">
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">Materials Science</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">Nanofabrication</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">Polymer Processing</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">Characterization</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3 class="category-title">
+                                <i class="fa fa-bolt" aria-hidden="true"></i>
+                                Energy & Innovation
+                            </h3>
+                            <div class="skill-tags">
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">Energy Harvesting</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag expert">
+                                    <span class="skill-name">Triboelectric Nanogenerators</span>
+                                    <span class="skill-level">Expert</span>
+                                </div>
+                                <div class="skill-tag advanced">
+                                    <span class="skill-name">Research & Development</span>
+                                    <span class="skill-level">Advanced</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- End #skills -->
 

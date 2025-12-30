@@ -148,9 +148,17 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            background-repeat: no-repeat;
             padding: 15px;
             overflow: hidden;
             z-index: 1;
+        }
+
+        /* Mobile background fixes */
+        @media (hover: none) and (pointer: coarse) {
+            #lead {
+                background-attachment: scroll !important;
+            }
         }
 
         #lead-overlay {
@@ -1469,6 +1477,14 @@
                 margin-bottom: 30px;
             }
 
+            /* Fix mobile lead/header background issues */
+            #lead {
+                background-attachment: scroll !important;
+                min-height: 100vh;
+                height: auto;
+                background-position: center center;
+            }
+
             #lead-content h1 {
                 font-size: 2.5em;
             }
@@ -1560,13 +1576,25 @@
         }
 
         @media only screen and (max-width: 480px) {
+            #lead {
+                background-attachment: scroll;
+                min-height: 100vh;
+                height: auto;
+                background-position: center center;
+                padding: 30px 15px;
+            }
+
+            #lead-content {
+                padding: 0 20px;
+            }
 
             #lead-content h1 {
-                font-size: 2.5em;
+                font-size: 2em;
+                line-height: 1.1em;
             }
 
             #lead-content h2 {
-                font-size: 1.5em;
+                font-size: 1.2em;
             }
 
             .heading {

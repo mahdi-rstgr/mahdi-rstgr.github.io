@@ -719,6 +719,49 @@
             height: 280px;
         }
 
+        /* Multi-image gallery for projects */
+        .project-image-gallery {
+            flex-shrink: 0;
+            width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .project-image-gallery .gallery-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-image-gallery .gallery-main {
+            width: 100%;
+            height: 200px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .project-image-gallery .gallery-thumb {
+            flex: 1;
+            height: 95px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .project-image-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-block:hover .project-image-gallery img {
+            transform: scale(1.05);
+        }
+
         /* Skills Section */
         #skills {
             padding: 50px 15px;
@@ -1544,6 +1587,19 @@
                 height: 200px;
             }
 
+            .project-image-gallery {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .project-image-gallery .gallery-main {
+                height: 150px;
+            }
+
+            .project-image-gallery .gallery-thumb {
+                height: 70px;
+            }
+
             .project-info {
                 position: relative;
                 margin: 0;
@@ -2214,6 +2270,57 @@
                         </div>
                         <div class="project-image large">
                             <img src="images/project2.png" alt="Data-Driven Rheology Analysis Platform" />
+                        </div>
+                    </div>
+
+					<div class="project-block">
+                        <div class="project-content">
+                            <h3 class="project-title">Dissolution Apparatus Cell</h3>
+                            <div class="project-description">
+                                <p>Designed and developed a box of cells and channels for flowing different fluids in a dissolution apparatus. 
+									Implemented CFD simulations to optimize flow characteristics and ensure uniform dissolution rates across samples.</p>
+								<p><strong>Technologies:</strong> CFD Simulation, CAD Design, Python (Cad Query - PyMesh - PyVista/Fluidfoam), Bayesian Optimization, Prototyping, 3D Printing, Experimental Testing</p>
+								<p><strong>Results:</strong> Achieved uniform flow distribution and enhanced dissolution efficiency in pharmaceutical testing.</p>
+							</div>
+							<div class="project-actions">
+								<a href="#" class="btn btn-project">View Details</a>
+								<a href="#" class="btn btn-project-secondary">GitHub</a>
+							</div>
+						</div>
+						<div class="project-image-gallery">
+							<div class="gallery-main">
+								<img src="images/project4_1.png" alt="Dissolution Apparatus Cell - Main View" />
+							</div>
+							<div class="gallery-row">
+								<div class="gallery-thumb">
+									<img src="images/project4_2.png" alt="CAD and mesh python" />
+								</div>
+								<div class="gallery-thumb">
+									<img src="images/project4_3.png" alt="CFD Simulation Results" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="project-block">
+						<div class="project-content">
+							<h3 class="project-title">Formulator: Self-Driving Liquid Handler and Powder Dispenser</h3>
+							<div class="project-description">
+								<p>Developed a self-driving lab for data-driven liquid/powder dispenser, integrating machine learning for 
+									optimization and uncertainty reduction in experimental parameter space. Implemented an ML-driven dispensing 
+									model using Python and TensorFlow to infer flow behavior for uncalibrated fluids. Utilized advanced imaging and inverse 
+									heat transfer methods to automate synthesis and characterization.
+								</p>
+                                <p><strong>Technologies:</strong> Machine Learning, Computer Vision, Liquid Handling, Laboratory Automation, Prototyping</p>
+                                <p><strong>Results:</strong> Liquid handling and powder dispenser with accuracy of ±0.1 gram. 5x faster synthesis formulation</p>
+                            </div>
+                            <div class="project-actions">
+                                <a href="#" class="btn btn-project">View Details</a>
+                                <a href="#" class="btn btn-project-secondary">Demo</a>
+                            </div>
+                        </div>
+                        <div class="project-image large">
+                            <img src="images/project3.png" alt="Formulator" />
                         </div>
                     </div>
 

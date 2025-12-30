@@ -796,6 +796,15 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
+        .project-image-gallery .gallery-wide {
+            flex: 1;
+            height: 180px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            min-width: 0;
+        }
+
         .project-image-gallery img {
             width: 100%;
             height: 100%;
@@ -1664,6 +1673,15 @@
 
             .project-image-gallery .gallery-thumb {
                 height: 70px;
+            }
+
+            .project-image-gallery .gallery-wide {
+                height: 120px;
+                margin-bottom: 10px;
+            }
+
+            .project-image-gallery .gallery-row {
+                flex-direction: column;
             }
 
             .project-info {
@@ -2746,8 +2764,15 @@
                             </div>
 
                         </div>
-                        <div class="project-image large">
-                            <img src="images/project15.png" alt="Electrical and Solar Vehicle PGSC III" />
+                        <div class="project-image-gallery">
+                            <div class="gallery-row">
+                                <div class="gallery-wide">
+                                    <img src="images/PGSC_III_1.jpg" alt="Electrical and Solar Vehicle PGSC III - View 1" />
+                                </div>
+                                <div class="gallery-wide">
+                                    <img src="images/PGSC_III_2.jpg" alt="Electrical and Solar Vehicle PGSC III - View 2" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

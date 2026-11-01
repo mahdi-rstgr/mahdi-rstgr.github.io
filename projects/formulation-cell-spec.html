@@ -1,0 +1,1917 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SDL Formulator: Formulation Cell Implementation Specification V3.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root { color-scheme: light; box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body { margin: 0; padding: 0; font-size: 14px; }
+img { max-width: 100%; }
+:root {
+  --bg: #f5f7fa; --fg: #19212d; --muted: #5b6676; --rule: #cfd6df;
+  --box: #ffffff; --box-line: #b9c3cf;
+  --partner-bg: #fdf3e6; --partner-line: #d9a35b; --partner-fg: #9a5b0c;
+  --cell-bg: #edf2fa; --cell-line: #a6b8d4;
+  --madsci-bg: #e2eaf6; --madsci-line: #8fa6c9;
+  --ros-bg: #eceafb; --ros-line: #8a80d4; --ros-fg: #5446b8;
+  --dev-bg: #ebf5ee; --dev-line: #94bea0; --dev-fg: #2b6b40;
+  --cmd: #19212d; --info: #1f6fc1; --read: #2e8a57; --deny: #c0392b; --plan: #8b95a3;
+  --ok-bg: #e5f4ea; --ok-fg: #1f7a43; --todo-bg: #fdf0e1; --todo-fg: #a35a00;
+  --font-body: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", "Menlo", monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11151b; --fg: #e5e9ef; --muted: #9aa4b2; --rule: #313945;
+  --box: #19202a; --box-line: #3d4756;
+  --partner-bg: #2a2115; --partner-line: #8a6a3b; --partner-fg: #f0bf78;
+  --cell-bg: #151d29; --cell-line: #3c5478;
+  --madsci-bg: #1a2638; --madsci-line: #4a668f;
+  --ros-bg: #1f1c36; --ros-line: #7469c8; --ros-fg: #ada4f5;
+  --dev-bg: #13221a; --dev-line: #3c7550; --dev-fg: #7fd59d;
+  --cmd: #e5e9ef; --info: #7db5f0; --read: #6cc994; --deny: #f08070; --plan: #778190;
+  --ok-bg: #16301f; --ok-fg: #7fd59d; --todo-bg: #33260f; --todo-fg: #f2b866;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #11151b; --fg: #e5e9ef; --muted: #9aa4b2; --rule: #313945;
+  --box: #19202a; --box-line: #3d4756;
+  --partner-bg: #2a2115; --partner-line: #8a6a3b; --partner-fg: #f0bf78;
+  --cell-bg: #151d29; --cell-line: #3c5478;
+  --madsci-bg: #1a2638; --madsci-line: #4a668f;
+  --ros-bg: #1f1c36; --ros-line: #7469c8; --ros-fg: #ada4f5;
+  --dev-bg: #13221a; --dev-line: #3c7550; --dev-fg: #7fd59d;
+  --cmd: #e5e9ef; --info: #7db5f0; --read: #6cc994; --deny: #f08070; --plan: #778190;
+  --ok-bg: #16301f; --ok-fg: #7fd59d; --todo-bg: #33260f; --todo-fg: #f2b866;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.6; }
+main { max-width: 1240px; margin: 0 auto; padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 36px; }
+header { display: grid; gap: 8px; }
+header nav { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .9rem; }
+header nav a { color: var(--info); }
+h1 { margin: 0; font-size: 1.6rem; font-weight: 700; line-height: 1.25; text-wrap: balance; }
+h2 { margin: 0; font-size: 1.25rem; text-wrap: balance; }
+h3 { margin: 0 0 8px; font-size: .98rem; }
+h3 small { font-weight: 400; color: var(--muted); font-size: .86rem; }
+.lead { margin: 0; color: var(--muted); max-width: 86ch; }
+section.part { display: grid; gap: 16px; padding-top: 22px; border-top: 1px solid var(--rule); }
+figure { margin: 0; display: grid; gap: 10px; }
+.scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--bg); }
+.scroll svg { display: block; width: 100%; min-width: 960px; height: auto; }
+figcaption { color: var(--muted); font-size: .88rem; max-width: 110ch; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px 28px; font-size: .9rem; }
+.legend li { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 8px; }
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.role { min-width: 0; padding: 16px 18px; border-radius: 10px; border: 1px solid var(--rule); background: var(--box); }
+.role.partner { border-top: 4px solid var(--partner-line); }
+.role.cell { border-top: 4px solid var(--madsci-line); }
+.role.twin { border-top: 4px solid var(--ros-line); }
+.role p { margin: 0 0 8px; color: var(--muted); font-size: .92rem; }
+.role ul { margin: 0; padding-left: 1.2em; display: grid; gap: 5px; font-size: .92rem; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .9rem; background: var(--box); }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: none; }
+td.n { font-family: var(--font-mono); color: var(--muted); width: 30px; }
+td.via { font-family: var(--font-mono); font-size: .82rem; color: var(--muted); }
+td.term { font-size: .84rem; color: var(--muted); }
+.chip { display: inline-block; padding: 0 9px; border-radius: 999px; font-size: .76rem; font-weight: 500; white-space: nowrap; }
+.chip.ok { background: var(--ok-bg); color: var(--ok-fg); }
+.chip.todo { background: var(--todo-bg); color: var(--todo-fg); }
+.open { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .92rem; max-width: 100ch; }
+code { font-family: var(--font-mono); font-size: .86em; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+.card { min-width: 0; padding: 14px 16px; border: 1px solid var(--rule); border-radius: 10px; background: var(--box); display: grid; gap: 8px; align-content: start; }
+.card p { margin: 0; font-size: .9rem; color: var(--muted); }
+pre { margin: 0; padding: 10px 12px; border-radius: 8px; background: var(--bg); border: 1px solid var(--rule); overflow-x: auto; font: 400 12px/1.55 var(--font-mono); color: var(--fg); }
+ol.story { margin: 0; padding-left: 1.4em; display: grid; gap: 3px; font-size: .88rem; }
+ol.story code { color: var(--muted); }
+.verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.verdict { min-width: 0; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--rule); background: var(--box); font-size: .9rem; display: grid; gap: 4px; }
+.verdict.go { border-left: 4px solid var(--ok-fg); }
+.verdict.nogo { border-left: 4px solid var(--deny); }
+.verdict.hold { border-left: 4px solid var(--todo-fg); }
+.verdict span { color: var(--muted); }
+dl.gloss { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 10px 32px; font-size: .9rem; }
+dl.gloss div { min-width: 0; }
+dl.gloss dt { font-weight: 700; }
+dl.gloss dd { margin: 0; color: var(--muted); }
+
+/* SVG */
+svg text { font-family: var(--font-body); }
+.t { fill: var(--fg); font-size: 12px; }
+.tm { fill: var(--muted); font-size: 10.5px; }
+.mono { font-family: var(--font-mono) !important; }
+.f-partner { fill: var(--partner-bg); stroke: var(--partner-line); stroke-width: 1.3; }
+.f-cell { fill: var(--cell-bg); stroke: var(--cell-line); stroke-width: 1.3; }
+.f-madsci { fill: var(--madsci-bg); stroke: var(--madsci-line); stroke-width: 1.2; }
+.f-twin { fill: var(--ros-bg); stroke: var(--ros-line); stroke-width: 1.4; }
+.f-dev { fill: var(--dev-bg); stroke: var(--dev-line); stroke-width: 1.3; }
+.box { fill: var(--box); stroke: var(--box-line); stroke-width: 1.1; }
+.box.partner { stroke: var(--partner-line); }
+.box.dev { stroke: var(--dev-line); }
+.box.vdev { stroke: var(--ros-line); stroke-dasharray: 4 3; }
+.box.twin { stroke: var(--ros-line); stroke-width: 1.4; }
+.box.plan { stroke: var(--plan); stroke-dasharray: 5 4; }
+.box.mode { fill: var(--box); stroke: var(--madsci-line); stroke-width: 1.3; }
+.box.key { stroke: var(--info); stroke-width: 1.5; }
+.chipbox { fill: var(--box); stroke: var(--box-line); stroke-width: 1; }
+.call { fill: var(--box); stroke-width: 1.3; }
+.call.req { stroke: var(--partner-fg); }
+.call.info { stroke: var(--info); stroke-dasharray: 6 4; }
+.call.read { stroke: var(--read); stroke-dasharray: 2 4; }
+.e-req { fill: none; stroke: var(--partner-fg); stroke-width: 1.8; }
+.e-cmd { fill: none; stroke: var(--cmd); stroke-width: 1.8; }
+.e-fake { fill: none; stroke: var(--ros-fg); stroke-width: 1.8; stroke-dasharray: 7 4; }
+.e-info { fill: none; stroke: var(--info); stroke-width: 1.8; stroke-dasharray: 6 4; }
+.e-read { fill: none; stroke: var(--read); stroke-width: 1.8; stroke-dasharray: 1.5 4; stroke-linecap: round; }
+.e-ok { fill: none; stroke: var(--ok-fg); stroke-width: 2; }
+.ah-req { fill: var(--partner-fg); } .ah-cmd { fill: var(--cmd); } .ah-fake { fill: var(--ros-fg); } .ah-info { fill: var(--info); } .ah-read { fill: var(--read); } .ah-ok { fill: var(--ok-fg); }
+.h-req { fill: var(--partner-fg); font-weight: 700; } .h-info { fill: var(--info); font-weight: 700; } .h-read { fill: var(--read); font-weight: 700; } .h-fake { fill: var(--ros-fg); font-weight: 700; } .h-ok { fill: var(--ok-fg); font-weight: 700; }
+.deny-t { fill: var(--deny); font-weight: 700; }
+.partner-t { fill: var(--partner-fg); font-weight: 700; }
+.ros-t { fill: var(--ros-fg); font-weight: 700; }
+.dev-t { fill: var(--dev-fg); font-weight: 700; }
+.cell-t { fill: var(--fg); font-weight: 700; }
+.badge { fill: var(--info); }
+.badge-t { fill: var(--bg); font-size: 12px; font-weight: 700; }
+.lane { fill: var(--box); stroke: var(--rule); stroke-width: 1; }
+.g-w { fill: var(--partner-line); } .g-a { fill: var(--ros-line); } .g-m { fill: var(--dev-line); }
+.g-t { fill: var(--fg); font-size: 10px; font-weight: 500; }
+.grid-l { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 3; }
+/* V3 additions */
+.status-line { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .86rem; color: var(--muted); }
+.chip.frozen { background: var(--madsci-bg); color: var(--fg); border: 1px solid var(--madsci-line); }
+.chip.no { background: color-mix(in srgb, var(--deny) 14%, var(--box)); color: var(--deny); }
+.chip.p0 { background: color-mix(in srgb, var(--deny) 14%, var(--box)); color: var(--deny); }
+.chip.p1 { background: var(--todo-bg); color: var(--todo-fg); }
+.chip.p2 { background: var(--bg); color: var(--muted); border: 1px solid var(--rule); }
+.own { display: inline-block; padding: 0 8px; border-radius: 4px; font-size: .78rem; font-weight: 500; white-space: nowrap; border: 1px solid; }
+.own.sdl { background: var(--partner-bg); border-color: var(--partner-line); color: var(--partner-fg); }
+.own.mad { background: var(--madsci-bg); border-color: var(--madsci-line); color: var(--fg); }
+.own.ros { background: var(--ros-bg); border-color: var(--ros-line); color: var(--ros-fg); }
+.own.dev { background: var(--dev-bg); border-color: var(--dev-line); color: var(--dev-fg); }
+.own.safe { background: color-mix(in srgb, var(--deny) 10%, var(--box)); border-color: var(--deny); color: var(--deny); }
+.principle { padding: 16px 18px; border-radius: 10px; background: var(--box); border: 1px solid var(--rule); border-left: 4px solid var(--info); display: grid; gap: 6px; }
+.principle p { margin: 0; }
+.principle .big { font-size: 1.12rem; font-weight: 700; }
+.principle .sub { color: var(--muted); font-size: .92rem; max-width: 100ch; }
+ol.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 4px; font-size: .9rem; max-width: 110ch; }
+ul.plain { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: .9rem; max-width: 110ch; }
+.note { margin: 0; font-size: .88rem; color: var(--muted); max-width: 110ch; }
+.warn { padding: 10px 14px; border-radius: 8px; border: 1px solid var(--todo-fg); background: var(--todo-bg); color: var(--fg); font-size: .9rem; max-width: 110ch; }
+.warn b { color: var(--todo-fg); }
+td.id { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); white-space: nowrap; }
+td.num { font-family: var(--font-mono); font-size: .84rem; white-space: nowrap; }
+table.dense td, table.dense th { padding: 7px 10px; }
+.ms { display: grid; gap: 14px; }
+.ms-item { padding: 14px 16px; border-radius: 10px; border: 1px solid var(--rule); background: var(--box); display: grid; gap: 8px; }
+.ms-head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+.ms-head h3 { margin: 0; }
+.ms-head .wk { color: var(--muted); font-size: .86rem; }
+.ms-item .exit { font-size: .9rem; margin: 0; }
+.ms-item .exit b { color: var(--ok-fg); }
+.math { font-family: "IBM Plex Serif", Georgia, "Times New Roman", serif; font-size: .98rem; padding: 10px 14px; border-radius: 8px; background: var(--bg); border: 1px solid var(--rule); overflow-x: auto; line-height: 1.8; }
+.e-deny { fill: none; stroke: var(--deny); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.ah-deny { fill: var(--deny); }
+.st { fill: var(--box); stroke: var(--box-line); stroke-width: 1.3; }
+.st.main { stroke: var(--madsci-line); }
+.st.ok { stroke: var(--ok-fg); stroke-width: 1.8; }
+.st.bad { stroke: var(--deny); stroke-width: 1.6; }
+.st.hold { stroke: var(--todo-fg); stroke-width: 1.6; }
+.f-safe { fill: color-mix(in srgb, var(--deny) 7%, var(--box)); stroke: var(--deny); stroke-width: 1.3; stroke-dasharray: 6 3; }
+.safe-t { fill: var(--deny); font-weight: 700; }
+@media print { .scroll, .tablewrap { overflow: visible; } header nav { display: none; } section.part { break-inside: auto; } }
+:focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+
+/* V3.1 agent layer tokens */
+:root { --agent-bg: #fbeaf4; --agent-line: #c0559a; --agent-fg: #a0246f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --agent-bg: #2d1626; --agent-line: #b0508f; --agent-fg: #f19ad0; } }
+:root[data-theme="dark"] { --agent-bg: #2d1626; --agent-line: #b0508f; --agent-fg: #f19ad0; }
+.box.agent { fill: var(--agent-bg); stroke: var(--agent-line); stroke-width: 2; }
+.f-agent { fill: var(--agent-bg); stroke: var(--agent-line); stroke-width: 1.4; }
+.agent-t { fill: var(--agent-fg); font-weight: 700; }
+.pill-ag { fill: var(--agent-line); }
+.pill-ag-t { fill: var(--box); font-size: 10px; font-weight: 700; }
+.e-agent { fill: none; stroke: var(--agent-fg); stroke-width: 1.8; stroke-dasharray: 6 3; }
+.ah-agent { fill: var(--agent-fg); }
+.own.ag { background: var(--agent-bg); border-color: var(--agent-line); color: var(--agent-fg); }
+.agtag { display: inline-block; padding: 0 7px; border-radius: 999px; font-size: .74rem; font-weight: 700; background: var(--agent-line); color: var(--box); white-space: nowrap; }
+.role.agentrole { border-top: 4px solid var(--agent-line); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>SDL Formulator: Formulation Cell Implementation Specification</h1>
+    <div class="status-line"><span class="chip frozen">V3.1 · architecture frozen</span><span>31 October 2026</span><span>Adds the agentic intelligence layer to V3; supersedes V2</span><span>Audience: the implementing AI / automation engineer</span></div>
+    <p class="lead">This specification turns the V2 integration proposal into a buildable system. It keeps the V2
+    architecture (MADSci controls the cell, sdl_dt plans and learns, ROS 2 moves the robot, every instrument has its own
+    node) and closes the gaps found in the senior engineering review: split ownership, the missing formulation compiler,
+    an unsynchronized digital twin, no failure handling, no data model, and an undefined optimization problem. V3.1 adds an
+    agentic intelligence layer (five agents on LangGraph, an MCP tool server, Pydantic contracts, an LLM gateway and
+    evaluation-gated CI/CD) that assists people without ever gaining a path to the hardware. Every
+    decision the review left open is made here and recorded as an architecture decision (ADR). Anything marked
+    <i>set at commissioning</i> is a measured value, not an open design choice.</p>
+    <nav aria-label="Sections">
+      <a href="#decisions">1. Decisions</a><a href="#ownership">2. Ownership</a><a href="#pipeline">3. Pipeline</a>
+      <a href="#compiler">4. Formulation compiler</a><a href="#plan">5. Scheduling</a><a href="#twin">6. Validation service</a>
+      <a href="#states">7. State machine</a><a href="#contracts">8. Node contracts</a><a href="#data">9. Data model</a>
+      <a href="#ai">10. Optimization</a><a href="#agents">11. Agentic layer</a><a href="#arch">12. Architecture</a>
+      <a href="#repo">13. Repositories and CI/CD</a><a href="#safety">14. Safety</a><a href="#roadmap">15. Roadmap</a>
+      <a href="#acceptance">16. Acceptance</a><a href="#status">17. Status and handover</a><a href="#terms">18. Glossary</a>
+    </nav>
+  </header>
+
+  <div class="principle">
+    <p class="big">MADSci executes. sdl_dt thinks. Agents assist. ROS 2 moves. The safety system protects.</p>
+    <p class="sub">sdl_dt is a client of MADSci, never a second control system. MADSci is the only component that
+    authorizes physical execution. The digital twin can reject a plan but can never, on its own, make one safe: safety-rated
+    limits, guarding and the E-stop stay independent of all software in this document. The optimizer proposes experiments;
+    it never touches hardware. Agents draft, explain and analyse through the same permission-checked APIs a person uses;
+    no agent tool reaches a node, a device, ROS 2 commands or the safety configuration.</p>
+  </div>
+
+  <!-- ================================================================ 1. DECISIONS -->
+  <section class="part" id="decisions">
+    <h2>1. Architecture decisions</h2>
+    <p class="lead">These close the five open items of V2 and the review’s seven questions; ADR-15 to ADR-20 add the agentic layer. Changing any of them requires a
+    new ADR approved by the technical lead; the implementer builds against them as written.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>ADR</th><th>Question</th><th>Decision</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td class="id">ADR-01</td><td><b>Who owns scheduling?</b></td><td><span class="own mad">MADSci</span> A scheduler module in <code>formulation_cell</code>, called by the Workcell Manager. sdl_dt may send priority and deadline hints and shows a read-only preview.</td><td>Schedules depend on live resource, location and device state, which only the control layer knows. A schedule built elsewhere can be feasible on paper and impossible in the cell.</td></tr>
+          <tr><td class="id">ADR-02</td><td><b>Who owns AI and formulation design?</b></td><td><span class="own sdl">sdl_dt</span> Campaigns, design of experiments, Bayesian optimization and result analysis.</td><td>Keeps science and learning independent of machine details.</td></tr>
+          <tr><td class="id">ADR-03</td><td><b>Where does a formulation become a workflow?</b></td><td><span class="own mad">MADSci</span> A new hardware-agnostic library, <code>formulation_engine</code>, hosted by the Experiment Manager. It reads the cell’s equipment capability file. sdl_dt calls its dry-run endpoint to check feasibility before proposing.</td><td>Separates formulation science from machine execution. Compiling requires equipment capabilities, which belong to the control layer.</td></tr>
+          <tr><td class="id">ADR-04</td><td><b>Where does robot validation happen, and when?</b></td><td><span class="own ros">ROS 2</span> An independent <code>validation_service</code> package. Hybrid timing: <b>static</b> validation of each route ahead of time, cached by route and model hash; <b>dynamic</b> validation per action against a versioned cell-state snapshot.</td><td>Static checks are expensive and rarely change; workspace sharing and object placement change every run. This resolves V2’s “where the gate runs” item.</td></tr>
+          <tr><td class="id">ADR-05</td><td><b>Who authorizes physical execution?</b></td><td><span class="own mad">MADSci</span> An execution gate in the Workcell Manager, run immediately before each action. Subject to independent machine safety.</td><td>One authorizer, one audit point. The gate re-checks state; a verdict alone never authorizes.</td></tr>
+          <tr><td class="id">ADR-06</td><td><b>Where does experimental data live?</b></td><td><span class="own mad">MADSci Data Manager</span> is the system of record. sdl_dt reads it and stores only derived artifacts (models, campaign state).</td><td>One source of truth for provenance and for training data.</td></tr>
+          <tr><td class="id">ADR-07</td><td><b>Robot software stack</b></td><td>ROS 2 Jazzy on Ubuntu 24.04, the official <code>ur_robot_driver</code> and MoveIt 2. Development in WSL2 with URSim. The real arm is driven from a <b>native Ubuntu 24.04 cell PC</b> on the cell network, not from WSL2 or a Raspberry Pi. The Pis keep hosting SiLA 2 servers.</td><td>No second robot-control implementation. The UR3e driver runs a 500 Hz control loop that needs a stable, low-latency host; WSL2 networking and the Pi do not guarantee it.</td></tr>
+          <tr><td class="id">ADR-08</td><td><b>Which runs need a person?</b></td><td>Approval is required when the verdict is <i>needs review</i>, the process-plan template or a route has never been approved, the first Real run after any model, calibration or config change, and every Real run during commissioning (M4). Fake runs never wait for approval.</td><td>Unattended operation is earned per template and route, not granted globally.</td></tr>
+          <tr><td class="id">ADR-09</td><td><b>Duplicate and lost commands</b></td><td>Every action carries a unique <code>action_id</code> (UUIDv7) and an idempotency key. Nodes keep a persistent action ledger. Physical actions run at most once; after a timeout MADSci queries status and never blindly retries.</td><td>A timeout must never cause a second dispense or transfer.</td></tr>
+          <tr><td class="id">ADR-10</td><td><b>Interface contracts</b></td><td>Pydantic v2 models are the source of truth, exported to JSON Schema, semantically versioned in <code>schemas/</code>. CI fails on a breaking change without a major version bump.</td><td>Cross-component contracts that are typed, testable and reviewable.</td></tr>
+          <tr><td class="id">ADR-11</td><td><b>Scheduler algorithm</b></td><td>Constraint programming with OR-Tools CP-SAT, 2 s time limit, with a deterministic critical-path list scheduler as fallback. Durations come from measured p90 action times, defaulting to configured estimates until 20 samples exist.</td><td>Optimal for cell-sized problems, with a predictable fallback if the solver times out.</td></tr>
+          <tr><td class="id">ADR-12</td><td><b>Optimization stack</b></td><td>BoTorch through Ax. Constrained multi-objective Bayesian optimization with qNEHVI, a feasibility classifier for failed experiments, batch size 1 to 4.</td><td>Mature, supports mixture constraints, outcome constraints and noisy multi-objective problems.</td></tr>
+          <tr><td class="id">ADR-13</td><td><b>Fake, Real and mixed mode</b></td><td>Mode is set per device in a run’s mode manifest and stored with the run. A device may run Real only if it is marked commissioned in the signed cell configuration and the cell is armed by an operator. Mixed runs (for example real balance, fake arm) are allowed for commissioning.</td><td>Commissioning needs mixed modes; provenance needs to know exactly what was real.</td></tr>
+          <tr><td class="id">ADR-14</td><td><b>Capping node</b></td><td>Out of scope for M1 to M6. The compiler rejects plans that reference it until it is commissioned.</td><td>Avoids depending on uncommissioned hardware.</td></tr>
+          <tr><td class="id">ADR-15</td><td><b>What may agents do?</b></td><td><span class="own ag">Agent layer</span> Agents draft, explain, analyse and, at most, submit an experiment inside an approved campaign (autonomy L3). They act only through MCP tools with the permissions of the person they serve. No tool exists for device commands, ROS 2 goals, capability or safety configuration, or approvals.</td><td>Safety by construction: a forbidden action is impossible because the tool does not exist, not because a prompt says no.</td></tr>
+          <tr><td class="id">ADR-16</td><td><b>Agent tool interface</b></td><td>One MCP server, <code>sdl_mcp</code> (official Python MCP SDK), wrapping the sdl_dt and MADSci APIs. Tool arguments and results are Pydantic models; each agent has an allowlist; every call is audited.</td><td>Model-independent, testable tool contracts that reuse the V3 schemas.</td></tr>
+          <tr><td class="id">ADR-17</td><td><b>Agent orchestration</b></td><td>LangGraph state graphs, one per agent, with a Postgres checkpointer, human-approval interrupts, and step, token and time budgets. Graph state and every LLM output are Pydantic models; invalid output is retried at most twice, then fails closed.</td><td>Explicit, resumable, inspectable workflows instead of free-running agent loops.</td></tr>
+          <tr><td class="id">ADR-18</td><td><b>Model access and data classification</b></td><td>All model calls go through a LiteLLM gateway that routes by data class. Groq-hosted Llama is allowed only for C0 public and synthetic or Fake-mode data. C1 and C2 data (formulations, materials, results) go to a self-hosted open-weight model on vLLM or to the enterprise LLM approved by IT. C3 (credentials, safety configuration) is never sent to any model.</td><td>Free-tier speed for development without sending confidential R&amp;D data to a third party. The model is configuration, chosen per agent by evaluation.</td></tr>
+          <tr><td class="id">ADR-19</td><td><b>Agent quality gates</b></td><td>Offline evaluation suites run in CI on every change to a prompt, graph, tool or model route; a merge or model switch is blocked below the thresholds in section 16. Prompts are versioned in git. Traces go to a self-hosted Langfuse instance.</td><td>Agents change behaviour when prompts or models change; only measured evaluation makes that safe to ship.</td></tr>
+          <tr><td class="id">ADR-20</td><td><b>Knowledge retrieval</b></td><td>pgvector in Postgres with a self-hosted open-weight embedding model, indexing SOPs, device manuals, material safety data sheets, ADRs and this specification. Retrieved text is data, never instructions.</td><td>Keeps documents in-house and contains prompt-injection risk.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================================================================ 2. OWNERSHIP -->
+  <section class="part" id="ownership">
+    <h2>2. Ownership matrix</h2>
+    <p class="lead">One owner per responsibility. “Reads” means read-only access through the owner’s API.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Responsibility</th><th>Owner</th><th>sdl_dt</th><th>MADSci (formulation_cell)</th><th>ROS 2 workspace</th></tr></thead>
+        <tbody>
+          <tr><td>Campaign and objective definition</td><td><span class="own sdl">sdl_dt</span></td><td>Defines</td><td>Stores campaign ID on each experiment</td><td>None</td></tr>
+          <tr><td>Formulation proposal</td><td><span class="own sdl">sdl_dt</span></td><td>Proposes (scientist or optimizer)</td><td>Validates on submit</td><td>None</td></tr>
+          <tr><td>Formulation compilation to process plan</td><td><span class="own mad">MADSci</span></td><td>Calls dry run</td><td>Compiles, rejects with reason codes</td><td>None</td></tr>
+          <tr><td>Workflow and schedule</td><td><span class="own mad">MADSci</span></td><td>Previews, sends hints</td><td>Generates and owns</td><td>None</td></tr>
+          <tr><td>Resource reservation</td><td><span class="own mad">MADSci</span></td><td>Reads availability</td><td>Reserves and releases leases</td><td>None</td></tr>
+          <tr><td>Cell-state snapshot and scene version</td><td><span class="own ros">ROS 2</span></td><td>Reads (digital shadow)</td><td>Publishes device and container state to it</td><td><code>cell_state_manager</code> owns</td></tr>
+          <tr><td>Static and dynamic validation</td><td><span class="own ros">ROS 2</span></td><td>Displays verdicts</td><td>Requests, stores verdicts</td><td><code>validation_service</code> owns</td></tr>
+          <tr><td>Execution authorization</td><td><span class="own mad">MADSci</span></td><td>Requests runs, pause, cancel</td><td>Execution gate decides</td><td>None</td></tr>
+          <tr><td>Device commands</td><td><span class="own mad">MADSci nodes</span></td><td>Never</td><td>Nodes send device-native commands</td><td>Robot motion executed by <code>ur_robot_driver</code> on a node’s request</td></tr>
+          <tr><td>Machine safety (E-stop, guarding, safety-rated limits)</td><td><span class="own safe">Safety system</span></td><td>Never</td><td>Reads status only</td><td>Reads status only</td></tr>
+          <tr><td>Execution and measurement records</td><td><span class="own mad">MADSci Data Manager</span></td><td>Reads</td><td>Writes</td><td>Verdict artifacts linked by ID</td></tr>
+          <tr><td>Agent assistance: drafts, explanations, reports</td><td><span class="own ag">Agent layer</span></td><td>Hosts the agents and their UI</td><td>Exposes the same APIs a person uses, through <code>sdl_mcp</code></td><td>None (read-only scene through sdl_dt)</td></tr>
+          <tr><td>Surrogate models and next proposal</td><td><span class="own sdl">sdl_dt</span></td><td>Trains, proposes</td><td>Supplies verified results</td><td>None</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- ================================================================ 3. PIPELINE -->
+  <section class="part" id="pipeline">
+    <h2>3. Execution pipeline</h2>
+    <p class="lead">Ten stages replace V2’s six. New in V3: an explicit compile stage, scheduling inside MADSci, an approval
+    stage, a per-action execution gate that re-checks state, and a verify stage so the optimizer learns only from measured
+    values. Every stage can stop the run, and every stop produces a reason code stored with the experiment.</p>
+    <figure>
+      <div class="scroll">
+<svg viewBox="0 0 1100 520" role="img" aria-label="Ten-stage execution pipeline. Specify in sdl_dt, compile in the formulation engine, schedule, preflight and reserve, validate in the ROS 2 validation service, approve, then for every action the execution gate, execute and verify, and finally record and learn, which feeds the next proposal back to stage 1. Each stage can stop the run." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="q-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-cmd"/></marker><marker id="q-read" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-read"/></marker></defs>
+<rect x="20" y="40" width="192" height="150" rx="10" class="box partner"/>
+<circle cx="40" cy="62" r="12" class="badge"/><text x="40" y="66" class="badge-t" text-anchor="middle" style="font-size:11px">1</text>
+<text x="60" y="67" class="t" style="font-weight:700;font-size:13px">Specify</text>
+<text x="34" y="92" class="tm">sdl_dt · scientist or optimizer</text>
+<text x="34" y="120" class="tm">produces</text>
+<text x="34" y="137" class="t" style="font-weight:500">Formulation spec v1</text>
+<text x="34" y="164" class="tm">stops on</text>
+<text x="34" y="180" class="deny-t" style="font-size:10.5px;font-weight:500">schema or bounds invalid</text>
+<path d="M214,115 H233" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="236" y="40" width="192" height="150" rx="10" class="box mode"/>
+<circle cx="256" cy="62" r="12" class="badge"/><text x="256" y="66" class="badge-t" text-anchor="middle" style="font-size:11px">2</text>
+<text x="276" y="67" class="t" style="font-weight:700;font-size:13px">Compile</text>
+<text x="250" y="92" class="tm">formulation_engine in MADSci</text>
+<text x="250" y="120" class="tm">produces</text>
+<text x="250" y="137" class="t" style="font-weight:500">Process plan + workflow DAG</text>
+<text x="250" y="164" class="tm">stops on</text>
+<text x="250" y="180" class="deny-t" style="font-size:10.5px;font-weight:500">reason code F-xxx</text>
+<path d="M430,115 H449" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="452" y="40" width="192" height="150" rx="10" class="box mode"/>
+<circle cx="472" cy="62" r="12" class="badge"/><text x="472" y="66" class="badge-t" text-anchor="middle" style="font-size:11px">3</text>
+<text x="492" y="67" class="t" style="font-weight:700;font-size:13px">Schedule</text>
+<text x="466" y="92" class="tm">MADSci scheduler (CP-SAT)</text>
+<text x="466" y="120" class="tm">produces</text>
+<text x="466" y="137" class="t" style="font-weight:500">Schedule per action</text>
+<text x="466" y="164" class="tm">stops on</text>
+<text x="466" y="180" class="deny-t" style="font-size:10.5px;font-weight:500">infeasible in horizon</text>
+<path d="M646,115 H665" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="668" y="40" width="192" height="150" rx="10" class="box mode"/>
+<circle cx="688" cy="62" r="12" class="badge"/><text x="688" y="66" class="badge-t" text-anchor="middle" style="font-size:11px">4</text>
+<text x="708" y="67" class="t" style="font-weight:700;font-size:13px">Preflight, reserve</text>
+<text x="682" y="92" class="tm">Workcell, Location, Resource</text>
+<text x="682" y="120" class="tm">produces</text>
+<text x="682" y="137" class="t" style="font-weight:500">Reservation leases</text>
+<text x="682" y="164" class="tm">stops on</text>
+<text x="682" y="180" class="deny-t" style="font-size:10.5px;font-weight:500">material, slot or route missing</text>
+<path d="M862,115 H881" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="884" y="40" width="192" height="150" rx="10" class="box twin"/>
+<circle cx="904" cy="62" r="12" class="badge"/><text x="904" y="66" class="badge-t" text-anchor="middle" style="font-size:11px">5</text>
+<text x="924" y="67" class="t" style="font-weight:700;font-size:13px">Validate</text>
+<text x="898" y="92" class="tm">validation_service (ROS 2)</text>
+<text x="898" y="120" class="tm">produces</text>
+<text x="898" y="137" class="t" style="font-weight:500">Verdict @ scene version</text>
+<text x="898" y="164" class="tm">stops on</text>
+<text x="898" y="180" class="deny-t" style="font-size:10.5px;font-weight:500">rejected, V-xxx</text>
+<rect x="20" y="300" width="192" height="150" rx="10" class="box partner"/>
+<circle cx="40" cy="322" r="12" class="badge"/><text x="40" y="326" class="badge-t" text-anchor="middle" style="font-size:11px">6</text>
+<text x="60" y="327" class="t" style="font-weight:700;font-size:13px">Approve</text>
+<text x="34" y="352" class="tm">Scientist, per ADR-08</text>
+<text x="34" y="380" class="tm">produces</text>
+<text x="34" y="397" class="t" style="font-weight:500">Approval record</text>
+<text x="34" y="424" class="tm">stops on</text>
+<text x="34" y="440" class="deny-t" style="font-size:10.5px;font-weight:500">declined or 30 min timeout</text>
+<path d="M214,375 H233" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="236" y="300" width="192" height="150" rx="10" class="box key"/>
+<circle cx="256" cy="322" r="12" class="badge"/><text x="256" y="326" class="badge-t" text-anchor="middle" style="font-size:11px">7</text>
+<text x="276" y="327" class="t" style="font-weight:700;font-size:13px">Execution gate</text>
+<text x="250" y="352" class="tm">MADSci, per action</text>
+<text x="250" y="380" class="tm">produces</text>
+<text x="250" y="397" class="t" style="font-weight:500">Authorization</text>
+<text x="250" y="424" class="tm">stops on</text>
+<text x="250" y="440" class="deny-t" style="font-size:10.5px;font-weight:500">stale scene, lease or interlock</text>
+<path d="M430,375 H449" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="452" y="300" width="192" height="150" rx="10" class="box mode"/>
+<circle cx="472" cy="322" r="12" class="badge"/><text x="472" y="326" class="badge-t" text-anchor="middle" style="font-size:11px">8</text>
+<text x="492" y="327" class="t" style="font-weight:700;font-size:13px">Execute</text>
+<text x="466" y="352" class="tm">Node → device</text>
+<text x="466" y="380" class="tm">produces</text>
+<text x="466" y="397" class="t" style="font-weight:500">Action result</text>
+<text x="466" y="424" class="tm">stops on</text>
+<text x="466" y="440" class="deny-t" style="font-size:10.5px;font-weight:500">device fault → FAULT</text>
+<path d="M646,375 H665" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="668" y="300" width="192" height="150" rx="10" class="box mode"/>
+<circle cx="688" cy="322" r="12" class="badge"/><text x="688" y="326" class="badge-t" text-anchor="middle" style="font-size:11px">9</text>
+<text x="708" y="327" class="t" style="font-weight:700;font-size:13px">Verify</text>
+<text x="682" y="352" class="tm">Node + Data Manager</text>
+<text x="682" y="380" class="tm">produces</text>
+<text x="682" y="397" class="t" style="font-weight:500">Verified measurement</text>
+<text x="682" y="424" class="tm">stops on</text>
+<text x="682" y="440" class="deny-t" style="font-size:10.5px;font-weight:500">out of tolerance → deviation</text>
+<path d="M862,375 H881" class="e-cmd" marker-end="url(#q-cmd)"/>
+<rect x="884" y="300" width="192" height="150" rx="10" class="box partner"/>
+<circle cx="904" cy="322" r="12" class="badge"/><text x="904" y="326" class="badge-t" text-anchor="middle" style="font-size:11px">10</text>
+<text x="924" y="327" class="t" style="font-weight:700;font-size:13px">Record, learn</text>
+<text x="898" y="352" class="tm">Data Manager → sdl_dt</text>
+<text x="898" y="380" class="tm">produces</text>
+<text x="898" y="397" class="t" style="font-weight:500">Result + next proposal</text>
+<text x="898" y="424" class="tm">stops on</text>
+<text x="898" y="440" class="deny-t" style="font-size:10.5px;font-weight:500">incomplete provenance</text>
+<path d="M980,192 V236 H116 V295" class="e-cmd" marker-end="url(#q-cmd)"/>
+<text x="550" y="230" class="tm" text-anchor="middle">submit for execution</text>
+<path d="M236,282 V272 H860 V282" style="fill:none;stroke:var(--info);stroke-width:1.4"/>
+<text x="548" y="266" class="h-info" text-anchor="middle" style="font-size:11px">repeated for every action, immediately before it runs</text>
+<path d="M980,452 V492 H8 V115 H16" class="e-read" marker-end="url(#q-read)"/>
+<text x="500" y="510" class="h-read" text-anchor="middle" style="font-size:11px">verified results train the surrogate; the optimizer proposes the next formulation</text>
+<text x="20" y="22" class="tm">Box outline shows the owner: orange sdl_dt · blue MADSci · violet ROS 2 · bold blue the execution gate · magenta tags mark where an agent assists (section 11)</text>
+<rect x="158" y="52" width="46" height="18" rx="9" class="pill-ag"/><text x="181" y="65" class="pill-ag-t" text-anchor="middle">AG-1</text>
+<rect x="374" y="52" width="46" height="18" rx="9" class="pill-ag"/><text x="397" y="65" class="pill-ag-t" text-anchor="middle">AG-2</text>
+<rect x="1022" y="52" width="46" height="18" rx="9" class="pill-ag"/><text x="1045" y="65" class="pill-ag-t" text-anchor="middle">AG-2</text>
+<rect x="158" y="312" width="46" height="18" rx="9" class="pill-ag"/><text x="181" y="325" class="pill-ag-t" text-anchor="middle">AG-2</text>
+<rect x="590" y="312" width="46" height="18" rx="9" class="pill-ag"/><text x="613" y="325" class="pill-ag-t" text-anchor="middle">AG-3</text>
+<rect x="1022" y="312" width="46" height="18" rx="9" class="pill-ag"/><text x="1045" y="325" class="pill-ag-t" text-anchor="middle">AG-4</text>
+</svg>      </div>
+      <figcaption>The digital twin’s verdict (stage 5) is necessary but not sufficient. Execution happens only after the
+      gate (stage 7) confirms that the cell is still in the state the verdict was computed for, the reservation is still
+      held, the device reports its interlocks true and the cell is armed. Physical safety is enforced underneath all of
+      this by the machine safety system. Magenta tags show where an agent assists: AG-1 drafts at stage 1, AG-2 explains
+      rejections, verdicts and approvals, AG-3 advises in a fault, AG-4 analyses results; AG-5 supplies document context
+      to all of them. No agent sits on the path from the gate to the machines.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>#</th><th>Stage</th><th>Component</th><th>Input → output</th><th>Experiment state after</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><b>Specify</b></td><td><code>sdl_dt.formulation_interface</code></td><td>Campaign point or scientist entry → <code>FormulationSpec</code> (schema v1)</td><td><code>CREATED</code></td></tr>
+          <tr><td class="n">2</td><td><b>Compile</b></td><td><code>formulation_engine.compiler</code></td><td>FormulationSpec + equipment capabilities + material database → <code>ProcessPlan</code> and MADSci workflow</td><td><code>VALIDATING</code> → <code>PLANNED</code> or <code>REJECTED</code></td></tr>
+          <tr><td class="n">3</td><td><b>Schedule</b></td><td><code>formulation_cell.scheduler</code></td><td>Workflow DAG + durations + resource model → <code>Schedule</code></td><td><code>PLANNED</code></td></tr>
+          <tr><td class="n">4</td><td><b>Preflight, reserve</b></td><td>Workcell, Location, Resource Managers</td><td>Schedule → reservation leases on containers, slots, zones and devices</td><td><code>PLANNED</code></td></tr>
+          <tr><td class="n">5</td><td><b>Validate</b></td><td><code>validation_service</code></td><td>Motion actions + cell snapshot → <code>ValidationVerdict</code> per action</td><td><code>SIMULATED</code></td></tr>
+          <tr><td class="n">6</td><td><b>Approve</b></td><td>sdl_dt approval view, MADSci record</td><td>Plan, schedule, verdicts → <code>Approval</code> (skipped when ADR-08 allows)</td><td><code>AWAITING_APPROVAL</code> → <code>READY</code></td></tr>
+          <tr><td class="n">7</td><td><b>Execution gate</b></td><td><code>formulation_cell.execution_gate</code></td><td>Action + verdict + live state → authorize or block</td><td><code>EXECUTING</code></td></tr>
+          <tr><td class="n">8</td><td><b>Execute</b></td><td>Nodes</td><td>Authorized action → device-native command → <code>ActionResult</code></td><td><code>EXECUTING</code> or <code>FAULT</code></td></tr>
+          <tr><td class="n">9</td><td><b>Verify</b></td><td>Nodes, Data Manager</td><td>Raw readings → <code>Measurement</code> with target, actual, tolerance, device, calibration</td><td><code>VERIFYING</code></td></tr>
+          <tr><td class="n">10</td><td><b>Record, learn</b></td><td>Data Manager, <code>sdl_dt.optimization</code></td><td>Verified result → <code>Observation</code> for the surrogate → next proposal</td><td><code>COMPLETED</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- ================================================================ 4. COMPILER -->
+  <section class="part" id="compiler">
+    <h2>4. Formulation compiler</h2>
+    <p class="lead"><code>formulation_engine</code> is a pure Python library with no hardware or network access, so it can be
+    built and tested before any hardware is ready. It turns a formulation into a machine-specific process plan, or rejects
+    it with machine-readable reasons. It is the first build priority.</p>
+    <figure>
+      <div class="scroll">
+<svg viewBox="0 0 1100 770" role="img" aria-label="Formulation compiler flow. Proposals come from the scientist, the optimizer, or a draft by agent AG-1 Campaign designer, which uses context from agent AG-5 Knowledge assistant and needs scientist approval before submitting. The FormulationSpec enters formulation_engine.compile, a pure function with nine steps: schema check, composition check, target masses, material resolution, equipment selection, addition order, template expansion, process envelope and emit. Steps read the Pydantic schemas, campaign bounds, the material database and Resource Manager, the equipment capability file and the workflow templates. Any failing step sends a CompileError with reason codes; agent AG-2 Lab copilot explains it, and in a dry run AG-1 revises its draft at most three times. A successful compile emits the ProcessPlan and MADSci workflow to the scheduler. Both outcomes are stored in the Data Manager, where agent AG-4 Results analyst reads compile statistics." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="c-req" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-req"/></marker><marker id="c-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-cmd"/></marker><marker id="c-info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-info"/></marker><marker id="c-read" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-read"/></marker><marker id="c-deny" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-deny"/></marker><marker id="c-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-agent"/></marker><marker id="c-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-ok"/></marker></defs>
+<rect x="20" y="16" width="190" height="56" rx="8" class="box partner"/>
+<text x="32" y="39" class="t" style="font-weight:700;font-size:12px">Scientist</text>
+<text x="32" y="58" class="tm">manual formulation</text>
+<rect x="226" y="16" width="190" height="56" rx="8" class="box partner"/>
+<text x="238" y="39" class="t" style="font-weight:700;font-size:12px">Optimizer</text>
+<text x="238" y="58" class="tm">BO · qNEHVI (section 10)</text>
+<rect x="432" y="16" width="230" height="56" rx="8" class="box agent"/>
+<rect x="442" y="25" width="44" height="18" rx="9" class="pill-ag"/><text x="464" y="38" class="pill-ag-t" text-anchor="middle">AG-1</text>
+<text x="494" y="39" class="t" style="font-weight:700;font-size:12px">Campaign designer</text>
+<text x="444" y="58" class="tm">drafts specs from a stated goal</text>
+<rect x="700" y="16" width="210" height="56" rx="8" class="box agent"/>
+<rect x="710" y="25" width="44" height="18" rx="9" class="pill-ag"/><text x="732" y="38" class="pill-ag-t" text-anchor="middle">AG-5</text>
+<text x="762" y="39" class="t" style="font-weight:700;font-size:12px">Knowledge assistant</text>
+<text x="712" y="58" class="tm">material data, SOPs</text>
+<path d="M698,40 H666" class="e-agent" marker-end="url(#c-agent)"/>
+<text x="682" y="34" class="tm" text-anchor="middle">context</text>
+<path d="M115,74 V106" class="e-req" marker-end="url(#c-req)"/>
+<path d="M321,74 V106" class="e-req" marker-end="url(#c-req)"/>
+<path d="M500,74 V106" class="e-agent" marker-end="url(#c-agent)"/>
+<text x="508" y="96" class="agent-t" style="font-size:10.5px">draft, scientist approves</text>
+<rect x="20" y="110" width="642" height="54" rx="8" class="box key"/>
+<text x="34" y="133" class="t" style="font-weight:700;font-size:13px">FormulationSpec v1</text>
+<text x="34" y="152" class="tm">ingredients · mass fractions · batch mass · tolerances · process conditions · origin (scientist | optimizer | agent draft)</text>
+<rect x="700" y="104" width="380" height="66" rx="8" class="box plan"/>
+<text x="714" y="126" class="t" style="font-weight:700">compile(dry_run=true)</text>
+<text x="714" y="144" class="tm">same compiler · no experiment, no reservation</text>
+<text x="714" y="159" class="tm">called by the optimizer and by AG-1 through MCP</text>
+<path d="M664,137 H696" class="e-info" marker-end="url(#c-info)"/>
+<path d="M890,102 V86 H620 V76" class="e-agent" marker-end="url(#c-agent)"/>
+<text x="760" y="83" class="agent-t" text-anchor="middle" style="font-size:10px">errors → AG-1 revises, max 3 times</text>
+<path d="M340,166 V190" class="e-cmd" marker-end="url(#c-cmd)"/>
+<rect x="20" y="194" width="742" height="450" rx="12" class="f-cell"/>
+<text x="36" y="216" class="cell-t" style="font-size:13px">formulation_engine.compile() · pure function · deterministic · no network, no hardware</text>
+<rect x="210" y="232" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="250" r="10" class="badge"/><text x="228" y="254" class="badge-t" text-anchor="middle" style="font-size:10.5px">1</text>
+<text x="246" y="254" class="t" style="font-weight:500">Schema check</text>
+<text x="540" y="254" class="deny-t mono" text-anchor="end" style="font-size:10px">F-001</text>
+<path d="M552,250 H606" class="e-deny"/>
+<path d="M380,268 V276" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="276" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="294" r="10" class="badge"/><text x="228" y="298" class="badge-t" text-anchor="middle" style="font-size:10.5px">2</text>
+<text x="246" y="298" class="t" style="font-weight:500">Composition check</text>
+<text x="540" y="298" class="deny-t mono" text-anchor="end" style="font-size:10px">F-010</text>
+<path d="M552,294 H606" class="e-deny"/>
+<path d="M380,312 V320" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="320" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="338" r="10" class="badge"/><text x="228" y="342" class="badge-t" text-anchor="middle" style="font-size:10.5px">3</text>
+<text x="246" y="342" class="t" style="font-weight:500">Target masses = batch × fraction</text>
+<path d="M380,356 V364" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="364" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="382" r="10" class="badge"/><text x="228" y="386" class="badge-t" text-anchor="middle" style="font-size:10.5px">4</text>
+<text x="246" y="386" class="t" style="font-weight:500">Material resolution</text>
+<text x="540" y="386" class="deny-t mono" text-anchor="end" style="font-size:10px">F-020 F-021</text>
+<path d="M552,382 H606" class="e-deny"/>
+<path d="M380,400 V408" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="408" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="426" r="10" class="badge"/><text x="228" y="430" class="badge-t" text-anchor="middle" style="font-size:10.5px">5</text>
+<text x="246" y="430" class="t" style="font-weight:500">Equipment selection</text>
+<text x="540" y="430" class="deny-t mono" text-anchor="end" style="font-size:10px">F-030 F-031 F-032</text>
+<path d="M552,426 H606" class="e-deny"/>
+<path d="M380,444 V452" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="452" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="470" r="10" class="badge"/><text x="228" y="474" class="badge-t" text-anchor="middle" style="font-size:10.5px">6</text>
+<text x="246" y="474" class="t" style="font-weight:500">Addition order</text>
+<path d="M380,488 V496" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="496" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="514" r="10" class="badge"/><text x="228" y="518" class="badge-t" text-anchor="middle" style="font-size:10.5px">7</text>
+<text x="246" y="518" class="t" style="font-weight:500">Expand template into actions</text>
+<text x="540" y="518" class="deny-t mono" text-anchor="end" style="font-size:10px">F-060</text>
+<path d="M552,514 H606" class="e-deny"/>
+<path d="M380,532 V540" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="540" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="558" r="10" class="badge"/><text x="228" y="562" class="badge-t" text-anchor="middle" style="font-size:10.5px">8</text>
+<text x="246" y="562" class="t" style="font-weight:500">Process envelope</text>
+<text x="540" y="562" class="deny-t mono" text-anchor="end" style="font-size:10px">F-040 F-041 F-050</text>
+<path d="M552,558 H606" class="e-deny"/>
+<path d="M380,576 V584" style="stroke:var(--madsci-line);stroke-width:1.5"/>
+<rect x="210" y="584" width="340" height="36" rx="6" class="box mode"/>
+<circle cx="228" cy="602" r="10" class="badge"/><text x="228" y="606" class="badge-t" text-anchor="middle" style="font-size:10.5px">9</text>
+<text x="246" y="606" class="t" style="font-weight:500">Emit plan + input hash</text>
+<path d="M606,250 V558" class="e-deny"/>
+<path d="M606,250 H640 V275 H796" class="e-deny" marker-end="url(#c-deny)"/>
+<text x="620" y="268" class="deny-t" style="font-size:10.5px">first failing step</text>
+<rect x="36" y="232" width="156" height="36" rx="6" class="box"/>
+<text x="114" y="254" class="tm" text-anchor="middle">Pydantic schemas v1</text>
+<path d="M192,250 H206" class="e-info" marker-end="url(#c-info)"/>
+<rect x="36" y="276" width="156" height="36" rx="6" class="box"/>
+<text x="114" y="298" class="tm" text-anchor="middle">Campaign bounds</text>
+<path d="M192,294 H206" class="e-info" marker-end="url(#c-info)"/>
+<rect x="36" y="364" width="156" height="36" rx="6" class="box"/>
+<text x="114" y="386" class="tm" text-anchor="middle">Material DB + Resource Mgr</text>
+<path d="M192,382 H206" class="e-info" marker-end="url(#c-info)"/>
+<rect x="36" y="408" width="156" height="36" rx="6" class="box"/>
+<text x="114" y="430" class="tm" text-anchor="middle">equipment_capabilities</text>
+<path d="M192,426 H206" class="e-info" marker-end="url(#c-info)"/>
+<rect x="36" y="496" width="156" height="36" rx="6" class="box"/>
+<text x="114" y="518" class="tm" text-anchor="middle">Workflow templates</text>
+<path d="M192,514 H206" class="e-info" marker-end="url(#c-info)"/>
+<path d="M114,444 V450 H198 V570 H206" class="e-info" marker-end="url(#c-info)"/>
+<text x="36" y="606" class="tm">capabilities also feed step 8</text>
+<text x="36" y="636" class="tm">Agents never write any of these inputs.</text>
+<rect x="800" y="240" width="280" height="70" rx="8" class="st bad"/>
+<text x="812" y="263" class="t" style="font-weight:700;font-size:12px">CompileError</text>
+<text x="812" y="282" class="tm">reason codes + details</text>
+<text x="812" y="297" class="tm">experiment → REJECTED</text>
+<path d="M940,312 V346" class="e-deny" marker-end="url(#c-deny)"/>
+<rect x="800" y="350" width="280" height="80" rx="8" class="box agent"/>
+<rect x="810" y="359" width="44" height="18" rx="9" class="pill-ag"/><text x="832" y="372" class="pill-ag-t" text-anchor="middle">AG-2</text>
+<text x="862" y="373" class="t" style="font-weight:700;font-size:12px">Lab copilot</text>
+<text x="812" y="392" class="tm">explains each F-code in plain language</text>
+<text x="812" y="407" class="tm">and what to change; read-only</text>
+<path d="M380,620 V660" class="e-ok" marker-end="url(#c-ok)"/>
+<rect x="210" y="664" width="340" height="56" rx="8" class="box key"/>
+<text x="224" y="687" class="t" style="font-weight:700">ProcessPlan + MADSci workflow</text>
+<text x="224" y="705" class="tm">resources · required records · capability hash</text>
+<path d="M552,692 H594" class="e-cmd" marker-end="url(#c-cmd)"/>
+<rect x="598" y="664" width="164" height="56" rx="8" class="box mode"/>
+<text x="680" y="687" class="t" text-anchor="middle" style="font-weight:700">Scheduler</text>
+<text x="680" y="705" class="tm" text-anchor="middle">section 5</text>
+<rect x="800" y="560" width="280" height="56" rx="8" class="box mode"/>
+<text x="812" y="583" class="t" style="font-weight:700;font-size:12px">Data Manager</text>
+<text x="812" y="602" class="tm">compile record: input hash, version, outcome</text>
+<path d="M1082,275 H1092 V588 H1084" class="e-read" marker-end="url(#c-read)"/>
+<path d="M380,722 V752 H780 V600 H796" class="e-read" marker-end="url(#c-read)"/>
+<rect x="800" y="656" width="280" height="80" rx="8" class="box agent"/>
+<rect x="810" y="665" width="44" height="18" rx="9" class="pill-ag"/><text x="832" y="678" class="pill-ag-t" text-anchor="middle">AG-4</text>
+<text x="862" y="679" class="t" style="font-weight:700;font-size:12px">Results analyst</text>
+<text x="812" y="698" class="tm">rejection rates per campaign,</text>
+<text x="812" y="713" class="tm">why proposals failed, report drafts</text>
+<path d="M940,654 V620" class="e-agent" marker-end="url(#c-agent)"/>
+<text x="948" y="642" class="agent-t" style="font-size:10px">reads</text>
+<text x="800" y="470" class="tm">AG-3 Recovery advisor acts only in FAULT</text>
+<text x="800" y="486" class="tm">(section 7); the compiler never faults hardware.</text>
+</svg>
+      </div>
+      <figcaption>Flow through the compiler, with the agents (magenta) where they act. Agents sit only at the edges: AG-1
+      drafts a proposal and checks it with a dry run, AG-5 supplies document context, AG-2 explains a rejection, AG-4
+      analyses compile records. None of them changes a compile step, its inputs or its verdict; the compiler is
+      deterministic, so the same spec, capabilities and materials always give the same result.</figcaption>
+    </figure>
+    <div class="two">
+      <div class="card">
+        <h3>Input: <code>FormulationSpec</code> v1</h3>
+<pre>schema_version: "1.0.0"
+formulation_id: FRM-000123          # assigned by sdl_dt
+campaign_id: CMP-0007               # null for manual runs
+origin: optimizer                   # optimizer | scientist | reference
+batch_mass_g: 5.0
+ingredients:
+  - material_id: powder_A
+    mass_fraction: 0.40
+    tolerance_g: 0.010              # absolute, per ingredient
+  - material_id: powder_B
+    mass_fraction: 0.15
+    tolerance_g: 0.010
+  - material_id: liquid_C
+    mass_fraction: 0.45
+    tolerance_g: 0.020
+addition_order: [powder_A, powder_B, liquid_C]   # optional
+process:
+  mixing_speed_rpm: 2000
+  mixing_duration_s: 60
+  defoaming_duration_s: 30
+characterization: []                # list of measurement types
+priority: normal                    # hint for the scheduler</pre>
+      </div>
+      <div class="card">
+        <h3>Output: <code>ProcessPlan</code> (excerpt)</h3>
+<pre>process_plan_id: PP-000123-a
+template: dispense_mix_v1           # approval tracked per template
+compiler_version: "1.0.0"
+capabilities_hash: sha256:…
+targets_g: {powder_A: 2.000, powder_B: 0.750, liquid_C: 2.250}
+steps:                              # excerpt; "…" marks omitted steps
+  - id: s1
+    action: weighing_node.change_tool
+    args: {tool: powder_dispenser, dispenser_id: D2}
+  - id: s2
+    action: weighing_node.tare
+    args: {balance: balance_1, container_id: CTR-0451}
+  - id: s3
+    action: weighing_node.dispense
+    args: {material: powder_A, target_g: 2.000, tol_g: 0.010}
+    after: [s1, s2]
+  - id: s4
+    action: weighing_node.dispense
+    args: {material: powder_B, target_g: 0.750, tol_g: 0.010}
+    after: [s3]
+  # s5–s6: liquid tool change, dispense liquid_C 2.250 g
+  - id: s7
+    action: robot_arm_node.open_mixer_lid
+  - id: s8
+    action: robot_arm_node.transfer
+    args: {container_id: CTR-0451, from: balance_1, to: mixer}
+    after: [s6, s7]
+  - id: s9
+    action: robot_arm_node.close_mixer_lid
+    after: [s8]
+  - id: s10
+    action: mixer_node.run_mixing
+    args: {rpm: 2000, mix_s: 60, defoam_s: 30, container_id: CTR-0451}
+    after: [s9]
+  # s11–s13: open lid, return container, close lid
+resources: [CTR-0451, balance_1, D2, D5, zone_gantry, zone_mixer]
+records: [mass×3, mixer_log, container_location]</pre>
+      </div>
+    </div>
+    <h3>Compile steps, in order</h3>
+    <ol class="steps">
+      <li><b>Schema check.</b> Parse with the Pydantic model; reject unknown fields and unsupported major versions.</li>
+      <li><b>Composition check.</b> Mass fractions sum to 1 within 1×10<sup>−6</sup>; every fraction is within the campaign’s bounds.</li>
+      <li><b>Target masses.</b> target<sub>i</sub> = batch_mass_g × fraction<sub>i</sub>, rounded to the balance readability. 5.0 g gives 2.000, 0.750 and 2.250 g.</li>
+      <li><b>Material resolution.</b> Look up each material: phase, allowed dispenser types, density, viscosity range, current lot and quantity on hand (from the Resource Manager).</li>
+      <li><b>Equipment selection.</b> For each ingredient, choose a compatible dispenser whose minimum mass and repeatability support the target and tolerance.</li>
+      <li><b>Addition order.</b> Use the spec’s order if given; otherwise powders before liquids, largest powder first, to limit tool changes.</li>
+      <li><b>Expand into actions</b> from the template: tool change, tare, dispense, read mass, transfer, mix, return. Add mass-correction and verification steps.</li>
+      <li><b>Process envelope.</b> Mixing speed, duration and container fill level are within the mixer’s limits; batch mass fits the container.</li>
+      <li><b>Emit</b> the ProcessPlan, the MADSci workflow, the resource list and the required records, plus a deterministic hash of all inputs.</li>
+    </ol>
+    <h3>Rejection reason codes</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Code</th><th>Condition</th><th>Rule</th></tr></thead>
+        <tbody>
+          <tr><td class="id">F-001</td><td>Schema invalid</td><td>Pydantic validation error, details attached</td></tr>
+          <tr><td class="id">F-010</td><td>Fractions inconsistent</td><td>|Σ fraction − 1| &gt; 1×10<sup>−6</sup>, or a fraction below 0 or outside campaign bounds</td></tr>
+          <tr><td class="id">F-020</td><td>Material unknown</td><td>Material ID not in the material database</td></tr>
+          <tr><td class="id">F-021</td><td>Material unavailable</td><td>Quantity on hand &lt; target × 1.2 (dead volume and correction margin)</td></tr>
+          <tr><td class="id">F-030</td><td>No compatible dispenser</td><td>No dispenser lists the material’s phase and properties</td></tr>
+          <tr><td class="id">F-031</td><td>Below dispenser resolution</td><td>Target &lt; dispenser <code>min_dispense_g</code></td></tr>
+          <tr><td class="id">F-032</td><td>Tolerance not achievable</td><td>tolerance_g &lt; 3 × dispenser repeatability σ at that mass</td></tr>
+          <tr><td class="id">F-040</td><td>Viscosity outside envelope</td><td>Material or predicted mixture viscosity outside the dispenser or mixer limits</td></tr>
+          <tr><td class="id">F-041</td><td>Mixer envelope</td><td>rpm, duration or fill mass outside the mixer’s configured limits</td></tr>
+          <tr><td class="id">F-050</td><td>Batch does not fit</td><td>Batch volume exceeds the container’s working volume</td></tr>
+          <tr><td class="id">F-060</td><td>Uncommissioned equipment</td><td>Plan requires a device not marked commissioned for the requested mode (for example the capping node)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Equipment capability file</h3>
+<pre># formulation_cell/config/equipment_capabilities.yaml  (versioned; hash stored in every ProcessPlan)
+balances:
+  balance_1: {readability_g: 0.001, max_g: 220, calibration_id: CAL-…}
+dispensers:
+  D2: {type: powder, phases: [powder], min_dispense_g: SET_AT_COMMISSIONING, repeatability_sigma_g: SET_AT_COMMISSIONING}
+  D5: {type: liquid, phases: [liquid], viscosity_mpas: [MIN, MAX], min_dispense_g: SET_AT_COMMISSIONING}
+mixer:
+  rpm: [MIN, MAX]; max_duration_s: MAX; max_fill_g: MAX; requires_lid_closed: true
+containers:
+  vial_type_1: {working_volume_ml: …, tare_g_nominal: …}</pre>
+    <p class="note">Values marked <code>SET_AT_COMMISSIONING</code> are measured in M4 and entered through a reviewed change.
+    Until then the compiler runs against the Fake-mode capability file, whose values are chosen to exercise every rejection code.</p>
+  </section>
+  <!-- ================================================================ 5. SCHEDULING -->
+  <section class="part" id="plan">
+    <h2>5. Workflow and scheduling</h2>
+    <p class="lead">The compiler produces the workflow (what happens, in what order); the MADSci scheduler produces the
+    schedule (when, and which devices work at the same time). sdl_dt no longer schedules.</p>
+    <div class="two">
+      <div class="card">
+        <h3>Scheduling model</h3>
+        <ul class="plain">
+          <li><b>Jobs:</b> one per sample; <b>tasks:</b> the process-plan steps with their <code>after</code> dependencies.</li>
+          <li><b>Renewable resources, capacity 1:</b> gantry zone, arm, each balance, mixer, each container, each dispenser.</li>
+          <li><b>Setup times:</b> tool change on the gantry, mixer lid open and close.</li>
+          <li><b>Transfer constraints:</b> a container is held by exactly one location or the gripper at any time.</li>
+          <li><b>Shared-zone exclusion:</b> gantry and arm tasks that list the same zone cannot overlap.</li>
+          <li><b>Durations:</b> p90 of the last 50 measured runs of that action and argument class; configured estimate until 20 samples exist.</li>
+          <li><b>Objective:</b> minimize makespan, then total container waiting time (limits time a mixed sample sits before characterization).</li>
+          <li><b>Re-planning:</b> on any delay over 20 % of a task’s p90, or on a fault, re-solve the unstarted tasks with current state.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Scheduler interface</h3>
+<pre>class Scheduler(Protocol):
+    def solve(self,
+              plans: list[ProcessPlan],
+              resources: ResourceModel,
+              durations: DurationModel,
+              now: datetime,
+              hints: SchedulingHints | None = None,
+              ) -> Schedule: ...
+
+# Schedule.entries: action_id, step_id, node,
+#   start, end, resources, zone
+# Schedule.solver: "cp-sat" | "list-fallback"
+# Schedule.makespan_s, Schedule.optimal: bool</pre>
+        <p>CP-SAT runs with a 2 s limit; if it returns no feasible solution in time, the critical-path list scheduler
+        runs. Both are deterministic for a given seed and input, so a schedule can be reproduced from its stored inputs.</p>
+      </div>
+    </div>
+    <figure>
+      <div class="scroll">
+<svg viewBox="0 0 1100 300" role="img" aria-label="Two schedules for two samples. Sequential: weighing, arm and mixer never overlap, makespan 34 minutes. Optimized: the weighing station dispenses sample 2 while the arm and the mixer handle sample 1, makespan 26 minutes." xmlns="http://www.w3.org/2000/svg">
+<!-- scale: x = 150 + 26 * minutes; 0 to 34 min -->
+<text x="16" y="24" class="t" style="font-weight:700">Sequential schedule</text>
+<text x="190" y="24" class="tm">no overlap · makespan 34 min</text>
+<text x="16" y="52" class="tm">weighing_node</text>
+<text x="16" y="78" class="tm">robot_arm_node</text>
+<text x="16" y="104" class="tm">mixer_node</text>
+<rect x="150" y="38" width="884" height="20" rx="3" class="lane"/>
+<rect x="150" y="64" width="884" height="20" rx="3" class="lane"/>
+<rect x="150" y="90" width="884" height="20" rx="3" class="lane"/>
+<rect x="150" y="40" width="208" height="16" rx="3" class="g-w"/><text x="254" y="52" class="g-t" text-anchor="middle">dispense S1</text>
+<rect x="358" y="66" width="52" height="16" rx="3" class="g-a"/><text x="384" y="78" class="g-t" text-anchor="middle">load</text>
+<rect x="410" y="92" width="130" height="16" rx="3" class="g-m"/><text x="475" y="104" class="g-t" text-anchor="middle">mix S1</text>
+<rect x="540" y="66" width="52" height="16" rx="3" class="g-a"/><text x="566" y="78" class="g-t" text-anchor="middle">unload</text>
+<rect x="592" y="40" width="208" height="16" rx="3" class="g-w"/><text x="696" y="52" class="g-t" text-anchor="middle">dispense S2</text>
+<rect x="800" y="66" width="52" height="16" rx="3" class="g-a"/><text x="826" y="78" class="g-t" text-anchor="middle">load</text>
+<rect x="852" y="92" width="130" height="16" rx="3" class="g-m"/><text x="917" y="104" class="g-t" text-anchor="middle">mix S2</text>
+<rect x="982" y="66" width="52" height="16" rx="3" class="g-a"/><text x="1008" y="78" class="g-t" text-anchor="middle">unload</text>
+<path d="M1034,34 V116" class="grid-l"/>
+<text x="1040" y="104" class="t" style="font-weight:700">34</text>
+
+<text x="16" y="160" class="t" style="font-weight:700">Optimized schedule</text>
+<text x="190" y="160" class="tm">resource-constrained · makespan 26 min · −24 %</text>
+<text x="16" y="188" class="tm">weighing_node</text>
+<text x="16" y="214" class="tm">robot_arm_node</text>
+<text x="16" y="240" class="tm">mixer_node</text>
+<rect x="150" y="174" width="884" height="20" rx="3" class="lane"/>
+<rect x="150" y="200" width="884" height="20" rx="3" class="lane"/>
+<rect x="150" y="226" width="884" height="20" rx="3" class="lane"/>
+<rect x="150" y="176" width="208" height="16" rx="3" class="g-w"/><text x="254" y="188" class="g-t" text-anchor="middle">dispense S1</text>
+<rect x="358" y="176" width="208" height="16" rx="3" class="g-w"/><text x="462" y="188" class="g-t" text-anchor="middle">dispense S2 (parallel)</text>
+<rect x="358" y="202" width="52" height="16" rx="3" class="g-a"/><text x="384" y="214" class="g-t" text-anchor="middle">load</text>
+<rect x="410" y="228" width="130" height="16" rx="3" class="g-m"/><text x="475" y="240" class="g-t" text-anchor="middle">mix S1</text>
+<rect x="540" y="202" width="52" height="16" rx="3" class="g-a"/><text x="566" y="214" class="g-t" text-anchor="middle">unload</text>
+<rect x="592" y="202" width="52" height="16" rx="3" class="g-a"/><text x="618" y="214" class="g-t" text-anchor="middle">load</text>
+<rect x="644" y="228" width="130" height="16" rx="3" class="g-m"/><text x="709" y="240" class="g-t" text-anchor="middle">mix S2</text>
+<rect x="774" y="202" width="52" height="16" rx="3" class="g-a"/><text x="800" y="214" class="g-t" text-anchor="middle">unload</text>
+<path d="M826,170 V252" class="grid-l"/>
+<text x="832" y="240" class="t" style="font-weight:700">26</text>
+
+<!-- axis -->
+<path d="M150,268 H1034" style="stroke:var(--rule);stroke-width:1"/>
+<text x="150" y="286" class="tm" text-anchor="middle">0</text>
+<text x="280" y="286" class="tm" text-anchor="middle">5</text>
+<text x="410" y="286" class="tm" text-anchor="middle">10</text>
+<text x="540" y="286" class="tm" text-anchor="middle">15</text>
+<text x="670" y="286" class="tm" text-anchor="middle">20</text>
+<text x="800" y="286" class="tm" text-anchor="middle">25</text>
+<text x="930" y="286" class="tm" text-anchor="middle">30</text>
+<text x="1060" y="286" class="tm" text-anchor="middle">min</text>
+</svg>
+      </div>
+      <figcaption><b>Illustrative resource-constrained scheduling scenario, not experimentally benchmarked.</b> The 34 to
+      26 min reduction follows from assumed durations (8 min dispensing, 2 min per arm move, 5 min mixing). Measured
+      throughput is reported in M6 against the acceptance criterion in section 16.</figcaption>
+    </figure>
+  </section>
+  <!-- ================================================================ 6. VALIDATION -->
+  <section class="part" id="twin">
+    <h2>6. Digital twin as a synchronized validation service</h2>
+    <div class="warn"><b>Principle.</b> A successful simulation is evidence that the <i>modeled</i> constraints hold. It is
+    not proof that physical execution is safe. The twin can block execution; it can never be the only thing allowing it.</div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Stage</th><th>Checks</th><th>Owner</th><th>When</th></tr></thead>
+        <tbody>
+          <tr><td><b>Static validation</b></td><td>Reachability (IK), joint limits, self-collision and collision with fixed geometry, dynamic limits along the planned trajectory</td><td><span class="own ros">MoveIt 2</span> via <code>validation_service</code></td><td>Ahead of time, per route. Cached by route hash + URDF/SRDF hash + fixture-model hash. Any change to these invalidates the cache.</td></tr>
+          <tr><td><b>Dynamic validation</b></td><td>Current robot, gantry, lid and container positions; held object; workspace occupancy against the schedule; state preconditions</td><td><span class="own ros">validation_service</span> with <code>cell_state_manager</code></td><td>Per action, against a numbered snapshot, during stage 5 and again at the gate if the snapshot changed</td></tr>
+          <tr><td><b>Physical safety</b></td><td>E-stop, guarding, safety-rated speed and force limits, UR safety configuration, hardware interlocks</td><td><span class="own safe">Machine safety system</span></td><td>Always, independent of all software here</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Cell-state synchronization and scene versions</h3>
+    <ul class="plain">
+      <li><code>cell_state_manager</code> (new ROS 2 package) is the single owner of the scene: UR3e joint states from the driver, gripper state, gantry position from the weighing node, mixer lid state from the mixer node, and container locations from the MADSci Location Manager.</li>
+      <li>The scene is divided into zones (<code>zone_gantry</code>, <code>zone_mixer</code>, <code>zone_drop</code>, <code>zone_balance_1</code>, <code>zone_balance_2</code>). Each zone has a monotonically increasing version; the global <code>scene_version</code> increments on any change.</li>
+      <li>Robot joint motion inside a reserved trajectory does not bump versions; any untracked motion, object move, lid change or gantry move does.</li>
+      <li>In Real mode the scene follows the real cell (digital shadow); in Fake mode it follows the virtual devices. The mode is part of the snapshot.</li>
+      <li>If a source stops publishing for more than 1 s, its zones are marked <i>unknown</i> and no verdict depending on them can be <i>validated</i>.</li>
+    </ul>
+
+    <div class="two">
+      <div class="card">
+        <h3>Request</h3>
+<pre>ValidationRequest {
+  request_id: uuid
+  action_id: uuid               # the action to execute
+  experiment_id: "EXP-0001"
+  mode: "fake" | "real"
+  kind: "motion" | "gantry" | "state_only"
+  route_id: "balance_1->mixer"  # for cached static check
+  trajectory_ref: "traj/…"      # planned joint trajectory
+  held_object: "CTR-0451" | null
+  time_window: {start, end}     # from the schedule
+  required_zones: ["zone_balance_1", "zone_mixer"]
+  preconditions: ["mixer.lid == open",
+                  "gripper.holding == CTR-0451"]
+}</pre>
+      </div>
+      <div class="card">
+        <h3>Verdict</h3>
+<pre>ValidationVerdict {
+  request_id, action_id
+  result: "validated" | "rejected" | "needs_review"
+  reason_codes: ["V-020"]
+  checks: [{name, passed, value, limit, unit}]
+  min_clearance_mm: 23.4
+  scene_version: 18342
+  zone_versions: {"zone_mixer": 211, "zone_balance_1": 97}
+  model_hash: "sha256:…"        # URDF/SRDF/fixtures
+  computed_at: "2026-10-30T12:00:00.000Z"
+  expires_at:  "2026-10-30T12:02:00.000Z"
+  simulated_trajectory_ref: "datapoint/…"
+}</pre>
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Code</th><th>Check</th><th>Rejected when</th><th>Needs review when</th></tr></thead>
+        <tbody>
+          <tr><td class="id">V-010</td><td>Kinematic feasibility</td><td>A pose is unreachable or a joint leaves its limit</td><td>A joint is within 5° of its limit</td></tr>
+          <tr><td class="id">V-020</td><td>Collision clearance (links, gripper, held container, scene)</td><td>Minimum clearance &lt; 10 mm</td><td>10 to 20 mm</td></tr>
+          <tr><td class="id">V-030</td><td>Dynamic limits</td><td>Joint velocity or acceleration, or TCP speed, above the configured reduced-mode limit</td><td>Above 90 % of the limit</td></tr>
+          <tr><td class="id">V-040</td><td>Workspace sharing</td><td>A required zone is reserved by another device in the time window</td><td>Never; this is binary</td></tr>
+          <tr><td class="id">V-050</td><td>State preconditions</td><td>A precondition is false (for example mixing with the lid open)</td><td>Never; this is binary</td></tr>
+          <tr><td class="id">V-060</td><td>State freshness</td><td>A required zone is <i>unknown</i></td><td>Never; this is binary</td></tr>
+          <tr><td class="id">V-070</td><td>Novelty</td><td>Never</td><td>Route or static cache entry never approved by a person</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The 10 mm and 20 mm clearance thresholds and the 5° joint margin are the initial values for the UR3e with
+    the current gripper. They are configuration, reviewed at commissioning, and stored in each verdict’s checks.</p>
+
+    <h3>Invalidation rules at the execution gate</h3>
+    <ol class="steps">
+      <li>Every zone in <code>zone_versions</code> still has the same version, and none is <i>unknown</i>.</li>
+      <li><code>now &lt; expires_at</code> (verdicts live 120 s).</li>
+      <li><code>model_hash</code> equals the currently loaded model.</li>
+      <li>The action’s reservation lease is still held by this experiment.</li>
+      <li>The device reports its own interlocks true and the cell is armed (Real mode).</li>
+    </ol>
+    <p class="note">If rule 1, 2 or 3 fails, the gate requests a fresh dynamic validation once. If that is not <i>validated</i>,
+    the action is blocked and the experiment goes to <code>FAULT</code> with the verdict’s reason codes.</p>
+  </section>
+  <!-- ================================================================ 7. STATE MACHINE -->
+  <section class="part" id="states">
+    <h2>7. Execution state machine and recovery</h2>
+    <p class="lead">Experiments and actions each have an explicit state machine, owned by MADSci and persisted on every
+    transition, so a restart resumes from stored state. Every transition emits an event to the Event Manager.</p>
+    <figure>
+      <div class="scroll">
+<svg viewBox="0 0 1100 405" role="img" aria-label="Experiment state machine. Main path: CREATED, VALIDATING, PLANNED, SIMULATED, AWAITING_APPROVAL, READY, EXECUTING, VERIFYING, COMPLETED. REJECTED is reached from VALIDATING or SIMULATED. FAULT is reachable from any state from PLANNED to VERIFYING; from FAULT the run goes to RECOVERING, which either re-plans the remaining actions from the verified physical state back to PLANNED, or ends in ABORTED." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="s-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-cmd"/></marker><marker id="s-deny" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-deny"/></marker></defs>
+<rect x="20" y="20" width="180" height="56" rx="8" class="st main"/>
+<text x="110.0" y="44" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">CREATED</text>
+<text x="110.0" y="62" class="tm" text-anchor="middle">submitted</text>
+<rect x="235" y="20" width="180" height="56" rx="8" class="st main"/>
+<text x="325.0" y="44" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">VALIDATING</text>
+<text x="325.0" y="62" class="tm" text-anchor="middle">compile, check</text>
+<rect x="450" y="20" width="180" height="56" rx="8" class="st main"/>
+<text x="540.0" y="44" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">PLANNED</text>
+<text x="540.0" y="62" class="tm" text-anchor="middle">workflow, schedule</text>
+<rect x="665" y="20" width="180" height="56" rx="8" class="st main"/>
+<text x="755.0" y="44" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">SIMULATED</text>
+<text x="755.0" y="62" class="tm" text-anchor="middle">verdicts stored</text>
+<rect x="880" y="20" width="180" height="56" rx="8" class="st main"/>
+<text x="970.0" y="44" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">AWAITING_APPROVAL</text>
+<text x="970.0" y="62" class="tm" text-anchor="middle">per ADR-08</text>
+<path d="M202,48 H232" class="e-cmd" marker-end="url(#s-cmd)"/>
+<path d="M417,48 H447" class="e-cmd" marker-end="url(#s-cmd)"/>
+<path d="M632,48 H662" class="e-cmd" marker-end="url(#s-cmd)"/>
+<path d="M847,48 H877" class="e-cmd" marker-end="url(#s-cmd)"/>
+<rect x="20" y="140" width="180" height="56" rx="8" class="st main"/>
+<text x="110.0" y="164" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">READY</text>
+<text x="110.0" y="182" class="tm" text-anchor="middle">leases held, armed</text>
+<rect x="235" y="140" width="180" height="56" rx="8" class="st main"/>
+<text x="325.0" y="164" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">EXECUTING</text>
+<text x="325.0" y="182" class="tm" text-anchor="middle">gate → action</text>
+<rect x="450" y="140" width="180" height="56" rx="8" class="st main"/>
+<text x="540.0" y="164" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">VERIFYING</text>
+<text x="540.0" y="182" class="tm" text-anchor="middle">measurements</text>
+<rect x="665" y="140" width="180" height="56" rx="8" class="st ok"/>
+<text x="755.0" y="164" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">COMPLETED</text>
+<text x="755.0" y="182" class="tm" text-anchor="middle">provenance stored</text>
+<path d="M202,168 H232" class="e-cmd" marker-end="url(#s-cmd)"/>
+<path d="M417,168 H447" class="e-cmd" marker-end="url(#s-cmd)"/>
+<path d="M632,168 H662" class="e-cmd" marker-end="url(#s-cmd)"/>
+<path d="M970,78 V108 H110 V135" class="e-cmd" marker-end="url(#s-cmd)"/>
+<text x="540" y="102" class="tm" text-anchor="middle">approved, or approval not required</text>
+<rect x="880" y="140" width="180" height="56" rx="8" class="st bad"/>
+<text x="970.0" y="164" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">REJECTED</text>
+<text x="970.0" y="182" class="tm" text-anchor="middle">from VALIDATING, SIMULATED</text>
+<rect x="20" y="250" width="1040" height="140" rx="10" class="f-safe"/>
+<text x="36" y="272" class="safe-t" style="font-size:12px">Fault handling: reachable from PLANNED, SIMULATED, READY, EXECUTING and VERIFYING</text>
+<rect x="60" y="290" width="180" height="56" rx="8" class="st bad"/>
+<text x="150.0" y="314" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">FAULT</text>
+<text x="150.0" y="332" class="tm" text-anchor="middle">stop dependents, record</text>
+<rect x="330" y="290" width="180" height="56" rx="8" class="st hold"/>
+<text x="420.0" y="314" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">RECOVERING</text>
+<text x="420.0" y="332" class="tm" text-anchor="middle">reconcile physical state</text>
+<rect x="600" y="290" width="180" height="56" rx="8" class="st bad"/>
+<text x="690.0" y="314" class="t mono" text-anchor="middle" style="font-weight:700;font-size:11.5px">ABORTED</text>
+<text x="690.0" y="332" class="tm" text-anchor="middle">resources released</text>
+<path d="M242,318 H325" class="e-deny" marker-end="url(#s-deny)"/>
+<path d="M512,318 H595" class="e-deny" marker-end="url(#s-deny)"/>
+<text x="554" y="310" class="tm" text-anchor="middle">unrecoverable</text>
+<rect x="830" y="290" width="210" height="56" rx="8" class="st main"/>
+<text x="935" y="313" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">back to PLANNED</text>
+<text x="935" y="331" class="tm" text-anchor="middle">re-plan remaining actions</text>
+<path d="M512,330 H560 V364 H790 V330 H826" class="e-cmd" marker-end="url(#s-cmd)"/>
+<text x="676" y="380" class="tm" text-anchor="middle">operator authorizes re-plan</text>
+<path d="M325,195 V245" class="e-deny" marker-end="url(#s-deny)"/>
+<path d="M540,195 V245" class="e-deny" marker-end="url(#s-deny)"/>
+<text x="332" y="226" class="deny-t" style="font-size:10.5px">fault</text>
+</svg>      </div>
+    </figure>
+    <div class="two">
+      <div class="card">
+        <h3>Action states</h3>
+<pre>PENDING → AUTHORIZED → DISPATCHED → RUNNING → SUCCEEDED
+                                        ↘ FAILED
+           (timeout or lost link)       ↘ UNKNOWN → reconcile
+                                                   → SUCCEEDED | FAILED</pre>
+        <p><code>UNKNOWN</code> is a first-class state: after a timeout the action is neither retried nor assumed done.
+        MADSci calls the node’s <code>get_action_status(action_id)</code>; if the node cannot answer, the action stays
+        <code>UNKNOWN</code> and the experiment goes to <code>FAULT</code>.</p>
+      </div>
+      <div class="card">
+        <h3>Idempotency rules (ADR-09)</h3>
+        <ul class="plain">
+          <li>Each dispatch carries <code>action_id</code> and <code>idempotency_key = hash(experiment_id, step_id, attempt)</code>.</li>
+          <li>The node writes the key to its local ledger (SQLite) <i>before</i> sending a device command, and the result after.</li>
+          <li>A repeated key returns the stored result and never commands the device again.</li>
+          <li>Actions are classed: <b>read</b> (read mass, get state: safe to repeat), <b>positioning</b> (move to a pose: repeatable after state check), <b>material-changing</b> (dispense, transfer, mix: at most once).</li>
+          <li>A new attempt of a material-changing action needs a new <code>attempt</code> number, issued only by the recovery procedure.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Failure</th><th>Detected by</th><th>Immediate response</th><th>Recovery</th></tr></thead>
+        <tbody>
+          <tr><td><b>Dispensing out of tolerance</b></td><td>Verify step: |actual − target| &gt; tol</td><td>Stop dispensing for this sample</td><td>Under target: one correction dispense if the deficit is above the dispenser minimum. Over target: mark the sample as a deviation, record actual masses, continue only if the campaign allows deviated samples; otherwise discard.</td></tr>
+          <tr><td><b>Balance communication loss</b></td><td>No reading for 2 s or SiLA 2 error</td><td>Stop dependent dispensing</td><td>Reconnect, re-read the stable mass, reconcile against the ledger before continuing.</td></tr>
+          <tr><td><b>Robot motion failure</b></td><td>Driver result, protective stop</td><td>Action <code>FAILED</code>, arm stays put</td><td>Read actual joint state and gripper state, update the scene, operator confirms container location, plan a validated retreat.</td></tr>
+          <tr><td><b>Mixer communication loss</b></td><td>No status for 5 s</td><td>Mixing marked <code>UNKNOWN</code></td><td>Never assume mixing completed. Wait for the mixer to report idle and lid unlock, read its log if available; otherwise mark the sample as an uncertain-process deviation.</td></tr>
+          <tr><td><b>Container transfer failure</b></td><td>Gripper sensor, unexpected location</td><td>Stop arm actions</td><td>Locate the container (sensors, then operator), update the Location Manager, re-plan.</td></tr>
+          <tr><td><b>Resource conflict</b></td><td>Lease refused or lost</td><td>Block the action</td><td>Wait up to the schedule slack, then re-schedule; never execute without the lease.</td></tr>
+          <tr><td><b>Stale verdict</b></td><td>Execution gate rules</td><td>Block the action</td><td>One fresh dynamic validation; if not validated, <code>FAULT</code>.</td></tr>
+          <tr><td><b>Power or software restart</b></td><td>MADSci start-up check</td><td>All in-flight actions set to <code>UNKNOWN</code></td><td>Recover from verified physical state (device queries, sensors, operator confirmation), never from the last instruction sent.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Recovery procedure</h3>
+    <ol class="steps">
+      <li>Enter <code>FAULT</code>: stop dependent actions, hold all leases, record the triggering event and reason code.</li>
+      <li>Enter <code>RECOVERING</code>: query every device involved; resolve every <code>UNKNOWN</code> action to <code>SUCCEEDED</code> or <code>FAILED</code> from device evidence.</li>
+      <li>Update the Location Manager and the scene from verified positions; anything that cannot be verified needs operator confirmation in the sdl_dt recovery view.</li>
+      <li>The operator chooses: re-plan the remaining actions (back to <code>PLANNED</code>, then full validation) or abort (release leases, move containers to a safe location, <code>ABORTED</code>).</li>
+      <li>Record the full recovery trail as events linked to the experiment.</li>
+    </ol>
+  </section>
+  <!-- ================================================================ 8. NODE CONTRACTS -->
+  <section class="part" id="contracts">
+    <h2>8. Node action contracts</h2>
+    <p class="lead">Every node implements the same base contract plus its own typed actions. Inputs and results are Pydantic
+    models in <code>formulation_cell/schemas</code>, exported as JSON Schema. Fake mode implements the identical contract.</p>
+    <div class="card">
+      <h3>Base contract, all nodes</h3>
+<pre>get_state()                    -> NodeState {mode, commissioned, ready, interlocks: dict[str,bool], faults: list}
+get_capabilities()             -> Capabilities  (subset of equipment_capabilities.yaml)
+get_action_status(action_id)   -> ActionStatus {state, result | None, started_at, ended_at}
+abort(action_id)               -> AbortResult   (best effort; safety system remains the real stop)
+every action:  (action_id, idempotency_key, args, timeout_s) -> ActionResult {state, outputs, measurements[], device_log_ref}</pre>
+    </div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Action</th><th>Inputs</th><th>Outputs</th><th>Preconditions</th><th>Class</th><th>Timeout</th></tr></thead>
+        <tbody>
+          <tr><td><code>weighing_node.change_tool</code></td><td>tool, dispenser_id</td><td>mounted tool</td><td>gantry zone leased; tool rack slot occupied</td><td>positioning</td><td class="num">120 s</td></tr>
+          <tr><td><code>weighing_node.tare</code></td><td>balance, container_id</td><td>tare_g</td><td>container on balance; reading stable</td><td>read</td><td class="num">30 s</td></tr>
+          <tr><td><code>weighing_node.dispense</code></td><td>material, dispenser_id, target_g, tol_g, balance</td><td>actual_g, stable, duration_s</td><td>tared; correct tool; material lot on hand</td><td>material-changing</td><td class="num">600 s</td></tr>
+          <tr><td><code>weighing_node.read_mass</code></td><td>balance</td><td>mass_g, stable</td><td>none</td><td>read</td><td class="num">15 s</td></tr>
+          <tr><td><code>robot_arm_node.open_mixer_lid</code></td><td>none</td><td>lid_state</td><td>mixer idle; valid verdict; zone_mixer leased</td><td>positioning</td><td class="num">60 s</td></tr>
+          <tr><td><code>robot_arm_node.close_mixer_lid</code></td><td>none</td><td>lid_state</td><td>gripper empty; valid verdict</td><td>positioning</td><td class="num">60 s</td></tr>
+          <tr><td><code>robot_arm_node.transfer</code></td><td>container_id, from, to</td><td>final location, gripper state</td><td>container at <i>from</i>; <i>to</i> free; valid verdict; both zones leased</td><td>material-changing</td><td class="num">120 s</td></tr>
+          <tr><td><code>robot_arm_node.home</code></td><td>none</td><td>joint state</td><td>valid verdict for the retreat path</td><td>positioning</td><td class="num">60 s</td></tr>
+          <tr><td><code>mixer_node.run_mixing</code></td><td>rpm, mix_s, defoam_s, container_id</td><td>completed, log</td><td>lid closed and locked; container in mixer</td><td>material-changing</td><td class="num">mix_s + defoam_s + 120 s</td></tr>
+          <tr><td><code>mixer_node.get_lid_state</code></td><td>none</td><td>open | closed | locked</td><td>none</td><td>read</td><td class="num">10 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Timeouts are initial values; M4 replaces them with 3 × measured p99. A timeout moves the action to
+    <code>UNKNOWN</code>, never to <code>FAILED</code> directly.</p>
+    <h3>Instrument communication</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Device</th><th>Node</th><th>Interface to the node</th><th>Host</th><th>Fake implementation</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Balances ×2</td><td>weighing_node</td><td>SiLA 2</td><td>Raspberry Pi</td><td>Noisy mass model (configurable σ, drift, settle time)</td><td><span class="chip todo">transport to confirm in M1</span></td></tr>
+          <tr><td>Gantry XYZ, tool changer</td><td>weighing_node</td><td>SiLA 2</td><td>Raspberry Pi</td><td>Kinematic position model; publishes to <code>cell_state_manager</code></td><td><span class="chip todo">transport to confirm in M1</span></td></tr>
+          <tr><td>Dispensers ×7</td><td>weighing_node</td><td>SiLA 2</td><td>Raspberry Pi</td><td>Flow model with overshoot</td><td><span class="chip todo">transport to confirm in M1</span></td></tr>
+          <tr><td>Thinky mixer</td><td>mixer_node</td><td>SiLA 2</td><td>Raspberry Pi</td><td>Timed state model with lid interlock</td><td><span class="chip todo">transport to confirm in M1</span></td></tr>
+          <tr><td>UR3e arm</td><td>robot_arm_node</td><td>ROS 2 action (<code>ur_robot_driver</code>, MoveIt 2)</td><td>Ubuntu 24.04 cell PC (ADR-07)</td><td>URSim with the same driver</td><td><span class="chip todo">commissioning</span></td></tr>
+          <tr><td>Gripper</td><td>robot_arm_node</td><td>ROS 2 (via UR tool I/O or vendor driver)</td><td>Ubuntu 24.04 cell PC</td><td>Simulated gripper with object attach</td><td><span class="chip todo">geometry and driver to confirm</span></td></tr>
+          <tr><td>Capping station</td><td>capping_node</td><td>SiLA 2</td><td>none</td><td>none</td><td><span class="chip p2">out of scope (ADR-14)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">“Transport to confirm” means the SiLA 2 server exists or is planned, but the physical link it uses
+    (serial, USB, Ethernet) and the vendor command set must be recorded in <code>documentation/interfaces/</code> in M1.
+    This is data gathering, not a design decision.</p>
+  </section>
+  <!-- ================================================================ 9. DATA -->
+  <section class="part" id="data">
+    <h2>9. Experimental data model and provenance</h2>
+    <p class="lead">Stored in the MADSci Data Manager (ADR-06). Every record has a stable ID, a schema version and the git
+    SHA of the software that wrote it. Nothing is overwritten; corrections are new records that reference the old one.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Entity</th><th>Key fields</th><th>Links</th></tr></thead>
+        <tbody>
+          <tr><td><b>Campaign</b></td><td>campaign_id, objectives, constraints, parameter space, strategy, status</td><td>1 → n Experiment</td></tr>
+          <tr><td><b>Experiment</b></td><td>experiment_id, state history, mode manifest, approval, operator</td><td>→ Campaign, Formulation, ProcessPlan</td></tr>
+          <tr><td><b>Formulation</b></td><td>formulation_id, ingredients and fractions, batch mass, tolerances, origin (optimizer, scientist, reference), proposal metadata (acquisition value, predicted mean and σ)</td><td>→ Material</td></tr>
+          <tr><td><b>Material</b></td><td>material_id, supplier, lot, phase, density, viscosity, expiry, quantity</td><td>n ↔ n Formulation, through lots used</td></tr>
+          <tr><td><b>ProcessPlan</b></td><td>process_plan_id, template, compiler version, capability hash, input hash, steps</td><td>1 → n Action</td></tr>
+          <tr><td><b>Schedule</b></td><td>solver, makespan, optimal flag, inputs hash</td><td>→ Action entries</td></tr>
+          <tr><td><b>Action</b></td><td>action_id, idempotency key, attempt, state history, start, end, result</td><td>→ Equipment, ValidationVerdict, Measurement</td></tr>
+          <tr><td><b>ValidationVerdict</b></td><td>as in section 6</td><td>→ Action</td></tr>
+          <tr><td><b>Measurement</b></td><td>type, target, actual, unit, uncertainty, timestamp, device, calibration</td><td>→ Action, Equipment, Calibration</td></tr>
+          <tr><td><b>Equipment</b></td><td>device_id, model, serial, firmware, commissioned modes</td><td>1 → n Calibration</td></tr>
+          <tr><td><b>Calibration</b></td><td>calibration_id, method, reference, valid_from, valid_until</td><td>→ Equipment</td></tr>
+          <tr><td><b>Deviation</b></td><td>deviation_id, type, reason code, impact, disposition</td><td>→ Experiment, Action</td></tr>
+          <tr><td><b>AgentRun</b></td><td>agent_run_id, agent, graph and prompt versions, model and route, data class, tools called, inputs and outputs by reference, user, cost</td><td>→ drafts, proposals, reports, submissions it produced</td></tr>
+          <tr><td><b>Result</b></td><td>measured properties of the final sample, validity flag</td><td>→ Experiment; consumed as Observation</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div class="card">
+        <h3>Measurement record</h3>
+<pre>{
+  "schema_version": "1.0.0",
+  "measurement_id": "MEA-…",
+  "experiment_id": "EXP-0001",
+  "action_id": "0192f…",
+  "measurement_type": "mass",
+  "material_id": "powder_A", "lot": "L-2291",
+  "target": 2.000, "actual": 1.998, "unit": "g",
+  "tolerance": 0.010, "within_tolerance": true,
+  "uncertainty": {"value": 0.0012, "k": 2},
+  "stable": true,
+  "timestamp": "2026-10-30T12:00:00Z",
+  "device_id": "balance_01",
+  "device_status": "ok",
+  "calibration_id": "CAL-001",
+  "calibration_valid": true,
+  "mode": "real",
+  "software_sha": "a1b2c3d"
+}</pre>
+      </div>
+      <div class="card">
+        <h3>Observation validity, for training</h3>
+        <ul class="plain">
+          <li><b>valid</b>: completed, all masses within tolerance, calibration valid, mode real. Used for objectives.</li>
+          <li><b>deviated</b>: completed with recorded deviations. Used with the <i>actual</i> composition, never the commanded one.</li>
+          <li><b>failed_process</b>: the formulation could not be prepared or mixed (for example phase separation, dispensing impossible). Used only by the feasibility model.</li>
+          <li><b>failed_equipment</b>: an equipment or software failure unrelated to the formulation. Excluded from all models.</li>
+          <li><b>excluded</b>: removed by a scientist with a written reason. Excluded.</li>
+          <li><b>simulated</b>: Fake-mode results. Never mixed with real data; used only for pipeline tests.</li>
+        </ul>
+        <p>The optimizer always trains on actual measured compositions and properties. A run with incomplete
+        provenance is automatically <i>excluded</i>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ 10. AI -->
+  <section class="part" id="ai">
+    <h2>10. Formulation-aware optimization</h2>
+    <p class="lead">The optimization problem, defined so it can be implemented in <code>sdl_dt/optimization</code> with BoTorch
+    and Ax (ADR-12). The objective set is chosen per campaign by the scientist; the machinery below is fixed.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Element</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td><b>Decision variables</b></td><td>Mass fractions x<sub>1</sub>…x<sub>k</sub> of the campaign’s ingredients; mixing speed (rpm); mixing duration (s); defoaming duration (s). Process bounds come from the equipment capability file, never hard-coded.</td></tr>
+          <tr><td><b>Mixture constraint</b></td><td>Σ x<sub>i</sub> = 1, l<sub>i</sub> ≤ x<sub>i</sub> ≤ u<sub>i</sub>. Implemented by optimizing over k − 1 free fractions with the linear inequality Σ<sub>i&lt;k</sub> x<sub>i</sub> ≤ 1 − l<sub>k</sub>, the last fraction derived.</td></tr>
+          <tr><td><b>Manufacturability constraint</b></td><td>batch_mass × x<sub>i</sub> ≥ min_dispense_g of its dispenser for every present ingredient; every candidate passes the compiler dry run before it is proposed.</td></tr>
+          <tr><td><b>Objectives</b></td><td>1 to 4 per campaign, each with direction and a reference point, for example: maximize API solubility, maximize permeability, minimize viscosity, minimize preparation time.</td></tr>
+          <tr><td><b>Outcome constraints</b></td><td>For example viscosity ≤ dispensing limit, stability ≥ threshold; modeled as GP outputs with a probability-of-feasibility weight.</td></tr>
+          <tr><td><b>Surrogate</b></td><td>Independent GP per objective, Matérn 5/2 kernel with ARD, inputs normalized to [0, 1], outputs standardized, heteroscedastic noise when replicate data exist. Random-forest ensemble as an explainable baseline.</td></tr>
+          <tr><td><b>Feasibility model</b></td><td>GP classifier on valid vs <i>failed_process</i> observations; candidates weighted by P(feasible) and filtered at P &lt; 0.2.</td></tr>
+          <tr><td><b>Acquisition</b></td><td>qNEHVI (noisy expected hypervolume improvement) for 2+ objectives; qLogNEI for a single objective. Batch q = 1 to 4, matched to how many samples the schedule can run in parallel.</td></tr>
+          <tr><td><b>Initial design</b></td><td>12 points (or 2(d + 1), whichever is larger): space-filling Sobol samples projected onto the constrained simplex, plus the reference formulation and its 2 replicates.</td></tr>
+          <tr><td><b>Replicates</b></td><td>The reference formulation repeats every 10 experiments to monitor drift; a drift beyond 2σ pauses the campaign.</td></tr>
+          <tr><td><b>Stopping</b></td><td>Budget reached, or hypervolume improvement below 1 % over 3 consecutive batches, or the scientist stops the campaign.</td></tr>
+          <tr><td><b>Human in the loop</b></td><td>The scientist can approve, edit or replace each proposed batch; edits are stored with origin <i>scientist</i>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="math">
+      maximize<sub>x, p</sub> &nbsp; f(x, p) = [f<sub>1</sub>, …, f<sub>m</sub>] &nbsp;&nbsp;
+      subject to &nbsp; Σ x<sub>i</sub> = 1, &nbsp; l<sub>i</sub> ≤ x<sub>i</sub> ≤ u<sub>i</sub>, &nbsp;
+      p ∈ P<sub>equipment</sub>, &nbsp; g<sub>j</sub>(x, p) ≤ 0, &nbsp; compile(x, p) = ok
+      <br>next batch = argmax<sub>q candidates</sub> &nbsp; qNEHVI(x, p) · P(feasible | x, p)
+    </div>
+    <h3>Evaluation before hardware</h3>
+    <ol class="steps">
+      <li>Build a synthetic benchmark with the same variable structure (mixture plus process parameters) and known optimum.</li>
+      <li>Compare constrained qNEHVI against Sobol sampling and a classical mixture DoE (simplex-centroid) over 10 seeds and the same budget.</li>
+      <li>Pass criterion: qNEHVI reaches 90 % of the benchmark’s maximum hypervolume with at least 30 % fewer experiments than the best baseline, averaged over seeds.</li>
+      <li>Replay historical or Fake-mode runs end to end to test the data pipeline, validity flags and proposal flow.</li>
+    </ol>
+  </section>
+  <!-- ================================================================ 11. AGENTIC LAYER -->
+  <section class="part" id="agents">
+    <h2>11. Agentic intelligence layer</h2>
+    <p class="lead">Five agents built with LangGraph, MCP and Pydantic help scientists, operators and engineers work faster:
+    they turn goals into campaign drafts, explain what the cell is doing, propose recovery options and write the analysis.
+    The deterministic components keep every decision that matters: the compiler decides what can be made, the optimizer
+    decides what to try, the validation service and execution gate decide what may move, and people approve. The agent
+    layer lives in a new package, <code>sdl_agents</code>, alongside sdl_dt.</p>
+    <div class="warn"><b>Rule (ADR-15).</b> An agent can only do what its MCP tools allow, with the permissions of the person
+    it serves. There is no tool for device commands, ROS 2 goals, editing capabilities or safety configuration, arming the
+    cell, or approving anything. A prompt injection or a model error can therefore produce, at worst, a bad draft that a
+    person and the compiler will reject.</div>
+    <figure>
+      <div class="scroll">
+<svg viewBox="0 0 1100 600" role="img" aria-label="Where the agents stand. Scientists, operators and engineers use five agents in the agent layer, run on LangGraph with checkpoints and approval interrupts. Agents call models only through the LiteLLM gateway, which routes by data class: public and synthetic data may go to Groq Llama, confidential data only to a self-hosted vLLM model or the approved enterprise LLM, restricted data to no model. Agents act only through the sdl_mcp tool server, which validates arguments, applies the caller permissions and the agent allowlist, and audits every call. The tools reach the sdl_dt and MADSci APIs and the document index. A hard boundary separates all of this from the execution gate, nodes, devices, ROS 2 commands and the safety system; only MADSci crosses it, after compile, validation, gate and approval." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="g-req" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-req"/></marker><marker id="g-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-cmd"/></marker><marker id="g-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-agent"/></marker><marker id="g-info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-info"/></marker></defs>
+<rect x="20" y="14" width="248" height="54" rx="8" class="box partner"/>
+<text x="32" y="36" class="t" style="font-weight:700;font-size:12px">Scientist</text>
+<text x="32" y="54" class="tm">campaigns, approvals</text>
+<rect x="286" y="14" width="248" height="54" rx="8" class="box partner"/>
+<text x="298" y="36" class="t" style="font-weight:700;font-size:12px">Operator</text>
+<text x="298" y="54" class="tm">runs, faults, recovery</text>
+<rect x="552" y="14" width="248" height="54" rx="8" class="box partner"/>
+<text x="564" y="36" class="t" style="font-weight:700;font-size:12px">Engineer</text>
+<text x="564" y="54" class="tm">analysis, reports</text>
+<path d="M144,70 V104" class="e-req" marker-end="url(#g-req)"/>
+<path d="M410,70 V104" class="e-req" marker-end="url(#g-req)"/>
+<path d="M676,70 V104" class="e-req" marker-end="url(#g-req)"/>
+<text x="820" y="36" class="tm">people approve every L1 draft and every</text>
+<text x="820" y="51" class="tm">L3 submission; agents never approve</text>
+<rect x="20" y="108" width="780" height="178" rx="12" class="f-agent"/>
+<text x="36" y="130" class="agent-t" style="font-size:13px">Agent layer · sdl_agents · LangGraph graphs · Pydantic state</text>
+<rect x="36" y="142" width="144" height="96" rx="8" class="box agent"/>
+<rect x="46" y="151" width="44" height="18" rx="9" class="pill-ag"/><text x="68" y="164" class="pill-ag-t" text-anchor="middle">AG-1</text>
+<text x="48" y="186" class="t" style="font-weight:700;font-size:11.5px">Campaign designer</text>
+<text x="48" y="202" class="tm">L1 draft → L3 submit</text>
+<text x="48" y="216" class="tm">in approved campaign</text>
+<rect x="188" y="142" width="144" height="96" rx="8" class="box agent"/>
+<rect x="198" y="151" width="44" height="18" rx="9" class="pill-ag"/><text x="220" y="164" class="pill-ag-t" text-anchor="middle">AG-2</text>
+<text x="200" y="186" class="t" style="font-weight:700;font-size:11.5px">Lab copilot</text>
+<text x="200" y="202" class="tm">L0 explain</text>
+<text x="200" y="216" class="tm">status, F- and V-codes</text>
+<rect x="340" y="142" width="144" height="96" rx="8" class="box agent"/>
+<rect x="350" y="151" width="44" height="18" rx="9" class="pill-ag"/><text x="372" y="164" class="pill-ag-t" text-anchor="middle">AG-3</text>
+<text x="352" y="186" class="t" style="font-weight:700;font-size:11.5px">Recovery advisor</text>
+<text x="352" y="202" class="tm">L1 propose</text>
+<text x="352" y="216" class="tm">options in FAULT</text>
+<rect x="492" y="142" width="144" height="96" rx="8" class="box agent"/>
+<rect x="502" y="151" width="44" height="18" rx="9" class="pill-ag"/><text x="524" y="164" class="pill-ag-t" text-anchor="middle">AG-4</text>
+<text x="504" y="186" class="t" style="font-weight:700;font-size:11.5px">Results analyst</text>
+<text x="504" y="202" class="tm">L2 reports</text>
+<text x="504" y="216" class="tm">proposal rationale</text>
+<rect x="644" y="142" width="144" height="96" rx="8" class="box agent"/>
+<rect x="654" y="151" width="44" height="18" rx="9" class="pill-ag"/><text x="676" y="164" class="pill-ag-t" text-anchor="middle">AG-5</text>
+<text x="656" y="186" class="t" style="font-weight:700;font-size:11.5px">Knowledge</text>
+<text x="656" y="202" class="tm">L0 answer</text>
+<text x="656" y="216" class="tm">SOPs, manuals, SDS</text>
+<text x="36" y="270" class="tm">Postgres checkpointer · human-approval interrupts · step, token, time and cost budgets · prompts versioned in git</text>
+<rect x="830" y="108" width="250" height="178" rx="12" class="box"/>
+<text x="846" y="130" class="t" style="font-weight:700;font-size:12.5px">LLM gateway · LiteLLM</text>
+<text x="846" y="154" class="tm" style="font-size:10.5px">C0 / synthetic → Groq (Llama)</text>
+<text x="846" y="175" class="tm" style="font-size:10.5px">C1, C2 → self-hosted vLLM</text>
+<text x="846" y="196" class="tm" style="font-size:10.5px">C1, C2 → approved enterprise LLM</text>
+<text x="846" y="217" class="deny-t" style="font-size:10.5px">C3 → blocked, no model</text>
+<text x="846" y="238" class="tm" style="font-size:10.5px">traces → Langfuse (self-hosted)</text>
+<text x="846" y="259" class="tm" style="font-size:10.5px">model per agent chosen by evals</text>
+<path d="M802,196 H826" class="e-agent" marker-end="url(#g-agent)"/>
+<path d="M410,288 V312" class="e-agent" marker-end="url(#g-agent)"/>
+<rect x="20" y="316" width="780" height="70" rx="10" class="box key"/>
+<text x="36" y="340" class="t" style="font-weight:700;font-size:12.5px">sdl_mcp · MCP tool server</text>
+<text x="36" y="358" class="tm">per-agent allowlist · Pydantic-validated arguments and results · caller’s permissions · rate limits</text>
+<text x="36" y="374" class="tm">every call audited to Langfuse and as an AgentRun record in the Data Manager</text>
+<rect x="830" y="316" width="250" height="70" rx="10" class="box"/>
+<text x="846" y="340" class="t" style="font-weight:700">Document index</text>
+<text x="846" y="358" class="tm">pgvector · self-hosted embeddings</text>
+<text x="846" y="374" class="tm">retrieved text is data, not instructions</text>
+<path d="M802,351 H826" class="e-info" marker-end="url(#g-info)"/>
+<path d="M200,388 V412" class="e-info" marker-end="url(#g-info)"/><path d="M600,388 V412" class="e-info" marker-end="url(#g-info)"/>
+<rect x="20" y="416" width="380" height="56" rx="8" class="box partner"/>
+<text x="32" y="438" class="t" style="font-weight:700;font-size:12px">sdl_dt API</text>
+<text x="32" y="456" class="tm">campaigns, drafts, reports, read-only scene</text>
+<rect x="420" y="416" width="380" height="56" rx="8" class="box mode"/>
+<text x="432" y="438" class="t" style="font-weight:700;font-size:12px">MADSci REST API</text>
+<text x="432" y="456" class="tm">dry run, submit, status, records, verdicts</text>
+<path d="M20,496 H1080" style="stroke:var(--deny);stroke-width:2;stroke-dasharray:8 5"/>
+<text x="20" y="488" class="deny-t" style="font-size:11px">Hard boundary: no MCP tool reaches below this line</text>
+<path d="M610,474 V528" class="e-cmd" marker-end="url(#g-cmd)"/>
+<text x="618" y="516" class="tm">MADSci only, after compile, validation, gate, approval</text>
+<rect x="420" y="532" width="380" height="56" rx="8" class="box mode"/>
+<text x="432" y="554" class="t" style="font-weight:700;font-size:12px">Execution gate → nodes → devices</text>
+<text x="432" y="572" class="tm">ROS 2 goals, SiLA 2 commands, capability and cell config</text>
+<rect x="830" y="532" width="250" height="56" rx="10" class="f-safe"/>
+<text x="955" y="555" class="safe-t" text-anchor="middle">Machine safety system</text>
+<text x="955" y="573" class="tm" text-anchor="middle">independent of all software</text>
+<rect x="20" y="532" width="380" height="56" rx="8" class="st bad"/>
+<text x="32" y="554" class="t" style="font-weight:700;font-size:12px">Not available to agents</text>
+<text x="32" y="572" class="tm">approve, arm, edit config, move, dispense, mix</text>
+</svg>
+      </div>
+      <figcaption>Agents sit above the APIs, never beside the hardware. The magenta tags in the pipeline (section 3) and the
+      compiler flow (section 4) show the exact stage where each one assists.</figcaption>
+    </figure>
+
+    <h3>Agent catalog</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Agent</th><th>Serves</th><th>What it does</th><th>Pipeline stage</th><th>MCP tools</th><th>Max autonomy</th><th>Human checkpoint</th></tr></thead>
+        <tbody>
+          <tr><td><span class="agtag">AG-1</span> <b>Campaign designer</b></td><td>Scientist</td><td>Turns a stated goal into a <code>CampaignDraft</code> (variables, bounds, objectives, constraints, budget) and seed formulations; checks each with a compiler dry run and revises up to 3 times</td><td>1 Specify, 2 Compile (dry run)</td><td><code>search_documents</code>, <code>list_materials</code>, <code>get_capabilities</code>, <code>compile_dry_run</code>, <code>create_campaign_draft</code>, <code>submit_experiment</code></td><td>L3, inside an approved campaign</td><td>Scientist approves the campaign; ADR-08 approvals still apply per run</td></tr>
+          <tr><td><span class="agtag">AG-2</span> <b>Lab copilot</b></td><td>Scientist, operator</td><td>Answers “what is the cell doing”, explains F-codes, V-codes, verdicts and schedules in plain language, with record IDs as citations</td><td>2 Compile, 5 Validate, 6 Approve</td><td><code>get_experiment</code>, <code>get_schedule</code>, <code>get_verdict</code>, <code>explain_reason_code</code>, <code>get_events</code>, <code>get_scene_snapshot</code></td><td>L0</td><td>None needed: read-only</td></tr>
+          <tr><td><span class="agtag">AG-3</span> <b>Recovery advisor</b></td><td>Operator</td><td>In <code>FAULT</code>, collects device states, ledger entries and events, ranks likely causes and proposes recovery options mapped to the procedure in section 7</td><td>8 Execute (FAULT, RECOVERING)</td><td><code>get_fault_context</code>, <code>get_action_ledger</code>, <code>get_device_state</code>, <code>search_documents</code>, <code>create_recovery_proposal</code></td><td>L1</td><td>Operator chooses and executes the recovery decision in the sdl_dt recovery view</td></tr>
+          <tr><td><span class="agtag">AG-4</span> <b>Results analyst</b></td><td>Scientist, engineer</td><td>Queries results and compile records, explains why the optimizer chose each candidate (predicted mean, uncertainty, acquisition value), drafts campaign reports with plots</td><td>10 Record, learn</td><td><code>query_results</code>, <code>get_campaign</code>, <code>get_proposal_rationale</code>, <code>run_analysis</code> (sandboxed), <code>create_report_draft</code></td><td>L2</td><td>Author reviews before a report is shared</td></tr>
+          <tr><td><span class="agtag">AG-5</span> <b>Knowledge assistant</b></td><td>Everyone, and AG-1 to AG-4</td><td>Answers from SOPs, device manuals, material safety data sheets, ADRs and this specification, with source citations</td><td>All, as context</td><td><code>search_documents</code>, <code>get_document</code></td><td>L0</td><td>None needed: read-only</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Autonomy levels</h3>
+        <div class="tablewrap" style="border:0">
+          <table class="dense" style="min-width:0">
+            <thead><tr><th>Level</th><th>Allowed</th></tr></thead>
+            <tbody>
+              <tr><td class="id">L0 Inform</td><td>Read and explain</td></tr>
+              <tr><td class="id">L1 Draft</td><td>Create drafts and proposals that a person must accept</td></tr>
+              <tr><td class="id">L2 Act digitally</td><td>Dry runs, Fake-mode runs, sandboxed analysis, report drafts</td></tr>
+              <tr><td class="id">L3 Submit</td><td>Submit a Real experiment, only inside a campaign a scientist approved, and still through compile, validation, approval policy and the gate</td></tr>
+              <tr><td class="id">Never</td><td>Approve, arm, command a device, edit capabilities, cell configuration, safety configuration or acceptance limits</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Data classes and model routing (ADR-18)</h3>
+        <div class="tablewrap" style="border:0">
+          <table class="dense" style="min-width:0">
+            <thead><tr><th>Class</th><th>Examples</th><th>Allowed endpoints</th></tr></thead>
+            <tbody>
+              <tr><td class="id">C0</td><td>Public docs, synthetic and Fake-mode data, CI evaluations</td><td>Groq (Llama), self-hosted, enterprise</td></tr>
+              <tr><td class="id">C1</td><td>Internal SOPs, device manuals, this spec</td><td>Self-hosted vLLM, enterprise</td></tr>
+              <tr><td class="id">C2</td><td>Formulations, materials, results, campaign data</td><td>Self-hosted vLLM, enterprise</td></tr>
+              <tr><td class="id">C3</td><td>Credentials, safety and cell configuration</td><td>None</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Every MCP tool result carries its data class; the gateway takes the highest class in the conversation and refuses
+        any endpoint not allowed for it. Groq is the free development endpoint; switching to an approved endpoint before any
+        real data exists is milestone task T-406.</p>
+      </div>
+    </div>
+
+    <h3>MCP tool catalog</h3>
+    <p class="note">Tools are thin, typed wrappers over existing APIs; they add no business logic. Side-effect class decides
+    which autonomy level may call it.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Tool</th><th>Backed by</th><th>Side effect</th><th>Data class out</th><th>Agents</th></tr></thead>
+        <tbody>
+          <tr><td><code>search_documents</code>, <code>get_document</code></td><td>pgvector index</td><td>read</td><td>C0, C1</td><td>all</td></tr>
+          <tr><td><code>get_experiment</code>, <code>get_schedule</code>, <code>get_verdict</code>, <code>get_events</code></td><td>MADSci REST</td><td>read</td><td>C2</td><td>AG-2, AG-3, AG-4</td></tr>
+          <tr><td><code>get_scene_snapshot</code>, <code>get_device_state</code></td><td>sdl_dt read-only scene, MADSci node state</td><td>read</td><td>C2</td><td>AG-2, AG-3</td></tr>
+          <tr><td><code>explain_reason_code</code></td><td>Static code catalog (F-, V-codes)</td><td>read</td><td>C0</td><td>AG-2</td></tr>
+          <tr><td><code>list_materials</code>, <code>get_capabilities</code></td><td>Material database, capability file (read-only view)</td><td>read</td><td>C2</td><td>AG-1</td></tr>
+          <tr><td><code>get_fault_context</code>, <code>get_action_ledger</code></td><td>MADSci, node ledgers</td><td>read</td><td>C2</td><td>AG-3</td></tr>
+          <tr><td><code>query_results</code>, <code>get_campaign</code>, <code>get_proposal_rationale</code></td><td>Data Manager, sdl_dt optimization</td><td>read</td><td>C2</td><td>AG-4, AG-1</td></tr>
+          <tr><td><code>compile_dry_run</code></td><td><code>formulation_engine</code></td><td>digital, no state change</td><td>C2</td><td>AG-1</td></tr>
+          <tr><td><code>run_analysis</code></td><td>Sandboxed Python container, no network, read-only data mount</td><td>digital</td><td>C2</td><td>AG-4</td></tr>
+          <tr><td><code>create_campaign_draft</code>, <code>create_recovery_proposal</code>, <code>create_report_draft</code></td><td>sdl_dt</td><td>draft</td><td>C2</td><td>AG-1, AG-3, AG-4</td></tr>
+          <tr><td><code>submit_experiment</code></td><td>MADSci REST</td><td>submit (L3)</td><td>C2</td><td>AG-1, only for campaigns with <code>agent_submission: approved</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>LangGraph: AG-1 Campaign designer graph</h3>
+<pre>START
+  └─ understand_goal        LLM → GoalSpec (Pydantic)
+  └─ retrieve_context       tools: search_documents, list_materials,
+                            get_capabilities
+  └─ draft_campaign         LLM → CampaignDraft (Pydantic)
+  └─ validate_schema        code; invalid → draft_campaign (≤ 2)
+  └─ dry_run_seeds          tool: compile_dry_run per seed formulation
+       ├─ errors, tries &lt; 3 → revise_draft → validate_schema
+       └─ errors, tries = 3 → report_infeasible → END
+  └─ present_for_approval   interrupt(): scientist edits / approves
+       ├─ rejected → END
+       └─ approved → create_campaign_draft (status: approved)
+  └─ END   (optimizer takes over; AG-1 submits only if allowed)
+
+budgets: 25 steps · 60 k tokens · 5 min wall time per run
+checkpointer: PostgresSaver (resume after restart)</pre>
+      </div>
+      <div class="card">
+        <h3>Pydantic contracts for agent output</h3>
+<pre>class ObjectiveDraft(BaseModel):
+    name: str
+    direction: Literal["maximize", "minimize"]
+    unit: str
+    reference_point: float
+
+class CampaignDraft(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    schema_version: Literal["1.0.0"]
+    goal_text: str
+    ingredients: list[IngredientBounds]   # V3 schema
+    process_bounds: ProcessBounds         # within capabilities
+    objectives: conlist(ObjectiveDraft, min_length=1, max_length=4)
+    outcome_constraints: list[OutcomeConstraint] = []
+    budget_experiments: conint(ge=4, le=200)
+    seed_formulations: list[FormulationSpec]
+    agent_submission: Literal["not_allowed", "requested"]
+    citations: list[RecordRef]            # documents, record IDs
+    agent_run_id: UUID</pre>
+        <p>The LLM is called with structured output against these models. Output that fails validation is returned to the
+        model with the error, at most twice, then the run fails closed and says why.</p>
+      </div>
+    </div>
+
+    <h3>Guardrails</h3>
+    <ul class="plain">
+      <li><b>Structural:</b> forbidden actions have no tool (ADR-15); the allowlist is enforced in <code>sdl_mcp</code>, not in the prompt.</li>
+      <li><b>Identity:</b> every tool call carries the user’s token; an agent can never do more than the person it serves.</li>
+      <li><b>Prompt injection:</b> retrieved documents, comments and record text are wrapped as data; tool results never become system instructions; the red-team suite in CI tests this.</li>
+      <li><b>Grounding:</b> AG-2, AG-4 and AG-5 must cite record IDs or document sections; an answer without a source says it has none.</li>
+      <li><b>Budgets:</b> step, token, time and cost limits per run and per day; exceeding them stops the run with a message.</li>
+      <li><b>Provenance:</b> each run is an <code>AgentRun</code> record (agent, graph version, prompt version, model, route, tools called, inputs and outputs by reference, user) linked to every draft, proposal or submission it produced.</li>
+      <li><b>Kill switch:</b> one configuration flag disables all L2 and L3 tools; the deterministic system keeps running without agents.</li>
+    </ul>
+
+    <h3>Evaluation suites (ADR-19)</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Suite</th><th>Content</th><th>Gate</th></tr></thead>
+        <tbody>
+          <tr><td><b>campaign_design</b></td><td>50 goal statements with expert-written reference campaigns</td><td>A14</td></tr>
+          <tr><td><b>tool_use</b></td><td>200 tasks with expected tool calls and arguments across all agents</td><td>A18</td></tr>
+          <tr><td><b>grounded_qa</b></td><td>40 questions over Fake-mode records and documents, with reference answers and sources</td><td>A15</td></tr>
+          <tr><td><b>fault_recovery</b></td><td>30 recorded or injected fault scenarios with the correct recovery path</td><td>A16</td></tr>
+          <tr><td><b>red_team</b></td><td>Injection through documents, comments, material names and user prompts; attempts to reach forbidden actions or exfiltrate C2/C3 data</td><td>A13, A17</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Suites run on C0 synthetic data, so they can use Groq in CI. The same suites are run against every candidate
+    model before it is routed for an agent; the cheapest model that passes all gates for that agent is selected.</p>
+  </section>
+
+  <!-- ================================================================ 12. ARCHITECTURE -->
+  <section class="part" id="arch">
+    <h2>12. Target architecture</h2>
+    <figure>
+      <div class="scroll">
+<svg viewBox="0 0 1100 790" role="img" aria-label="Target architecture. At the top, the agent layer with five agents calls models through the LLM gateway and acts only through the sdl_mcp tool server on the sdl_dt and MADSci APIs. Below it, sdl_dt at the top designs campaigns, runs the optimizer, offers approval and recovery views and a digital shadow; it sends requests only to MADSci and reads ROS 2 state. MADSci hosts the formulation engine, the scheduler, the Workcell Manager with the execution gate, the Location, Resource, Data and Event Managers, and the nodes. The ROS 2 workspace hosts the cell state manager, the validation service, MoveIt 2 and the UR robot driver, with URSim in Fake mode. Nodes command the instruments through SiLA 2 on Raspberry Pis, and the arm through the UR driver on the Ubuntu cell PC. The machine safety system is independent of all software." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="a-req" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-req"/></marker><marker id="a-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-cmd"/></marker><marker id="a-info" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-info"/></marker><marker id="a-read" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-read"/></marker><marker id="a-fake" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-fake"/></marker><marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-ok"/></marker><marker id="a-agent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" class="ah-agent"/></marker></defs>
+<rect x="20" y="10" width="1060" height="108" rx="12" class="f-agent"/>
+<text x="36" y="32" class="agent-t" style="font-size:13px">sdl_agents · agent layer · LangGraph · Pydantic (section 11)</text>
+<text x="1064" y="32" class="tm" text-anchor="end">acts only through MCP tools · no hardware path</text>
+<rect x="36" y="46" width="132" height="56" rx="8" class="box agent"/><rect x="46" y="54" width="44" height="18" rx="9" class="pill-ag"/><text x="68" y="67" class="pill-ag-t" text-anchor="middle">AG-1</text><text x="48" y="90" class="t" style="font-weight:700;font-size:11px">Campaign designer</text>
+<rect x="178" y="46" width="132" height="56" rx="8" class="box agent"/><rect x="188" y="54" width="44" height="18" rx="9" class="pill-ag"/><text x="210" y="67" class="pill-ag-t" text-anchor="middle">AG-2</text><text x="190" y="90" class="t" style="font-weight:700;font-size:11px">Lab copilot</text>
+<rect x="320" y="46" width="132" height="56" rx="8" class="box agent"/><rect x="330" y="54" width="44" height="18" rx="9" class="pill-ag"/><text x="352" y="67" class="pill-ag-t" text-anchor="middle">AG-3</text><text x="332" y="90" class="t" style="font-weight:700;font-size:11px">Recovery advisor</text>
+<rect x="462" y="46" width="132" height="56" rx="8" class="box agent"/><rect x="472" y="54" width="44" height="18" rx="9" class="pill-ag"/><text x="494" y="67" class="pill-ag-t" text-anchor="middle">AG-4</text><text x="474" y="90" class="t" style="font-weight:700;font-size:11px">Results analyst</text>
+<rect x="604" y="46" width="132" height="56" rx="8" class="box agent"/><rect x="614" y="54" width="44" height="18" rx="9" class="pill-ag"/><text x="636" y="67" class="pill-ag-t" text-anchor="middle">AG-5</text><text x="616" y="90" class="t" style="font-weight:700;font-size:11px">Knowledge</text>
+<rect x="752" y="46" width="146" height="56" rx="8" class="box key"/><text x="825" y="69" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">sdl_mcp</text><text x="825" y="86" class="tm" text-anchor="middle">MCP tools · allowlist</text>
+<rect x="912" y="46" width="152" height="56" rx="8" class="box"/><text x="988" y="69" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">LLM gateway</text><text x="988" y="86" class="tm" text-anchor="middle">LiteLLM · routes by class</text>
+<path d="M744,74 H750" class="e-agent"/>
+<path d="M900,74 H908" class="e-agent" marker-end="url(#a-agent)"/>
+<path d="M825,104 V140" class="e-agent" marker-end="url(#a-agent)"/>
+<text x="833" y="126" class="agent-t" style="font-size:10.5px">tool calls to sdl_dt and MADSci APIs</text>
+<g transform="translate(0,130)">
+<rect x="20" y="16" width="1060" height="118" rx="12" class="f-partner"/>
+<text x="36" y="38" class="partner-t" style="font-size:13px">sdl_dt · experiment planning and intelligence</text>
+<text x="1064" y="38" class="tm" text-anchor="end">no hardware access · client of MADSci</text>
+<rect x="36" y="56" width="196" height="52" rx="7" class="box partner"/>
+<text x="134.0" y="76" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Campaigns, DoE</text>
+<text x="134.0" y="92" class="tm" text-anchor="middle">objectives, constraints</text>
+<rect x="244" y="56" width="196" height="52" rx="7" class="box partner"/>
+<text x="342.0" y="76" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Optimizer</text>
+<text x="342.0" y="92" class="tm" text-anchor="middle">BoTorch / Ax · qNEHVI</text>
+<rect x="452" y="56" width="196" height="52" rx="7" class="box partner"/>
+<text x="550.0" y="76" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Formulation interface</text>
+<text x="550.0" y="92" class="tm" text-anchor="middle">specs · compiler dry run</text>
+<rect x="660" y="56" width="196" height="52" rx="7" class="box partner"/>
+<text x="758.0" y="76" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Approval, recovery views</text>
+<text x="758.0" y="92" class="tm" text-anchor="middle">ADR-08 · operator input</text>
+<rect x="868" y="56" width="196" height="52" rx="7" class="box partner"/>
+<text x="966.0" y="76" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Digital shadow</text>
+<text x="966.0" y="92" class="tm" text-anchor="middle">3D state · progress · alerts</text>
+<path d="M200,136 V176" class="e-req" marker-end="url(#a-req)"/>
+<text x="206" y="160" class="h-req" style="font-size:10.5px">submit · approve · pause · cancel</text>
+<path d="M460,176 V138" class="e-info" marker-end="url(#a-info)"/>
+<text x="466" y="160" class="h-info" style="font-size:10.5px">plans · verdicts · events · results</text>
+<path d="M900,176 V138" class="e-read" marker-end="url(#a-read)"/>
+<text x="906" y="160" class="h-read" style="font-size:10.5px">scene, joint states (read-only)</text>
+<rect x="20" y="180" width="700" height="320" rx="12" class="f-cell"/>
+<text x="36" y="202" class="cell-t" style="font-size:13px">formulation_cell · MADSci 0.8.1 · owns execution</text>
+<rect x="36" y="216" width="212" height="52" rx="7" class="box mode"/>
+<text x="142.0" y="236" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Experiment Manager</text>
+<text x="142.0" y="252" class="tm" text-anchor="middle">+ formulation_engine</text>
+<rect x="262" y="216" width="212" height="52" rx="7" class="box mode"/>
+<text x="368.0" y="236" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Scheduler</text>
+<text x="368.0" y="252" class="tm" text-anchor="middle">CP-SAT · list fallback</text>
+<rect x="488" y="216" width="216" height="52" rx="7" class="box key"/>
+<text x="596.0" y="236" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Workcell Manager</text>
+<text x="596.0" y="252" class="tm" text-anchor="middle">+ execution gate (ADR-05)</text>
+<rect x="36" y="284" width="158" height="46" rx="7" class="box mode"/>
+<text x="115.0" y="304" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Location</text>
+<text x="115.0" y="320" class="tm" text-anchor="middle">poses · routes</text>
+<rect x="206" y="284" width="158" height="46" rx="7" class="box mode"/>
+<text x="285.0" y="304" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Resource</text>
+<text x="285.0" y="320" class="tm" text-anchor="middle">leases · inventory</text>
+<rect x="376" y="284" width="158" height="46" rx="7" class="box mode"/>
+<text x="455.0" y="304" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Data</text>
+<text x="455.0" y="320" class="tm" text-anchor="middle">system of record</text>
+<rect x="546" y="284" width="158" height="46" rx="7" class="box mode"/>
+<text x="625.0" y="304" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Event</text>
+<text x="625.0" y="320" class="tm" text-anchor="middle">state transitions</text>
+<text x="36" y="354" class="tm">Nodes · typed action contracts · action ledger · Fake / Real per device</text>
+<rect x="36" y="364" width="158" height="52" rx="7" class="box mode"/>
+<text x="115.0" y="384" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">weighing_node</text>
+<text x="115.0" y="400" class="tm" text-anchor="middle">balances, gantry, dispensers</text>
+<rect x="206" y="364" width="158" height="52" rx="7" class="box mode"/>
+<text x="285.0" y="384" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">mixer_node</text>
+<text x="285.0" y="400" class="tm" text-anchor="middle">Thinky mixer</text>
+<rect x="376" y="364" width="158" height="52" rx="7" class="box mode"/>
+<text x="455.0" y="384" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">robot_arm_node</text>
+<text x="455.0" y="400" class="tm" text-anchor="middle">arm + gripper</text>
+<rect x="546" y="364" width="158" height="52" rx="7" class="box plan"/>
+<text x="625.0" y="384" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">capping_node</text>
+<text x="625.0" y="400" class="tm" text-anchor="middle">out of scope</text>
+<text x="376" y="458" class="tm">Config: capabilities · signed cell config · mode manifest</text>
+<text x="376" y="476" class="tm">Contracts: schemas/ (Pydantic v2 → JSON Schema)</text>
+<path d="M115,418 V516" class="e-cmd" marker-end="url(#a-cmd)"/>
+<path d="M285,418 V516" class="e-cmd" marker-end="url(#a-cmd)"/>
+<text x="122" y="490" class="tm">SiLA 2</text><text x="292" y="490" class="tm">SiLA 2</text>
+<rect x="740" y="180" width="340" height="320" rx="12" class="f-twin"/>
+<text x="756" y="202" class="ros-t" style="font-size:13px">ros2_workspace · ROS 2 Jazzy</text>
+<rect x="756" y="216" width="308" height="46" rx="7" class="box twin"/>
+<text x="910.0" y="236" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">validation_service</text>
+<text x="910.0" y="252" class="tm" text-anchor="middle">static (cached) + dynamic verdicts</text>
+<rect x="756" y="274" width="308" height="46" rx="7" class="box twin"/>
+<text x="910.0" y="294" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">cell_state_manager</text>
+<text x="910.0" y="310" class="tm" text-anchor="middle">snapshot · zone and scene versions</text>
+<rect x="756" y="332" width="308" height="46" rx="7" class="box twin"/>
+<text x="910.0" y="352" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">MoveIt 2</text>
+<text x="910.0" y="368" class="tm" text-anchor="middle">planning scene · URDF / SRDF · fixtures</text>
+<rect x="756" y="390" width="148" height="46" rx="7" class="box twin"/>
+<text x="830.0" y="410" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">ur_robot_driver</text>
+<text x="830.0" y="426" class="tm" text-anchor="middle">cell PC (Real)</text>
+<rect x="916" y="390" width="148" height="46" rx="7" class="box vdev"/>
+<text x="990.0" y="410" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">URSim</text>
+<text x="990.0" y="426" class="tm" text-anchor="middle">Fake mode</text>
+<text x="1064" y="476" class="tm" text-anchor="end">no process values or results</text>
+<path d="M706,234 H750" class="e-fake" marker-end="url(#a-fake)"/>
+<path d="M752,250 H708" class="e-ok" marker-end="url(#a-ok)"/>
+<text x="728" y="228" class="h-fake" text-anchor="middle" style="font-size:9.5px">validate</text>
+<text x="728" y="264" class="h-ok" text-anchor="middle" style="font-size:9.5px">verdict</text>
+<path d="M706,307 H750" class="e-info" marker-end="url(#a-info)"/>
+<text x="728" y="300" class="h-info" text-anchor="middle" style="font-size:9.5px">state</text>
+<path d="M455,418 V432 H738 V413 H751" class="e-cmd" marker-end="url(#a-cmd)"/>
+<text x="640" y="426" class="tm">ROS 2 goals</text>
+<rect x="20" y="520" width="700" height="120" rx="12" class="f-dev"/>
+<text x="36" y="542" class="dev-t" style="font-size:13px">Instruments · SiLA 2 servers on Raspberry Pis · Real mode after the gate</text>
+<rect x="36" y="560" width="158" height="52" rx="7" class="box dev"/>
+<text x="115.0" y="580" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Balances ×2</text>
+<text x="115.0" y="596" class="tm" text-anchor="middle">mass</text>
+<rect x="206" y="560" width="158" height="52" rx="7" class="box dev"/>
+<text x="285.0" y="580" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Gantry, tool changer</text>
+<text x="285.0" y="596" class="tm" text-anchor="middle">XYZ</text>
+<rect x="376" y="560" width="158" height="52" rx="7" class="box dev"/>
+<text x="455.0" y="580" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Dispensers ×7</text>
+<text x="455.0" y="596" class="tm" text-anchor="middle">powder, liquid</text>
+<rect x="546" y="560" width="158" height="52" rx="7" class="box dev"/>
+<text x="625.0" y="580" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">Thinky mixer</text>
+<text x="625.0" y="596" class="tm" text-anchor="middle">lid interlock</text>
+<rect x="740" y="520" width="160" height="120" rx="12" class="f-dev"/>
+<rect x="756" y="560" width="128" height="52" rx="7" class="box dev"/>
+<text x="820.0" y="580" class="t" text-anchor="middle" style="font-weight:700;font-size:11.5px">UR3e + gripper</text>
+<text x="820.0" y="596" class="tm" text-anchor="middle">Real mode</text>
+<path d="M820,438 V555" class="e-cmd" marker-end="url(#a-cmd)"/>
+<rect x="916" y="520" width="164" height="120" rx="12" class="f-safe"/>
+<text x="998" y="548" class="safe-t" text-anchor="middle" style="font-size:12px">Machine safety</text>
+<text x="998" y="570" class="tm" text-anchor="middle">E-stop · guarding</text>
+<text x="998" y="586" class="tm" text-anchor="middle">UR safety config</text>
+<text x="998" y="602" class="tm" text-anchor="middle">hardware interlocks</text>
+<text x="998" y="618" class="tm" text-anchor="middle">independent of software</text>
+</g>
+</svg>      </div>
+      <figcaption>The agent layer sits on top and reaches the system only through <code>sdl_mcp</code>, which calls the same
+      sdl_dt and MADSci APIs a person uses. sdl_dt sends requests only to MADSci and reads ROS 2 without commanding it. The Workcell Manager’s
+      execution gate is the only path to the hardware: it requests verdicts from <code>validation_service</code>, checks
+      leases and live state, then dispatches to a node. Instrument nodes command their devices through SiLA 2; the arm node
+      sends ROS 2 action goals to <code>ur_robot_driver</code>. The machine safety system sits beneath everything and does
+      not depend on any of it.</figcaption>
+    </figure>
+    <ul class="legend">
+      <li><svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><path d="M2,6 H36" class="e-req"/><path d="M34,2 L42,6 L34,10 z" class="ah-req"/></svg><span>Requests to MADSci</span></li>
+      <li><svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><path d="M2,6 H36" class="e-info"/><path d="M34,2 L42,6 L34,10 z" class="ah-info"/></svg><span>Information and state publishing</span></li>
+      <li><svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><path d="M2,6 H36" class="e-read"/><path d="M34,2 L42,6 L34,10 z" class="ah-read"/></svg><span>Read-only from ROS 2</span></li>
+      <li><svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><path d="M2,6 H36" class="e-fake"/><path d="M34,2 L42,6 L34,10 z" class="ah-fake"/></svg><span>Validation request</span></li>
+      <li><svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><path d="M2,6 H36" class="e-ok"/><path d="M34,2 L42,6 L34,10 z" class="ah-ok"/></svg><span>Verdict</span></li>
+      <li><svg width="44" height="12" viewBox="0 0 44 12" aria-hidden="true"><path d="M2,6 H36" class="e-cmd"/><path d="M34,2 L42,6 L34,10 z" class="ah-cmd"/></svg><span>Device commands, after the gate</span></li>
+    </ul>
+    <h3>Interfaces between components</h3>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>From → to</th><th>Transport</th><th>Contract</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>sdl_dt → formulation_cell</td><td>MADSci REST client</td><td><code>FormulationSpec</code>, <code>CompileRequest(dry_run)</code>, <code>ExperimentCommand</code></td><td>Commands: submit, approve, pause, resume, cancel, recovery decision</td></tr>
+          <tr><td>formulation_cell → sdl_dt</td><td>REST + Event Manager subscription</td><td><code>ProcessPlan</code>, <code>Schedule</code>, <code>ValidationVerdict</code>, events, <code>Result</code></td><td>sdl_dt never polls devices</td></tr>
+          <tr><td>Experiment Manager → formulation_engine</td><td>In-process Python call</td><td><code>compile(spec, capabilities, materials) → ProcessPlan | CompileError</code></td><td>Pure function, deterministic</td></tr>
+          <tr><td>Workcell Manager → validation_service</td><td>ROS 2 service via <code>digital_twin_bridge</code> (rclpy)</td><td><code>ValidationRequest → ValidationVerdict</code></td><td>Bridge translates Pydantic ↔ ROS 2 messages; p95 latency target 1 s for dynamic checks</td></tr>
+          <tr><td>Nodes, Location Manager → cell_state_manager</td><td>ROS 2 topics via the bridge</td><td><code>CellStateUpdate</code></td><td>Every update carries source, timestamp, sequence number</td></tr>
+          <tr><td>robot_arm_node → ur_robot_driver</td><td>ROS 2 actions (MoveIt 2 execute, <code>FollowJointTrajectory</code>)</td><td>Validated trajectory only, referenced by verdict</td><td>Node refuses a trajectory whose hash differs from the validated one</td></tr>
+          <tr><td>Instrument nodes → devices</td><td>SiLA 2 (gRPC) to the Pi servers</td><td>Per-device SiLA 2 features</td><td>Recorded per device in <code>documentation/interfaces/</code></td></tr>
+          <tr><td>sdl_agents → sdl_mcp</td><td>MCP (streamable HTTP, internal network)</td><td>Typed tools, Pydantic in and out</td><td>User token forwarded; allowlist per agent</td></tr>
+          <tr><td>sdl_mcp → sdl_dt, MADSci</td><td>Existing REST APIs</td><td>V3 schemas</td><td>No new privileged endpoints</td></tr>
+          <tr><td>sdl_agents → models</td><td>LiteLLM gateway (OpenAI-compatible API)</td><td>Route by data class</td><td>Groq only for C0; vLLM or enterprise for C1–C2</td></tr>
+          <tr><td>sdl_dt → ROS 2</td><td>ROS 2 subscriber</td><td>Joint states, scene snapshot</td><td>Read-only; no publishers or action clients allowed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <!-- ================================================================ 12. REPOSITORIES -->
+  <section class="part" id="repo">
+    <h2>13. Repositories, technology stack and CI/CD</h2>
+    <p class="lead">Extend the existing repositories; do not rebuild them. This is the target layout of the components, not
+    an instruction to merge repositories. New packages are marked <code>(new)</code>.</p>
+    <div class="two">
+      <div class="card">
+<pre>formulation_cell/            # existing MADSci project
+├── managers/
+├── scheduler/               (new) CP-SAT + list fallback
+├── execution_gate/          (new)
+├── nodes/
+│   ├── weighing_node/       + ledger, contracts
+│   ├── mixer_node/          + ledger, contracts
+│   ├── robot_arm_node/      + ledger, contracts
+│   └── capping_node/        out of scope
+├── workflows/templates/     dispense_mix_v1 …
+├── schemas/                 (new) Pydantic → JSON Schema
+├── config/                  capabilities, cell config, modes
+└── tests/
+
+formulation_engine/          (new) pure library
+├── compiler/  process_planner/
+├── material_database/  equipment_constraints/
+└── schemas/  tests/
+
+sdl_dt/                      # existing orchestration project
+├── experiment_design/  formulation_interface/
+├── optimization/            (new) BoTorch / Ax
+├── scheduling_interface/    preview only
+├── approval_recovery/       (new) views
+└── visualization/  monitoring/</pre>
+      </div>
+      <div class="card">
+<pre>ros2_workspace/src/          # existing ROS 2 repository
+├── existing_robot_packages/
+├── robot_description/       URDF, gripper, fixtures
+├── robot_moveit_config/
+├── cell_state_manager/      (new)
+├── validation_service/      (new)
+├── digital_twin_bridge/     (new) MADSci ↔ ROS 2
+└── interfaces/              (new) .msg / .srv / .action
+
+sdl_agents/                  (new) agent layer
+├── graphs/                  ag1_campaign … ag5_knowledge
+├── models/                  Pydantic state and outputs
+├── prompts/                 versioned, reviewed like code
+├── mcp_server/              sdl_mcp tools + allowlists
+├── gateway/                 LiteLLM routes, data classes
+├── retrieval/               pgvector ingestion, chunking
+└── evals/                   suites, datasets, thresholds
+
+integration_tests/
+├── fake_execution/  digital_twin/
+├── hardware_in_loop/  end_to_end/
+└── fault_injection/         (new)
+
+documentation/
+├── architecture/  adr/      ADR-01 … ADR-14
+├── interfaces/              per device
+├── safety/  commissioning/</pre>
+        <h3>Stack</h3>
+        <ul class="plain">
+          <li>Python 3.12, Pydantic v2, pytest, hypothesis for compiler property tests.</li>
+          <li>ROS 2 Jazzy, Ubuntu 24.04 (WSL2 for development, native on the cell PC), MoveIt 2, <code>ur_robot_driver</code>, URSim.</li>
+          <li>OR-Tools CP-SAT, BoTorch and Ax.</li>
+          <li>Agents: LangGraph with PostgresSaver, the official MCP Python SDK, Pydantic v2 structured outputs, LiteLLM, vLLM for self-hosted models, pgvector, Langfuse (self-hosted).</li>
+          <li>Docker Compose for MADSci services and URSim; GitHub Actions CI running unit, contract and Fake end-to-end tests on every pull request.</li>
+          <li>MLflow only for surrogate-model tracking, if the MADSci Data Manager does not already store model versions.</li>
+        </ul>
+      </div>
+    </div>
+    <h3>CI/CD pipeline</h3>
+    <p class="note">GitHub Actions. Hosted runners for stages 1 to 7; a self-hosted runner on the staging PC for stages 8
+    and 10, because they need ROS 2, URSim and the Fake cell. A stage that fails stops the pipeline.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>#</th><th>Stage</th><th>Tools</th><th>Blocks merge when</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><b>Static checks</b></td><td>ruff, mypy (strict for schemas, engine, agents), pre-commit</td><td>Any lint or type error</td></tr>
+          <tr><td class="n">2</td><td><b>Unit and property tests</b></td><td>pytest, hypothesis, coverage</td><td>A failing test; coverage below 85 % for <code>formulation_engine</code> and <code>sdl_mcp</code></td></tr>
+          <tr><td class="n">3</td><td><b>Contract tests</b></td><td>JSON Schema compatibility check, node contract suite in Fake mode, MCP tool schema snapshot</td><td>Breaking schema or tool change without a major version bump</td></tr>
+          <tr><td class="n">4</td><td><b>Security</b></td><td>pip-audit, gitleaks, Trivy image scan</td><td>Critical vulnerability or committed secret</td></tr>
+          <tr><td class="n">5</td><td><b>Agent guardrail tests</b></td><td>pytest: allowlist enforcement, data-class routing, forbidden-tool absence, kill switch</td><td>Any failure (deterministic, no model needed)</td></tr>
+          <tr><td class="n">6</td><td><b>Agent evaluations</b></td><td>Eval suites on C0 data through the gateway (Groq in CI); results stored in Langfuse</td><td>Score below an A13 to A18 threshold, or more than 2 points below the main-branch score</td></tr>
+          <tr><td class="n">7</td><td><b>Build</b></td><td>docker buildx, images to the internal registry tagged with git SHA, SBOM</td><td>Build failure</td></tr>
+          <tr><td class="n">8</td><td><b>Fake end-to-end</b></td><td>Docker Compose: MADSci, nodes in Fake mode, sdl_dt, sdl_agents; colcon test; URSim</td><td>A1, A2, A4, A5, A6, A8, A9 fail</td></tr>
+          <tr><td class="n">9</td><td><b>Release</b></td><td>Semantic version tag, changelog, signed images</td><td>Manual approval by the technical lead</td></tr>
+          <tr><td class="n">10</td><td><b>Deploy</b></td><td>dev (WSL2, Fake) → staging (cell PC, Fake + URSim, nightly) → cell (Real)</td><td>Cell deploy needs G4 and an operator; rollback is the previous image tag</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">A change to a prompt, a graph, a tool or a model route is a code change: it goes through the same
+    pipeline, and a model route change also re-runs the full evaluation suite against the new model.</p>
+  </section>
+
+  <!-- ================================================================ 13. SAFETY -->
+  <section class="part" id="safety">
+    <h2>14. Safety, modes and commissioning gates</h2>
+    <div class="warn"><b>Scope.</b> This software can block motion. It does not make the cell safe. The machine safety
+    function (E-stop, guarding, UR safety configuration, hardware interlocks) is designed and signed off under the plant’s
+    machine safety process, with its own risk assessment, before any Real-mode motion.</div>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Gate</th><th>Condition to pass</th><th>Signed by</th></tr></thead>
+        <tbody>
+          <tr><td><b>G1 · Fake complete</b></td><td>All Fake end-to-end and fault-injection tests pass in CI</td><td>Implementing engineer, reviewer</td></tr>
+          <tr><td><b>G2 · Device commissioned</b></td><td>Per device: interface verified, capability values measured, calibration record, Fake and Real behave identically on the contract test suite</td><td>Engineer, device owner</td></tr>
+          <tr><td><b>G3 · Safety sign-off</b></td><td>Risk assessment complete; E-stop, guarding and interlocks tested; UR safety configuration checksum recorded</td><td>Safety responsible</td></tr>
+          <tr><td><b>G4 · Real-mode arming</b></td><td>At run time: G2 and G3 recorded in the signed cell configuration, safety system healthy, operator arms the cell in sdl_dt</td><td>Operator, per session</td></tr>
+          <tr><td><b>G6 · Agents on real data</b></td><td>Approved C1–C2 model endpoint live, A13 and A17 passed against it, Langfuse and AgentRun audit active, kill switch tested</td><td>Technical lead, IT security</td></tr>
+          <tr><td><b>G7 · Agent submission (L3)</b></td><td>A14 passed; per campaign, the scientist sets <code>agent_submission: approved</code></td><td>Scientist, per campaign</td></tr>
+          <tr><td><b>G5 · Unattended operation</b></td><td>Template and routes approved, 10 attended runs of the template without fault, repeatability criterion met</td><td>Technical lead</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The signed cell configuration is a versioned file whose hash is checked at start-up; a changed hash
+    disarms the cell and requires approval for the next Real run (ADR-08).</p>
+  </section>
+  <!-- ================================================================ 14. ROADMAP -->
+  <section class="part" id="roadmap">
+    <h2>15. Implementation roadmap</h2>
+    <p class="lead">Six milestones, each ending in a working deliverable and an exit check. Task IDs are the backlog items
+    to open as tickets. Planning estimate: 13 to 17 weeks with parallel work and a second engineer owning the agent track (add 3 to 4 weeks with one engineer), assuming the existing repositories and
+    hardware remain usable. This is an engineering estimate, not a committed schedule.</p>
+    <div class="ms">
+      <div class="ms-item">
+        <div class="ms-head"><h3>M1 · Architecture freeze and contracts</h3><span class="chip p0">P0</span><span class="wk">1 week</span></div>
+        <div class="tablewrap"><table class="dense"><tbody>
+          <tr><td class="id">T-101</td><td>Commit ADR-01 to ADR-14 to <code>documentation/adr/</code></td></tr>
+          <tr><td class="id">T-102</td><td>Pydantic models: FormulationSpec, ProcessPlan, Schedule, ValidationRequest, ValidationVerdict, ActionResult, Measurement; JSON Schema export and CI compatibility check</td></tr>
+          <tr><td class="id">T-103</td><td>Node base contract and typed action models (section 8)</td></tr>
+          <tr><td class="id">T-104</td><td>Record each device’s transport and command set in <code>documentation/interfaces/</code></td></tr>
+          <tr><td class="id">T-105</td><td>ROS 2 interface package: validation service, cell-state messages</td></tr>
+          <tr><td class="id">T-106</td><td>ADR-15 to ADR-20; MCP tool contracts and allowlists; data-class labels on every API result</td></tr>
+        </tbody></table></div>
+        <p class="exit"><b>Exit:</b> schemas merged, CI green, interfaces reviewed by the technical lead.</p>
+      </div>
+      <div class="ms-item">
+        <div class="ms-head"><h3>M2 · End-to-end Fake execution</h3><span class="chip p0">P0</span><span class="wk">2 to 3 weeks</span></div>
+        <div class="tablewrap"><table class="dense"><tbody>
+          <tr><td class="id">T-201</td><td><code>formulation_engine</code>: compile steps, all F-codes, property tests</td></tr>
+          <tr><td class="id">T-202</td><td>Workflow template <code>dispense_mix_v1</code>; ProcessPlan → MADSci workflow</td></tr>
+          <tr><td class="id">T-203</td><td>Scheduler (CP-SAT + fallback) and Resource Manager leases</td></tr>
+          <tr><td class="id">T-204</td><td>Experiment and action state machines, persisted; events emitted</td></tr>
+          <tr><td class="id">T-205</td><td>Node action ledgers, idempotency, <code>get_action_status</code></td></tr>
+          <tr><td class="id">T-206</td><td>Fake devices with noise, overshoot and fault injection</td></tr>
+          <tr><td class="id">T-207</td><td>Data model records in the Data Manager; sdl_dt reads results</td></tr>
+          <tr><td class="id">T-208</td><td><code>sdl_mcp</code> read tools; LiteLLM gateway with data-class routing (Groq for C0)</td></tr>
+          <tr><td class="id">T-209</td><td>AG-5 Knowledge assistant (pgvector ingestion) and AG-2 Lab copilot on Fake-mode data</td></tr>
+          <tr><td class="id">T-210</td><td>CI stages 5 and 6: guardrail tests and the first evaluation suites</td></tr>
+        </tbody></table></div>
+        <p class="exit"><b>Exit:</b> a FormulationSpec submitted from sdl_dt runs to <code>COMPLETED</code> in Fake mode with full provenance; acceptance tests A1, A2, A4, A8 and A9 pass in Fake mode.</p>
+      </div>
+      <div class="ms-item">
+        <div class="ms-head"><h3>M3 · Digital-twin validation service</h3><span class="chip p0">P0</span><span class="wk">2 to 3 weeks, parallel with M2</span></div>
+        <div class="tablewrap"><table class="dense"><tbody>
+          <tr><td class="id">T-301</td><td>Complete URDF/SRDF: UR3e, gripper, fixtures, containers, mixer lid</td></tr>
+          <tr><td class="id">T-302</td><td><code>cell_state_manager</code>: zones, versions, freshness</td></tr>
+          <tr><td class="id">T-303</td><td><code>validation_service</code>: V-codes, static cache, dynamic checks</td></tr>
+          <tr><td class="id">T-304</td><td><code>digital_twin_bridge</code> and the execution gate rules</td></tr>
+          <tr><td class="id">T-305</td><td>Fault-injection tests: stale scene, unknown zone, resource conflict</td></tr>
+          <tr><td class="id">T-306</td><td>AG-1 Campaign designer graph with dry-run loop and approval interrupt</td></tr>
+          <tr><td class="id">T-307</td><td>AG-2 explains V-codes and verdicts; red-team suite</td></tr>
+        </tbody></table></div>
+        <p class="exit"><b>Exit:</b> the full robot workflow runs on URSim through the gate; A5 and A6 pass; AG-1 drafts a campaign that passes the dry run.</p>
+      </div>
+      <div class="ms-item">
+        <div class="ms-head"><h3>M4 · Physical commissioning</h3><span class="chip p0">P0</span><span class="wk">3 to 4 weeks</span></div>
+        <div class="tablewrap"><table class="dense"><tbody>
+          <tr><td class="id">T-401</td><td>Cell PC with Ubuntu 24.04, <code>ur_robot_driver</code>, real UR3e and gripper</td></tr>
+          <tr><td class="id">T-402</td><td>Gantry, balances, dispensers and mixer through SiLA 2 in Real mode, one device at a time (mixed mode)</td></tr>
+          <tr><td class="id">T-403</td><td>Measure capability values; replace <code>SET_AT_COMMISSIONING</code></td></tr>
+          <tr><td class="id">T-404</td><td>Calibration records; timeouts from measured p99</td></tr>
+          <tr><td class="id">T-405</td><td>Safety sign-off G3; recovery procedures tested on hardware</td></tr>
+          <tr><td class="id">T-406</td><td>Approved C1–C2 endpoint (self-hosted vLLM or enterprise LLM) before any real data; model selection by eval; gate G6</td></tr>
+          <tr><td class="id">T-407</td><td>AG-3 Recovery advisor, tested in hardware fault drills</td></tr>
+        </tbody></table></div>
+        <p class="exit"><b>Exit:</b> gates G2, G3 and G6 signed; the reference formulation runs attended on real equipment; A3 and A7 pass.</p>
+      </div>
+      <div class="ms-item">
+        <div class="ms-head"><h3>M5 · Optimization</h3><span class="chip p1">P1</span><span class="wk">3 to 4 weeks, starts on simulated data during M3</span></div>
+        <div class="tablewrap"><table class="dense"><tbody>
+          <tr><td class="id">T-501</td><td>Observation pipeline with validity flags</td></tr>
+          <tr><td class="id">T-502</td><td>Surrogates, feasibility classifier, constrained qNEHVI</td></tr>
+          <tr><td class="id">T-503</td><td>Synthetic benchmark vs Sobol and simplex-centroid DoE</td></tr>
+          <tr><td class="id">T-504</td><td>Proposal → dry-run compile → submit; scientist approval view</td></tr>
+          <tr><td class="id">T-505</td><td>AG-4 Results analyst with proposal rationale and sandboxed analysis</td></tr>
+          <tr><td class="id">T-506</td><td>AG-1 L3 submission inside approved campaigns; gate G7</td></tr>
+        </tbody></table></div>
+        <p class="exit"><b>Exit:</b> A10 passes on the benchmark; two closed-loop iterations on real equipment; A14 and A15 pass.</p>
+      </div>
+      <div class="ms-item">
+        <div class="ms-head"><h3>M6 · Validation and release</h3><span class="chip p1">P1</span><span class="wk">2 weeks</span></div>
+        <div class="tablewrap"><table class="dense"><tbody>
+          <tr><td class="id">T-601</td><td>Repeatability campaign, throughput benchmark</td></tr>
+          <tr><td class="id">T-602</td><td>Hardware fault-injection campaign</td></tr>
+          <tr><td class="id">T-603</td><td>Deployment, maintenance and operator documentation</td></tr>
+          <tr><td class="id">T-604</td><td>Full agent evaluation and red-team on the production model routes</td></tr>
+        </tbody></table></div>
+        <p class="exit"><b>Exit:</b> all acceptance tests pass; tagged release <code>sdl-formulator v1.0.0</code>; final demonstration recorded.</p>
+      </div>
+    </div>
+  </section>
+  <!-- ================================================================ 15. ACCEPTANCE -->
+  <section class="part" id="acceptance">
+    <h2>16. Acceptance criteria</h2>
+    <p class="lead">The project is finished when the system passes these tests, not when every component exists. Limits
+    are initial values; a change needs an ADR.</p>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>ID</th><th>Test</th><th>Pass criterion</th><th>Method</th></tr></thead>
+        <tbody>
+          <tr><td class="id">A1</td><td>Formulation compilation</td><td>100 % of a 200-case valid corpus compile; 100 % of an invalid corpus are rejected with the expected F-code</td><td>Unit and property tests in CI</td></tr>
+          <tr><td class="id">A2</td><td>Mass calculations</td><td>Targets equal batch × fraction within balance readability; fractions of targets sum to 1 within 1×10<sup>−6</sup></td><td>Property tests</td></tr>
+          <tr><td class="id">A3</td><td>Dispensing accuracy</td><td>≥ 95 % of dispenses within the ingredient tolerance on first attempt; 100 % after the correction step or recorded as deviation</td><td>30 dispenses per dispenser on hardware</td></tr>
+          <tr><td class="id">A4</td><td>Workflow execution</td><td>Every action starts only after its dependencies succeed; no resource used by two actions at once</td><td>Event-log checker over 50 Fake runs</td></tr>
+          <tr><td class="id">A5</td><td>Digital twin rejection</td><td>100 % of a seeded set of colliding, unreachable or over-limit trajectories rejected with the correct V-code; 0 false rejections on the approved route set</td><td>URSim test suite</td></tr>
+          <tr><td class="id">A6</td><td>Stale validation</td><td>0 of 100 injected scene changes between verdict and gate lead to execution without a fresh verdict</td><td>Fault injection</td></tr>
+          <tr><td class="id">A7</td><td>Hardware integration</td><td>Every commissioned device reports state, interlocks and measurements through its contract; Fake and Real pass the same contract tests</td><td>Contract test suite in both modes</td></tr>
+          <tr><td class="id">A8</td><td>Recovery and idempotency</td><td>0 duplicate material-changing actions over 50 injected timeouts and link losses (Fake) and 10 (hardware); 100 % reach a reconciled state</td><td>Fault injection, ledger audit</td></tr>
+          <tr><td class="id">A9</td><td>Data provenance</td><td>100 % of results link to formulation, material lots, process plan, devices, calibrations, verdicts, mode and software SHA</td><td>Automated provenance audit</td></tr>
+          <tr><td class="id">A10</td><td>Optimization</td><td>Benchmark criterion of section 10 met; on hardware, each proposal is generated only from observations flagged valid or deviated</td><td>Benchmark, data lineage check</td></tr>
+          <tr><td class="id">A11</td><td>Repeatability</td><td>10 consecutive runs of the reference formulation: 100 % of ingredient masses within tolerance, mixing confirmed complete 10 of 10, no unrecovered fault</td><td>Hardware campaign in M6</td></tr>
+          <tr><td class="id">A12</td><td>Throughput</td><td>Measured makespan within 15 % of the scheduler’s prediction, and below the sequential schedule for 2 or more samples</td><td>Hardware benchmark in M6</td></tr>
+          <tr><td class="id">A13</td><td>Agent tool safety</td><td>0 forbidden actions reached across the red-team suite; every forbidden action is absent from the tool list, verified by test</td><td>Red-team suite, guardrail tests</td></tr>
+          <tr><td class="id">A14</td><td>Campaign designer</td><td>≥ 90 % of 50 goal statements give a schema-valid CampaignDraft whose seeds pass the dry run within 3 revisions; expert rating ≥ 4 of 5 on ≥ 80 %</td><td>campaign_design suite</td></tr>
+          <tr><td class="id">A15</td><td>Grounded answers</td><td>≥ 95 % of answers correct against the reference, and 100 % of factual claims cite a record or document</td><td>grounded_qa suite</td></tr>
+          <tr><td class="id">A16</td><td>Recovery advice</td><td>0 unsafe recommendations over 30 scenarios; correct recovery path in the top 3 for ≥ 80 %</td><td>fault_recovery suite, reviewed by the operator lead</td></tr>
+          <tr><td class="id">A17</td><td>Data routing</td><td>0 C1–C3 payloads sent to a non-allowed endpoint in the gateway audit over the evaluation period</td><td>Gateway log audit</td></tr>
+          <tr><td class="id">A18</td><td>Tool-call accuracy</td><td>≥ 95 % correct tool and arguments on the tool_use suite</td><td>tool_use suite</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Final demonstration: closed-loop autonomous experimentation</h3>
+    <ol class="steps">
+      <li>The scientist states the goal; AG-1 drafts the campaign (target properties, ingredients, bounds, budget) and the scientist approves it.</li>
+      <li>The optimizer proposes a formulation; the compiler dry run confirms it can be made.</li>
+      <li>MADSci compiles the process plan, validates materials and equipment, and schedules it.</li>
+      <li>The digital twin validates every motion against the current cell state.</li>
+      <li>The approved workflow runs on the real equipment through the execution gate.</li>
+      <li>Measurements are verified and stored with full provenance.</li>
+      <li>The optimizer updates its models and proposes the next experiment, with no manual data handling.</li>
+      <li>AG-4 drafts the campaign report, AG-2 answers the scientist’s questions about it, and every agent step is traceable in its AgentRun record.</li>
+    </ol>
+  </section>
+
+  <!-- ================================================================ 16. STATUS -->
+  <section class="part" id="status">
+    <h2>17. Status and handover</h2>
+    <div class="tablewrap">
+      <table class="dense">
+        <thead><tr><th>Part</th><th>Today</th><th>V3 action</th><th>Milestone</th></tr></thead>
+        <tbody>
+          <tr><td>Managers, nodes, workflows; Fake and Real modes</td><td><span class="chip ok">in place</span> MADSci 0.8.1; Fake runs the arm on URSim</td><td>Keep; add contracts, ledgers, mode manifest</td><td>M1, M2</td></tr>
+          <tr><td>Formulation to workflow</td><td><span class="chip ok">partly</span> human node prepares a fixed-slot weighing cycle</td><td>Replace with <code>formulation_engine</code></td><td>M2</td></tr>
+          <tr><td>Scheduling</td><td><span class="chip todo">to build</span> steps run in order</td><td>CP-SAT scheduler in MADSci</td><td>M2</td></tr>
+          <tr><td>Preflight and reservations</td><td><span class="chip ok">partly</span> arm node checks routes; booking on transfer</td><td>Leases for all resources, held through execution</td><td>M2</td></tr>
+          <tr><td>Validation gate</td><td><span class="chip todo">to build</span> routes verified ahead of time and replayed</td><td>Keep as static stage; add dynamic stage and gate</td><td>M3</td></tr>
+          <tr><td>sdl_dt</td><td><span class="chip ok">first version</span> submits storylines, shows joint states</td><td>Becomes MADSci client; add approval, recovery, optimizer</td><td>M2, M5</td></tr>
+          <tr><td>Optimization</td><td><span class="chip todo">to build</span> campaign tooling for layout studies only</td><td>Formulation-specific constrained BO</td><td>M5</td></tr>
+          <tr><td>Real arm, gripper geometry, lid recipes</td><td><span class="chip todo">commissioning</span></td><td>Cell PC with <code>ur_robot_driver</code></td><td>M3, M4</td></tr>
+          <tr><td>Agentic layer</td><td><span class="chip todo">to build</span> Groq Llama evaluated as a free option</td><td>Five agents on LangGraph, <code>sdl_mcp</code>, LiteLLM gateway; Groq for C0 only</td><td>M1 to M6</td></tr>
+          <tr><td>Capping</td><td><span class="chip p2">planned</span></td><td>Out of scope</td><td>after v1.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two">
+      <div class="card">
+        <h3>Needed on day 1</h3>
+        <ul class="plain">
+          <li>Access to <code>formulation_cell</code>, <code>sdl_dt</code> and the ROS 2 repository, with their current branches.</li>
+          <li>Device manuals and existing SiLA 2 server code for balances, gantry, dispensers and mixer.</li>
+          <li>The current UR3e safety configuration and the gripper model and drawings.</li>
+          <li>Material list for the first campaign, with phases and known properties.</li>
+          <li>A named safety responsible and a named scientist for approvals.</li>
+          <li>IT’s decision on the approved C1–C2 model endpoint (self-hosted GPU capacity or enterprise LLM), and a Groq key for C0 development.</li>
+        </ul>
+        <p>The first engineering task is a two-day review of these repositories against this specification, producing a
+        keep, modify and build list per module before code changes start.</p>
+      </div>
+      <div class="card">
+        <h3>Risks</h3>
+        <div class="tablewrap">
+          <table class="dense" style="min-width:0">
+            <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+            <tbody>
+              <tr><td>Gripper geometry or driver late</td><td>M3 proceeds with a placeholder model; M4 is gated on it</td></tr>
+              <tr><td>Device protocol gaps in a SiLA 2 server</td><td>Found in T-104; extend the server, not the node</td></tr>
+              <tr><td>Mixer gives limited status</td><td>Treat mixing as <code>UNKNOWN</code> until the lid unlocks; record as uncertain</td></tr>
+              <tr><td>Too few real experiments for BO</td><td>Start on synthetic and historical data; batch proposals</td></tr>
+              <tr><td>Free-tier endpoint terms or limits change</td><td>Gateway makes the model a config change; CI can fall back to a self-hosted model</td></tr>
+              <tr><td>Agent gives a confident wrong answer</td><td>Grounding with citations, evaluation gates, drafts always reviewed</td></tr>
+              <tr><td>Twin drifts from the real cell</td><td>Zone freshness, scene versions, periodic reference-pose check</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================ 17. GLOSSARY -->
+  <section class="part" id="terms">
+    <h2>18. Glossary</h2>
+    <dl class="gloss">
+      <div><dt>Self-driving lab (SDL)</dt><dd>A lab that plans, runs and learns from its own experiments, with robots and AI in a closed loop.</dd></div>
+      <div><dt>Formulation specification</dt><dd>The recipe: ingredients, mass fractions, batch mass, tolerances and process conditions.</dd></div>
+      <div><dt>Formulation compiler</dt><dd>Turns a formulation into a machine-specific process plan, or rejects it with reason codes.</dd></div>
+      <div><dt>Process plan</dt><dd>The ordered, typed actions, resources and records needed to prepare one formulation on this cell.</dd></div>
+      <div><dt>Workflow (storyline)</dt><dd>The process plan as a MADSci workflow: a directed acyclic graph of node actions.</dd></div>
+      <div><dt>Schedule</dt><dd>Start and end time of every action, and which run in parallel.</dd></div>
+      <div><dt>Makespan</dt><dd>Total time from the first action to the last.</dd></div>
+      <div><dt>Reservation lease</dt><dd>A time-limited exclusive claim on a resource, held from scheduling through execution.</dd></div>
+      <div><dt>Scene version</dt><dd>A counter that changes whenever the modeled cell state changes; verdicts are valid only for the versions they were computed on.</dd></div>
+      <div><dt>Static validation</dt><dd>Checks that depend only on geometry and limits, computed once per route.</dd></div>
+      <div><dt>Dynamic validation</dt><dd>Checks against the current cell state, computed per action.</dd></div>
+      <div><dt>Execution gate</dt><dd>The last check before an action runs: fresh verdict, held lease, true interlocks, armed cell.</dd></div>
+      <div><dt>Idempotency key</dt><dd>An identifier that lets a node recognize a repeated command and return the earlier result instead of acting again.</dd></div>
+      <div><dt>Digital shadow</dt><dd>A live view of the real machines driven by their telemetry.</dd></div>
+      <div><dt>Interlock</dt><dd>A condition that must hold before an action may start, such as the mixer lid being closed.</dd></div>
+      <div><dt>Bayesian optimization</dt><dd>Proposes the next experiment from a probabilistic model, balancing exploration and exploitation.</dd></div>
+      <div><dt>qNEHVI</dt><dd>Noisy expected hypervolume improvement for batches: the acquisition function for multi-objective campaigns.</dd></div>
+      <div><dt>Agent</dt><dd>An LLM-driven workflow that plans steps and calls tools to help a person; here it never commands hardware.</dd></div>
+      <div><dt>Autonomy level</dt><dd>L0 inform, L1 draft, L2 act digitally, L3 submit within an approved campaign.</dd></div>
+      <div><dt>MCP (Model Context Protocol)</dt><dd>An open protocol for exposing tools and data to LLM applications; <code>sdl_mcp</code> is the cell’s tool server.</dd></div>
+      <div><dt>LangGraph</dt><dd>A library for building agents as explicit state graphs with checkpoints and human-approval interrupts.</dd></div>
+      <div><dt>LLM gateway</dt><dd>A single proxy for all model calls that routes, logs and enforces which data may reach which model.</dd></div>
+      <div><dt>Data class</dt><dd>C0 public to C3 restricted; decides which model endpoints may see a piece of data.</dd></div>
+      <div><dt>Prompt injection</dt><dd>Text in a document or record that tries to make an agent follow it as instructions.</dd></div>
+      <div><dt>Evaluation suite</dt><dd>A fixed set of tasks with reference answers that scores an agent before a change ships.</dd></div>
+      <div><dt>Provenance</dt><dd>The record of where every result came from: formulation, materials, plan, devices, calibrations, verdicts and software.</dd></div>
+    </dl>
+  </section>
+</main>
+</body>
+</html>

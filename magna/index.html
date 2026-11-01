@@ -201,7 +201,7 @@
         <tr><td>ML, GenAI and agentic AI to improve engineering processes</td><td><a href="#razi">Razi</a>, an engineering agent that does a layout engineer's analysis legwork on a digital twin and writes an evidence-backed memo; <a href="#flagship">AG-1</a>, a LangGraph agent that drafts experiment campaigns for scientist approval.</td></tr>
         <tr><td>From assistants to end-to-end workflows</td><td>The same tool layer serves a human at the CLI, an autonomous agent and MCP clients. The optimizer runs on its own and hands control back to the agent only when judgement is needed.</td></tr>
         <tr><td>Evaluate different solution approaches</td><td>A Bayesian optimizer, not the LLM, runs the numeric search: faster, cheaper, reproducible. The LLM frames, interprets and explains.</td></tr>
-        <tr><td>Concept → PoC → validation → deployment readiness</td><td>Typed contracts with schema versioning, deterministic compiler, Real/Fake device pairs, Docker Compose, CI with coverage gates, one-command demos and handover decks for non-programmers.</td></tr>
+        <tr><td>Concept → PoC → validation → deployment readiness</td><td>A <a href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener">20-ADR implementation specification</a> with acceptance tests and commissioning gates; typed contracts with schema versioning, deterministic compiler, Real/Fake device pairs, Docker Compose, CI with coverage gates, one-command demos and handover decks for non-programmers.</td></tr>
         <tr><td>System, mechanical, electrical and software domains</td><td>CAD → kinematics → collision planning; CFD (Ansys Fluent, NVIDIA Warp); ESP32 sensor networks and PCBs; ROS 2, SiLA 2, FastAPI services.</td></tr>
         <tr><td>Technology evaluation: deep dive, manufacturability, cost</td><td>Sole-author review of material-handling technologies for autonomous labs: about 30 case studies and 8 commercial liquid handlers benchmarked on capability and price; build-vs-buy against Nordson, Musashi and ViscoTec.</td></tr>
         <tr><td>Coordinate R&amp;D with universities and partners</td><td>Project owner on a Sekisui contract delivered with Vector Institute, Matter Lab, NVIDIA and the Acceleration Consortium.</td></tr>
@@ -257,6 +257,34 @@
           <li>LLM routing by data class: sensitive data only on self-hosted models</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The blueprint</p>
+    <h2>The whole cell, designed end to end</h2>
+    <p class="lead">My V3.1 implementation specification turns the lab into a buildable, verifiable system. It is the same work this role describes: evaluate solution approaches, record the decisions, and define how a concept is validated and handed over.</p>
+    <div class="grid2" style="align-items:center">
+      <figure>
+        <a class="media" href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener" style="display:block"><img src="../images/ai/spec_arch.jpg" alt="Target architecture: agent layer, sdl_dt, MADSci formulation cell, ROS 2 workspace, instruments and the independent machine safety system" loading="lazy"></a>
+        <figcaption>Target architecture: agents above the APIs, one execution gate to the hardware, machine safety independent of all software.</figcaption>
+      </figure>
+      <div>
+        <div class="callout" style="margin-top:0"><b>MADSci executes. sdl_dt thinks. Agents assist. ROS 2 moves. The safety system protects.</b></div>
+        <ul style="margin-top:16px">
+          <li><b>20 architecture decisions</b>, each with the question, the decision and why</li>
+          <li><b>10-stage pipeline</b> with a formulation compiler, CP-SAT scheduling, static and dynamic twin validation, and a per-action execution gate</li>
+          <li><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server, an LLM gateway that routes by data class, and evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</li>
+          <li><b>Delivery:</b> 18 acceptance tests, 7 commissioning and safety gates, a 6-milestone roadmap</li>
+        </ul>
+        <p style="margin-top:14px"><a href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener"><b>Read the specification →</b></a></p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:24px">
+      <figure><a class="media" href="../projects/formulation-cell-spec.html#pipeline" target="_blank" rel="noopener" style="display:block"><img src="../images/ai/spec_pipeline.jpg" alt="Ten-stage execution pipeline" loading="lazy"></a><figcaption>Ten-stage execution pipeline; every stage can stop the run with a reason code.</figcaption></figure>
+      <figure><a class="media" href="../projects/formulation-cell-spec.html#agents" target="_blank" rel="noopener" style="display:block"><img src="../images/ai/spec_agents.jpg" alt="Agent layer with MCP server, LLM gateway and hard boundary" loading="lazy"></a><figcaption>Agents act only through MCP tools with the user's permissions; a hard boundary separates them from the machines.</figcaption></figure>
     </div>
   </div>
 </section>

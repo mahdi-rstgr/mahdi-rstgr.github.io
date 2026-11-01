@@ -59,7 +59,27 @@
       linear-gradient(to bottom, transparent 70%, var(--bg)); }
   .pill { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 8px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 13px; color: var(--ink-2); background: var(--card); backdrop-filter: blur(6px); }
   .pill b { background: var(--acc-soft); color: var(--acc); padding: 2px 8px; border-radius: 999px; font: 500 11px "JetBrains Mono", monospace; letter-spacing: .04em; }
-  .hero h1 { font: 800 clamp(44px, 7.4vw, 96px)/0.98 "Inter Tight", sans-serif; letter-spacing: -.035em; margin: 26px 0 22px; max-width: 980px; }
+  .hero-grid { display: grid; grid-template-columns: 280px 1fr; gap: 60px; align-items: center; }
+  .id-card { text-align: center; }
+  .avatar { width: 248px; height: 248px; margin: 0 auto 22px; border-radius: 50%; padding: 4px; background: conic-gradient(from 210deg, var(--acc), var(--acc-2), var(--acc)); box-shadow: 0 0 70px -12px var(--glow); }
+  .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 5px solid var(--bg); }
+  .hero h1.name { font: 750 32px/1.1 "Inter Tight", sans-serif; letter-spacing: -.02em; margin: 0 0 8px; }
+  .cred { color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .hero .headline { font: 800 clamp(40px, 5.8vw, 78px)/1 "Inter Tight", sans-serif; letter-spacing: -.035em; margin: 22px 0 22px; max-width: 900px; }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+    .id-card { display: flex; align-items: center; gap: 18px; text-align: left; }
+    .avatar { width: 104px; height: 104px; margin: 0; flex: none; padding: 3px; }
+    .avatar img { border-width: 3px; }
+    .hero h1.name { font-size: 26px; }
+  }
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .gallery a { display: block; text-decoration: none; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--bg-1); transition: border-color .2s, transform .2s; }
+  .gallery a:hover { border-color: var(--acc); transform: translateY(-2px); }
+  .gallery img { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top left; background: #f5f7fa; }
+  .gallery span { display: block; padding: 12px 14px; font-size: 13.5px; color: var(--ink-2); }
+  .gallery b { color: var(--ink); font-weight: 600; }
+  @media (max-width: 800px) { .gallery { grid-template-columns: 1fr; } }
   .grad { background: linear-gradient(100deg, var(--acc) 10%, var(--acc-2) 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero p.sub { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 720px; margin: 0 0 34px; }
   .hero p.sub b { color: var(--ink); font-weight: 600; }
@@ -110,6 +130,7 @@
   .feature.flip { grid-template-columns: 1fr 1.15fr; }
   .feature.flip .media-frame { order: 2; }
   .media-frame { border-radius: 18px; border: 1px solid var(--line-2); overflow: hidden; background: #fff; box-shadow: 0 30px 80px -30px var(--glow); }
+  a.media-frame { text-decoration: none; color: inherit; }
   .media-frame .bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg-2); border-bottom: 1px solid var(--line); font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
   .media-frame .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
   .media-frame .bar span { margin-left: 8px; }
@@ -236,9 +257,17 @@
 
 <header class="hero" id="top">
   <canvas id="graph" aria-hidden="true"></canvas>
-  <div class="wrap">
+  <div class="wrap hero-grid">
+   <div class="id-card">
+    <div class="avatar"><img src="images/thumbs/Mahdi_Rastegar.jpg" alt="Portrait of Mahdi Rastegar"></div>
+    <div>
+      <h1 class="name">Mahdi Rastegar</h1>
+      <div class="cred">PhD, Mechanical Engineering<br>Toronto, Canada</div>
+    </div>
+   </div>
+   <div>
     <span class="pill"><b>NOW</b>AI Solutions Project Lead · Acceleration Consortium, University of Toronto</span>
-    <h1>Agentic AI that engineers can <span class="grad">trust.</span></h1>
+    <p class="headline">Agentic AI that engineers can <span class="grad">trust.</span></p>
     <p class="sub">I build <b>digital twins, engineering agents and physics-informed ML</b> that run on real robotic systems, where language models propose, simulation measures, requirements written as code decide, and people approve.</p>
     <div class="cta">
       <a class="btn primary" href="#systems">Explore the systems
@@ -248,10 +277,10 @@
       <a class="btn" href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
     </div>
     <div class="hero-meta">
-      <span>PhD, Mechanical Engineering · University of Toronto</span>
-      <span>Toronto, Canada</span>
+      <span>University of Toronto</span>
       <span>Collaborating with Vector Institute · Matter Lab · NVIDIA</span>
     </div>
+   </div>
   </div>
 </header>
 
@@ -346,7 +375,7 @@
       </div>
     </div>
 
-    <div class="feature reveal" style="margin-bottom:0">
+    <div class="feature reveal">
       <div class="stack"><b>AGENTS</b>        Razi (Claude + MCP) · AG-1 (LangGraph + LiteLLM)
               GP Bayesian optimization, no LLM in the loop
 <b>COMPILER</b>      FormulationSpec → 9 pure steps → process DAG
@@ -366,6 +395,30 @@
         </ul>
       </div>
     </div>
+
+    <div class="feature flip reveal" style="margin-bottom:0">
+      <a class="media-frame" href="projects/formulation-cell-spec.html" target="_blank" rel="noopener" style="display:block">
+        <div class="bar"><i></i><i></i><i></i><span>Formulation Cell Implementation Spec · V3.1</span></div>
+        <img src="images/ai/spec_arch.jpg" alt="Target architecture: agent layer, sdl_dt, MADSci formulation cell, ROS 2 workspace, instruments and the independent machine safety system" loading="lazy">
+      </a>
+      <div>
+        <div class="tagline">System 04 · Implementation blueprint</div>
+        <h3>The whole cell, designed end to end in one specification</h3>
+        <p>My V3.1 implementation specification turns the lab into a buildable, verifiable system, with 20 architecture decisions, typed contracts, a delivery roadmap and acceptance tests. Its rule: <b style="color:var(--ink)">MADSci executes, sdl_dt thinks, agents assist, ROS 2 moves, the safety system protects.</b></p>
+        <ul class="points">
+          <li><span><b>10-stage pipeline:</b> specify → compile → schedule (OR-Tools CP-SAT) → reserve → validate in the twin → approve → per-action execution gate → execute → verify → learn</span></li>
+          <li><span><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server, an LLM gateway routing by data class, and evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</span></li>
+          <li><span><b>Constrained multi-objective BO:</b> BoTorch / Ax with qNEHVI, a feasibility classifier and the compiler dry run as a manufacturability constraint</span></li>
+          <li><span><b>Delivery:</b> 18 acceptance tests, 7 commissioning and safety gates, a 6-milestone roadmap</span></li>
+        </ul>
+        <div class="links"><a href="projects/formulation-cell-spec.html" target="_blank" rel="noopener">Read the specification →</a></div>
+      </div>
+    </div>
+    <div class="gallery reveal">
+      <a href="projects/formulation-cell-spec.html#pipeline" target="_blank" rel="noopener"><img src="images/ai/spec_pipeline.jpg" alt="Ten-stage execution pipeline" loading="lazy"><span><b>Execution pipeline</b> · ten stages, each can stop the run</span></a>
+      <a href="projects/formulation-cell-spec.html#agents" target="_blank" rel="noopener"><img src="images/ai/spec_agents.jpg" alt="Agent layer with MCP tool server, LLM gateway and hard boundary to hardware" loading="lazy"><span><b>Agentic layer</b> · above the APIs, never beside the hardware</span></a>
+      <a href="projects/formulation-cell-spec.html#arch" target="_blank" rel="noopener"><img src="images/ai/spec_arch.jpg" alt="Target architecture of the formulation cell" loading="lazy"><span><b>Target architecture</b> · from agents to machine safety</span></a>
+    </div>
   </div>
 </section>
 
@@ -384,6 +437,17 @@
       <button aria-pressed="false" data-f="mat">Materials &amp; sensing</button>
     </div>
     <div class="grid" id="grid">
+
+      <article class="proj reveal" data-c="ai">
+        <div class="thumb"><img src="images/ai/spec_pipeline.jpg" alt="Ten-stage execution pipeline of the formulation cell" loading="lazy" style="object-position:left top"></div>
+        <div class="body"><div class="cat">AI · System architecture</div>
+          <h3>Formulation cell implementation specification</h3>
+          <p>The blueprint for the self-driving formulation lab: 20 ADRs, a formulation compiler, CP-SAT scheduling, a synchronized twin validation service, five guarded agents and constrained multi-objective BO.</p>
+          <div class="result">10-stage pipeline · 18 acceptance tests · 7 safety and commissioning gates</div>
+          <div class="chips"><span class="chip">LangGraph</span><span class="chip">MCP</span><span class="chip">CP-SAT</span><span class="chip">qNEHVI</span></div>
+          <div class="plinks"><a href="projects/formulation-cell-spec.html" target="_blank" rel="noopener">Read the spec →</a></div>
+        </div>
+      </article>
 
       <article class="proj reveal" data-c="ai">
         <div class="thumb"><img src="images/ai/twin_path.jpg" alt="Robot arm path traced in the digital twin" loading="lazy"></div>

@@ -1,3129 +1,793 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
-
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mahdi Rastegar - Portfolio</title>
-	<link rel="icon" type="image/png" href="images/x-icon2.png">
-	<link rel="shortcut icon" type="image/x-icon" href="images/x-icon.ico">
-
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
-    <style>
-        /*
-            File: styles.css
-            Author: Mahdi Rastegar
-            Description: Portfolio styles based on Dev Portfolio Template
-        */
-        
-        body {
-            font-family: 'Lato', sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            color: #374054;
-        }
-
-        /* Enhanced section headings */
-        .heading {
-            font-size: 2.5em !important;
-            font-weight: 700;
-            color: #374054;
-            margin-bottom: 50px;
-            position: relative;
-            text-align: center;
-        }
-
-        .heading::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: #4285F4;
-            border-radius: 2px;
-        }
-
-        p {
-            color: #74808a;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        a {
-            color: #4285F4;
-            text-decoration: none;
-        }
-
-        a:hover, a:focus, a:active {
-            color: #4285F4;
-            text-decoration: none;
-        }
-
-        .btn {
-            display: inline-block;
-            color: #4285F4;
-            padding: 15px 25px;
-            border: 3px solid #4285F4;
-            border-radius: 4px;
-            text-decoration: none;
-            background: #fff;
-            transition: 0.5s ease all;
-        }
-
-        .btn:hover, .btn:focus, .btn:active {
-            color: #fff;
-            background: #4285F4;
-            text-decoration: none;
-        }
-
-        .btn-rounded {
-            border-radius: 30px;
-        }
-
-		        /* Header and Mobile Menu */
-        header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 100;
-            padding: 20px 0;
-            animation-name: dropHeader;
-            animation-iteration-count: 1;
-            animation-timing-function: ease;
-            animation-duration: 0.75s;
-        }
-
-		header ul {
-            display: inline-block;
-            text-align: center;
-            padding: 10px 20px;
-            margin: 0;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        header li {
-            display: inline-block;
-        }
-
-        header a {
-            display: block;
-            color: #ffffff;
-            padding: 10px 15px;
-            font-weight: 500;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        header a:hover {
-            color: #ffffff;
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            transform: translateY(-1px);
-        }
-
-        /* Lead Section */
-        #lead {
-            position: relative;
-            height: 100vh;
-            min-height: 500px;
-            max-height: 1080px;
-            background: url('images/damavandmilkyway.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            padding: 15px;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        /* Mobile background fixes */
-        @media (hover: none) and (pointer: coarse) {
-            #lead {
-                background-attachment: scroll !important;
-            }
-        }
-
-        #lead-overlay {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: rgba(33, 125, 187, 0.0);
-            z-index: 1;
-        }
-
-        #lead-content {
-            position: absolute;
-            z-index: 50;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        #lead-content h1, #lead-content h2 {
-            margin: 0;
-        }
-
-        #lead-content h1 {
-            color: #fff;
-            font-weight: 900;
-            font-size: 6em;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            line-height: 0.9em;
-        }
-
-        #lead-content h2 {
-            color: #ffffff;
-            font-weight: 500;
-            font-size: 4em;
-            margin-bottom: 15px;
-        }
-
-        #lead-down {
-            position: absolute;
-            left: 0;
-            right: 0;
-            width: 100%;
-            text-align: center;
-            z-index: 50;
-            bottom: 15px;
-            color: #fff;
-        }
-
-        #lead-down span {
-            cursor: pointer;
-            display: block;
-            margin: 0 auto;
-            width: 35px;
-            height: 35px;
-            text-align: center;
-        }
-
-        #lead-down i {
-            animation: pulsate 1.5s ease;
-            animation-iteration-count: infinite;
-            padding-top: 5px;
-        }
-
-        @keyframes pulsate {
-            0% {
-                transform: scale(1, 1);
-            }
-            50% {
-                transform: scale(1.2, 1.2);
-            }
-            100% {
-                transform: scale(1, 1);
-            }
-        }
-
-        /* About Section */
-        #about {
-            padding: 75px 15px;
-            border-bottom: 1px solid #dcd9d9;
-        }
-
-        #about .container {
-            max-width: 1000px;
-        }
-
-        .about-content {
-            display: flex;
-            align-items: flex-start;
-            gap: 40px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .about-image {
-            flex-shrink: 0;
-        }
-
-        .about-image img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border: 4px solid #fff;
-        }
-
-        .about-text {
-            flex: 1;
-            min-width: 0;
-        }
-
-        #about h2 {
-            color: #374054;
-            margin-bottom: 20px;
-            font-size: 2.2em;
-        }
-
-        #about p {
-            color: #74808a;
-            margin: 0 0 15px 0;
-            font-size: 1.05em;
-            line-height: 1.6;
-        }
-
-        #about p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Experience Section */
-        #experience {
-            padding: 50px 15px;
-            text-align: center;
-            border-bottom: 1px solid #dcd9d9;
-        }
-
-        #experience h2 {
-            color: #374054;
-        }
-
-        #experience-timeline {
-            margin: 30px auto 0 auto;
-            position: relative;
-            max-width: 1000px;
-        }
-
-        #experience-timeline:before {
-            position: absolute;
-            content: '';
-            top: 0;
-            bottom: 0;
-            left: 303px;
-            right: auto;
-            height: 100%;
-            width: 3px;
-            background: #4285F4;
-            z-index: 0;
-        }
-
-        #experience-timeline:after {
-            position: absolute;
-            content: '';
-            width: 3px;
-            height: 40px;
-            background: #4285F4;
-            background: linear-gradient(to bottom, #4285F4, rgba(66,133,244,0));
-            top: 100%;
-            left: 303px;
-        }
-
-        .vtimeline-content {
-            margin-left: 350px;
-            background: #fff;
-            border: 1px solid #e6e6e6;
-            padding: 15px;
-            border-radius: 3px;
-            text-align: left;
-        }
-
-        .vtimeline-content h3 {
-            font-size: 1.5em;
-            font-weight: 300;
-            color: #374054;
-            display: inline-block;
-            margin: 0;
-        }
-
-        .vtimeline-content h4 {
-            font-size: 1.2em;
-            font-weight: 300;
-            color: #7e8890;
-            margin: 0 0 15px 0;
-        }
-
-        .vtimeline-content p {
-            color: #74808a;
-            font-size: 0.9em;
-            margin: 0;
-        }
-
-        .vtimeline-point {
-            position: relative;
-            display: block;
-            vertical-align: top;
-            margin-bottom: 30px;
-        }
-
-        .vtimeline-icon {
-            position: relative;
-            color: #fff;
-            width: 50px;
-            height: 50px;
-            background: #4285F4;
-            border-radius: 50%;
-            float: left;
-            z-index: 99;
-            margin-left: 280px;
-        }
-
-        .vtimeline-icon i {
-            display: block;
-            font-size: 2em;
-            margin-top: 10px;
-        }
-
-        .vtimeline-date {
-            width: 260px;
-            text-align: right;
-            position: absolute;
-            left: 0;
-            top: 10px;
-            font-weight: 300;
-            color: #374054;
-        }
-
-        .no-js #experience-timeline > div {
-            background: #fff;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #dcd9d9;
-        }
-
-        .no-js #experience-timeline > div h3 {
-            font-size: 1.5em;
-            font-weight: 300;
-            color: #374054;
-            display: inline-block;
-            margin: 0;
-        }
-
-        .no-js #experience-timeline > div h4 {
-            font-size: 1.2em;
-            font-weight: 300;
-            color: #7e8890;
-            margin: 0 0 15px 0;
-        }
-
-        .no-js #experience-timeline > div p {
-            color: #74808a;
-            font-size: 0.9em;
-            margin: 0;
-        }
-
-        .no-js #experience-timeline:before,
-        .no-js #experience-timeline:after {
-            content: none;
-        }
-
-        @media only screen and (max-width: 750px) {
-            #experience-timeline:before,
-            #experience-timeline:after {
-                left: 23px;
-            }
-
-            .vtimeline-date {
-                width: auto;
-                text-align: left;
-                position: relative;
-                margin-bottom: 15px;
-                display: block;
-                margin-left: 70px;
-            }
-
-            .vtimeline-icon {
-                margin-left: 0;
-            }
-
-            .vtimeline-content {
-                margin-left: 70px;
-            }
-        }
-
-        /* Education Section */
-        #education {
-            padding: 50px 15px 20px 15px;
-            border-bottom: 1px solid #dcd9d9;
-            text-align: center;
-        }
-
-        #education h2 {
-            color: #374054;
-            margin-bottom: 50px;
-        }
-
-        .education-block {
-            max-width: 800px;
-            margin: 0 auto 40px auto;
-            padding: 25px;
-            border: 1px solid #dcd9d9;
-            border-left: 4px solid #4285F4;
-            background: #fff;
-            border-radius: 8px;
-            text-align: left;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-        }
-
-        .education-block:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .education-logo {
-            flex-shrink: 0;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-        }
-
-        .education-logo img {
-            max-width: 70px;
-            max-height: 70px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .education-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .education-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 5px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .education-block h3 {
-            font-weight: 500;
-            font-size: 1.3em;
-            margin: 0;
-            color: #374054;
-            flex: 1;
-        }
-
-        .education-block span {
-            color: #74808a;
-            font-size: 0.9em;
-            white-space: nowrap;
-        }
-
-        .education-block h4 {
-            color: #74808a;
-            font-weight: 500;
-			font-size: 1.1em;
-            margin: 5px 0 15px 0;
-        }
-
-        .education-block p, .education-block ul {
-            margin: 0;
-            color: #74808a;
-            font-size: 0.9em;
-        }
-
-        .education-block ul {
-            padding: 0 0 0 20px;
-            margin-left: 0;
-            list-style-type: disc;
-        }
-
-        .education-block li {
-            margin-bottom: 5px;
-            line-height: 1.4;
-        }
-
-        /* Projects Section */
-        #projects {
-            padding: 50px 15px;
-            border-bottom: 1px solid #dcd9d9;
-            text-align: center;
-        }
-
-        #projects h2 {
-            color: #374054;
-            margin-bottom: 50px;
-        }
-
-        .project-block {
-            max-width: 1100px;
-            margin: 0 auto 40px auto;
-            padding: 25px;
-            border: 1px solid #dcd9d9;
-            border-left: 4px solid #4285F4;
-            background: #fff;
-            border-radius: 8px;
-            text-align: left;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
-            display: flex;
-            align-items: flex-start;
-            gap: 40px;
-            min-height: 250px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-block:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .project-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .project-title {
-            font-weight: 600;
-            font-size: 1.5em;
-            color: #374054;
-            margin: 0 0 15px 0;
-            line-height: 1.3;
-        }
-
-        .project-description {
-            margin-bottom: 20px;
-        }
-
-        .project-description p {
-            color: #74808a;
-            font-size: 0.95em;
-            margin: 0 0 10px 0;
-            line-height: 1.5;
-        }
-
-        .project-description p:last-child {
-            margin-bottom: 0;
-        }
-
-        .project-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .project-technologies {
-            margin: 15px 0;
-        }
-
-        .project-technologies h4 {
-            color: #374054;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tech-tag {
-            background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: 500;
-            border: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-
-        .tech-tag:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .btn-project {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #4285F4;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-project:hover {
-            background: #3367d6;
-            color: white;
-            text-decoration: none;
-            transform: translateY(-1px);
-        }
-
-        .btn-project-secondary {
-            display: inline-block;
-            padding: 10px 18px;
-            background: transparent;
-            color: #4285F4;
-            text-decoration: none;
-            border: 2px solid #4285F4;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-project-secondary:hover {
-            background: #4285F4;
-            color: white;
-            text-decoration: none;
-            transform: translateY(-1px);
-        }
-
-        .project-image {
-            flex-shrink: 0;
-            min-width: 200px;
-            max-width: 450px;
-            min-height: 150px;
-            max-height: 350px;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .project-image img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-
-        .project-block:hover .project-image img {
-            transform: scale(1.05);
-        }
-
-        /* Individual Project Image Sizing */
-        .project-image.large {
-            width: 400px;
-            height: 300px;
-        }
-
-        .project-image.medium {
-            width: 320px;
-            height: 240px;
-        }
-
-        .project-image.small {
-            width: 250px;
-            height: 180px;
-        }
-
-        .project-image.wide {
-            width: 450px;
-            height: 200px;
-        }
-
-        .project-image.tall {
-            width: 280px;
-            height: 350px;
-        }
-
-        .project-image.square {
-            width: 280px;
-            height: 280px;
-        }
-
-        /* Multi-image gallery for projects */
-        .project-image-gallery {
-            flex-shrink: 0;
-            width: 450px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .project-image-gallery .gallery-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .project-image-gallery .gallery-main {
-            width: 100%;
-            height: 200px;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .project-image-gallery .gallery-thumb {
-            flex: 1;
-            height: 95px;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .project-image-gallery .gallery-wide {
-            flex: 1;
-            height: 180px;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            min-width: 0;
-        }
-
-        .project-image-gallery img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .project-block:hover .project-image-gallery img {
-            transform: scale(1.05);
-        }
-
-        /* Skills Section */
-        #skills {
-            padding: 50px 15px;
-            text-align: center;
-            border-bottom: 1px solid #dcd9d9;
-        }
-
-        #skills h2 {
-            color: #374054;
-            margin-bottom: 50px;
-        }
-
-        .skills-grid {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
-            text-align: left;
-        }
-
-        .skill-category {
-            background: #fff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border: 1px solid #e9ecef;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .category-title {
-            color: #374054;
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .category-title i {
-            color: #4285F4;
-            font-size: 1.2em;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .skill-tag {
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            border-radius: 25px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-tag::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .skill-tag:hover::before {
-            opacity: 1;
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .skill-name {
-            flex: 1;
-            font-weight: 600;
-        }
-
-
-
-        /* Programming & Analysis Category - Blue Tones */
-        .skill-category:nth-child(1) .skill-tag.expert {
-            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
-            color: white;
-            border: 2px solid #1565C0;
-        }
-
-        .skill-category:nth-child(1) .skill-tag.advanced {
-            background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
-            color: white;
-            border: 2px solid #1E88E5;
-        }
-
-        .skill-category:nth-child(1) .skill-tag.intermediate {
-            background: linear-gradient(135deg, #64B5F6 0%, #90CAF9 100%);
-            color: white;
-            border: 2px solid #64B5F6;
-        }
-
-        /* Engineering & Simulation Category - Green Tones */
-        .skill-category:nth-child(2) .skill-tag.expert {
-            background: linear-gradient(135deg, #2E7D32 0%, #388E3C 100%);
-            color: white;
-            border: 2px solid #2E7D32;
-        }
-
-        .skill-category:nth-child(2) .skill-tag.advanced {
-            background: linear-gradient(135deg, #43A047 0%, #66BB6A 100%);
-            color: white;
-            border: 2px solid #43A047;
-        }
-
-        .skill-category:nth-child(2) .skill-tag.intermediate {
-            background: linear-gradient(135deg, #81C784 0%, #A5D6A7 100%);
-            color: white;
-            border: 2px solid #81C784;
-        }
-
-        /* Materials & Research Category - Purple Tones */
-        .skill-category:nth-child(3) .skill-tag.expert {
-            background: linear-gradient(135deg, #6A1B9A 0%, #7B1FA2 100%);
-            color: white;
-            border: 2px solid #6A1B9A;
-        }
-
-        .skill-category:nth-child(3) .skill-tag.advanced {
-            background: linear-gradient(135deg, #8E24AA 0%, #AB47BC 100%);
-            color: white;
-            border: 2px solid #8E24AA;
-        }
-
-        .skill-category:nth-child(3) .skill-tag.intermediate {
-            background: linear-gradient(135deg, #BA68C8 0%, #CE93D8 100%);
-            color: white;
-            border: 2px solid #BA68C8;
-        }
-
-        /* Energy & Innovation Category - Orange Tones */
-        .skill-category:nth-child(4) .skill-tag.expert {
-            background: linear-gradient(135deg, #E65100 0%, #F57C00 100%);
-            color: white;
-            border: 2px solid #E65100;
-        }
-
-        .skill-category:nth-child(4) .skill-tag.advanced {
-            background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
-            color: white;
-            border: 2px solid #FF9800;
-        }
-
-        .skill-category:nth-child(4) .skill-tag.intermediate {
-            background: linear-gradient(135deg, #FFCC02 0%, #FFD54F 100%);
-            color: #333;
-            border: 2px solid #FFCC02;
-        }
-
-
-
-        @media only screen and (max-width: 768px) {
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .skill-category {
-                padding: 20px;
-            }
-            
-            .skill-tag {
-                font-size: 0.85em;
-            }
-        }
-
-        /* Publications Section */
-        .publication-block {
-            max-width: 700px;
-            margin: 0 auto 30px auto;
-            padding: 20px;
-            border: 1px solid #dcd9d9;
-            text-align: center;
-            background: #fff;
-            border-radius: 4px;
-        }
-
-        .publication-block h3 {
-            font-weight: 500;
-            margin: 0 0 10px 0;
-            color: #374054;
-            font-size: 1.3em;
-        }
-
-        .publication-block h4 {
-            color: #74808a;
-            font-weight: 400;
-            margin: 0 0 15px 0;
-            font-size: 1em;
-        }
-
-        .publication-block p {
-            margin: 0 0 15px 0;
-            color: #74808a;
-            font-size: 0.9em;
-        }
-
-        /* Publications Section */
-        #publications {
-            padding: 50px 15px;
-            text-align: center;
-        }
-
-        .publication-block {
-            max-width: 800px;
-            margin: 0 auto 40px auto;
-            padding: 25px 25px 25px 25px;
-            border: 1px solid #dcd9d9;
-            border-left: 4px solid #4285F4;
-            background: #fff;
-            border-radius: 8px;
-            text-align: left;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .publication-block:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .publication-block.conference {
-            border-left: 4px solid #FFA500;
-        }
-
-        /* Ribbon Styles */
-        .pub-ribbon {
-            position: absolute;
-            bottom: 15px;
-            right: -10px;
-            background: #4285F4;
-            color: white;
-            padding: 10px 25px 10px 20px;
-            font-size: 0.8em;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            z-index: 10;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            clip-path: polygon(8px 0%, 100% 0, 100% 100%, 8px 100%, 0 50%);
-            min-width: 100px;
-        }
-
-        .pub-ribbon.conference {
-            background: #FFA500;
-        }
-
-        .pub-ribbon:after {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            right: 0;
-            width: 0;
-            height: 0;
-            border: 5px solid transparent;
-            border-bottom-color: #4285F4;
-            z-index: -1;
-        }
-
-        .pub-ribbon.conference:after {
-            border-bottom-color: #FFA500;
-        }
-
-        .pub-title {
-            font-weight: 600;
-            font-size: 1.4em;
-            color: #374054;
-            margin: 0 0 12px 0;
-            line-height: 1.3;
-        }
-
-        .pub-authors {
-            color: #555;
-            font-size: 1em;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .pub-authors strong {
-            color: #374054;
-            font-weight: 700;
-        }
-
-        .pub-journal {
-            color: #74808a;
-            font-size: 1em;
-            margin-bottom: 8px;
-        }
-
-        .pub-journal em {
-            color: #FFA500;
-            font-weight: 600;
-        }
-
-        .pub-doi {
-            color: #74808a;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .pub-doi a {
-            color: #4285F4;
-            text-decoration: none;
-        }
-
-        .pub-doi a:hover {
-            text-decoration: underline;
-        }
-
-        .pub-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn-pub {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #4285F4;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-pub:hover {
-            background: #4285F4;
-            color: white;
-            text-decoration: none;
-            transform: translateY(-1px);
-        }
-
-        .btn-pub-secondary {
-            display: inline-block;
-            padding: 8px 16px;
-            background: transparent;
-            color: #4285F4;
-            text-decoration: none;
-            border: 2px solid #4285F4;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-pub-secondary:hover {
-            background: #4285F4;
-            color: white;
-            text-decoration: none;
-            transform: translateY(-1px);
-        }
-
-        .publication-note {
-            max-width: 800px;
-            margin: 40px auto 0 auto;
-            padding: 20px;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .publication-note p {
-            color: #495057;
-            margin: 0;
-            font-size: 0.95em;
-        }
-
-        .publication-note a {
-            color: #4285F4;
-            text-decoration: none;
-        }
-
-        .publication-note a:hover {
-            text-decoration: underline;
-        }
-
-        /* Awards Section */
-        #awards {
-            padding: 50px 15px;
-            text-align: center;
-        }
-
-        .award-block {
-            max-width: 800px;
-            margin: 0 auto 40px auto;
-            padding: 25px;
-            border: 1px solid #dcd9d9;
-            border-left: 4px solid #4285F4;
-            background: #fff;
-            border-radius: 8px;
-            text-align: left;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .award-block:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-
-        .award-block h3 {
-            font-weight: 500;
-            margin: 0 0 10px 0;
-            color: #374054;
-            font-size: 1.3em;
-        }
-
-        .award-block h4 {
-            color: #74808a;
-            font-weight: 400;
-            margin: 0 0 15px 0;
-            font-size: 1em;
-        }
-
-        .award-block p {
-            margin: 0;
-            color: #74808a;
-            font-size: 0.9em;
-        }
-
-
-
-        #contact-form button:hover {
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-        }
-
-        /* Background Alt */
-        .background-alt {
-            background: #f2f2f5;
-        }
-
-        /* Responsive Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        /* Footer */
-        footer {
-            padding: 15px 0;
-            background: #4285F4;
-            color: #fff;
-        }
-
-        footer .container {
-            max-width: 800px;
-        }
-
-        footer .row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 0;
-        }
-
-        footer .copyright {
-            color: #fff;
-            flex: 1;
-            text-align: left;
-        }
-
-        footer .copyright p {
-            color: #fff;
-            margin: 0;
-            font-size: 1.1em;
-        }
-
-        footer .top {
-            flex: 0 0 auto;
-            text-align: center;
-            margin: 0 20px;
-        }
-
-        footer .social {
-            flex: 1;
-            text-align: right;
-        }
-
-        #to-top {
-            display: block;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #4285F4;
-            text-align: center;
-            color: #fff;
-            line-height: 46px;
-            text-decoration: none;
-            transition: 0.5s ease all;
-            z-index: 999;
-        }
-
-        #to-top:hover {
-            background: #FFA500;
-        }
-
-        .social {
-            text-align: right;
-        }
-
-        .social ul {
-            margin: 0;
-            padding: 0;
-            display: inline-flex;
-            gap: 5px;
-        }
-
-        .social li {
-            display: inline-block;
-            font-size: 1.5em;
-            list-style: none;
-        }
-
-        .social a {
-            display: block;
-            color: #ffffff;
-            padding: 8px;
-            transition: color 0.3s ease;
-        }
-
-        .social a:hover {
-            color: #e0e0e0;
-        }
-
-        .social a:hover {
-            color: #FFA500;
-        }
-
-        /* Mobile Menu */
-        #mobile-menu-open {
-            display: none;
-            cursor: pointer;
-            position: fixed;
-            right: 15px;
-            top: 10px;
-            color: #4285F4;
-            font-size: 1.5em;
-            z-index: 20;
-            padding: 0 7px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        #mobile-menu-close {
-            display: none;
-            text-align: right;
-            width: 100%;
-            background: #fff;
-            font-size: 1.5em;
-            padding-right: 15px;
-            padding-top: 10px;
-            cursor: pointer;
-            color: #4285F4;
-        }
-
-        /* Background Alt */
-        .background-alt {
-            background: #f2f2f5;
-        }
-
-        /* Responsive Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        /* Enhanced Mobile Responsiveness */
-        @media only screen and (max-width: 768px) {
-            header {
-                position: fixed;
-                display: none;
-                z-index: 999;
-                background: #fff;
-                border-bottom: 1px solid #dcd9d9;
-                width: 100%;
-                height: 100%;
-                overflow-y: auto;
-            }
-
-            header.active {
-                display: block;
-            }
-
-            header ul {
-                display: none;
-            }
-
-            header.active ul {
-                display: block;
-                padding: 25px 0;
-                margin: 0;
-                background: #fff;
-                height: auto;
-            }
-
-            header.active ul li {
-                display: block;
-                margin-bottom: 10px;
-            }
-
-            header a {
-                display: block;
-                color: #4285F4;
-                padding: 15px;
-                text-align: center;
-                border-bottom: 1px solid #dcd9d9;
-                text-shadow: none;
-            }
-
-            #mobile-menu-open {
-                display: block;
-            }
-
-            header.active #mobile-menu-close {
-                display: block;
-            }
-
-            body.active {
-                overflow: hidden;
-            }
-
-            .heading {
-                font-size: 2em !important;
-                margin-bottom: 30px;
-            }
-
-            /* Fix mobile lead/header background issues */
-            #lead {
-                background-attachment: scroll !important;
-                min-height: 100vh;
-                height: auto;
-                background-position: center center;
-            }
-
-            #lead-content h1 {
-                font-size: 2.5em;
-            }
-
-            #lead-content h2 {
-                font-size: 1.5em;
-            }
-
-            #about .container {
-                padding: 0 15px;
-            }
-
-            #skills ul {
-                display: block;
-            }
-
-            #skills li {
-                display: block;
-                margin-bottom: 5px;
-                padding: 8px 12px;
-                background: #e4e4ea;
-                border-radius: 4px;
-                text-align: center;
-            }
-
-            .project {
-                flex-direction: column;
-                max-width: none;
-                margin: 0 0 30px 0;
-                padding: 15px;
-            }
-
-            .project-image {
-                min-width: 200px;
-                max-width: 300px;
-                min-height: 150px;
-                max-height: 250px;
-                margin-bottom: 20px;
-            }
-
-            .project-image.large,
-            .project-image.wide {
-                max-width: 300px;
-                height: 200px;
-            }
-
-            .project-image.tall {
-                width: 200px;
-                max-height: 250px;
-            }
-
-            .project-info {
-                position: relative;
-                margin: 0;
-                padding: 0;
-                background: transparent;
-                transform: none;
-            }
-
-            #contact {
-                padding: 50px 15px;
-            }
-
-            #contact-form {
-                max-width: 100%;
-            }
-
-            .social {
-                text-align: center;
-            }
-        }
-
-        @media only screen and (max-width: 768px) {
-            .education-block {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .education-logo {
-                align-self: center;
-                margin-bottom: 15px;
-            }
-
-            .education-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 5px;
-            }
-        }
-
-        @media only screen and (max-width: 480px) {
-            #lead {
-                background-attachment: scroll;
-                min-height: 100vh;
-                height: auto;
-                background-position: center center;
-                padding: 30px 15px;
-            }
-
-            #lead-content {
-                padding: 0 20px;
-            }
-
-            #lead-content h1 {
-                font-size: 2em;
-                line-height: 1.1em;
-            }
-
-            #lead-content h2 {
-                font-size: 1.2em;
-            }
-
-            .heading {
-                font-size: 2em !important;
-                margin-bottom: 30px;
-            }
-
-            #about .container {
-                padding: 0 15px;
-            }
-
-            #skills ul {
-                display: block;
-            }
-
-            #skills li {
-                display: block;
-                margin-bottom: 5px;
-                padding: 5px 10px;
-                background: #e4e4ea;
-                border-radius: 4px;
-                text-align: center;
-            }
-
-            .project-block {
-                flex-direction: column;
-                max-width: none;
-                margin: 0 0 30px 0;
-                padding: 20px;
-                align-items: stretch;
-                gap: 20px;
-                min-height: auto;
-            }
-
-            .project-image {
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-                min-height: 180px;
-                max-height: 220px;
-                margin-bottom: 0;
-                order: 2;
-            }
-
-            .project-content {
-                order: 1;
-                margin-bottom: 15px;
-            }
-
-            .project-image.large,
-            .project-image.wide,
-            .project-image.tall,
-            .project-image.square {
-                width: 100%;
-                height: 200px;
-            }
-
-            .project-image-gallery {
-                width: 100%;
-                max-width: 100%;
-                order: 2;
-            }
-
-            .project-image-gallery .gallery-main {
-                height: 150px;
-            }
-
-            .project-image-gallery .gallery-thumb {
-                height: 70px;
-            }
-
-            .project-image-gallery .gallery-wide {
-                height: 120px;
-                margin-bottom: 10px;
-            }
-
-            .project-image-gallery .gallery-row {
-                flex-direction: column;
-            }
-
-            .project-info {
-                position: relative;
-                margin: 0;
-                padding: 0;
-                background: transparent;
-                transform: none;
-            }
-
-            #contact {
-                padding: 50px 15px;
-            }
-
-            #contact-form {
-                max-width: 100%;
-            }
-
-            .social {
-                text-align: center;
-            }
-
-            #about {
-                text-align: center;
-            }
-
-            .about-content {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-                text-align: center;
-            }
-
-            .about-image img {
-                width: 150px;
-                height: 150px;
-            }
-
-            .project-info {
-                position: relative;
-                margin: 0;
-                padding: 30px 15px;
-                top: auto;
-                transform: none;
-            }
-
-            footer {
-                text-align: center;
-            }
-
-            footer .row {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-
-            footer .copyright,
-            footer .top,
-            footer .social {
-                flex: none;
-                text-align: center;
-                margin: 0;
-                width: 100%;
-            }
-
-            footer .copyright {
-                order: 1;
-            }
-
-            footer .social {
-                order: 2;
-            }
-
-            footer .top {
-                order: 3;
-            }
-
-            .social {
-                text-align: center;
-            }
-        }
-
-        /* Animation */
-        @keyframes dropHeader {
-            0% {
-                transform: translateY(-100%);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahdi Rastegar · Agentic AI for Engineering</title>
+<meta name="description" content="Mahdi Rastegar builds trustworthy agentic AI for engineering: digital twins, LLM agents with requirements-as-code, Bayesian optimization and physics-informed ML on real robotic systems.">
+<meta name="author" content="Mahdi Rastegar">
+<meta property="og:title" content="Mahdi Rastegar · Agentic AI for Engineering">
+<meta property="og:description" content="Digital twins, engineering agents and physics-informed ML, from concept to running systems.">
+<meta property="og:image" content="https://mahdi-rstgr.github.io/images/ai/twin_overview.jpg">
+<link rel="icon" type="image/png" href="images/x-icon2.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root, :root[data-theme="dark"] {
+    --bg: #07090c; --bg-1: #0c1015; --bg-2: #121820; --line: #1e2731; --line-2: #2a3542;
+    --ink: #eef2f6; --ink-2: #b7c1cc; --muted: #7d8996;
+    --acc: #6cf0c2; --acc-2: #49b6ff; --acc-ink: #04130d; --acc-soft: rgba(108,240,194,.10);
+    --glow: rgba(108,240,194,.18); --card: rgba(18,24,32,.72);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #ffffff; --bg-1: #f6f8fa; --bg-2: #eef2f5; --line: #e2e7ec; --line-2: #d3dae1;
+    --ink: #0b1117; --ink-2: #33404d; --muted: #61707e;
+    --acc: #079669; --acc-2: #0a6fd1; --acc-ink: #ffffff; --acc-soft: rgba(7,150,105,.08);
+    --glow: rgba(7,150,105,.12); --card: rgba(255,255,255,.85);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.65 "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .mono { font-family: "JetBrains Mono", Consolas, monospace; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  @media (max-width: 640px) { .wrap { padding: 0 16px; } }
+  ::selection { background: var(--acc); color: var(--acc-ink); }
+
+  /* ---------- nav ---------- */
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .25s, border-color .25s; border-bottom: 1px solid transparent; }
+  .nav.solid { background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+  .nav .wrap { display: flex; align-items: center; height: 64px; gap: 28px; }
+  .logo { font: 700 16px "Inter Tight", sans-serif; letter-spacing: -.01em; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .logo i { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg, var(--acc), var(--acc-2)); display: grid; place-items: center; font: 700 12px "JetBrains Mono", monospace; color: var(--acc-ink); font-style: normal; }
+  .nav ul { display: flex; gap: 22px; list-style: none; margin: 0 0 0 auto; padding: 0; }
+  .nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav ul a:hover { color: var(--ink); }
+  .icon-btn { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line-2); background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; }
+  .icon-btn svg { width: 16px; height: 16px; }
+  @media (max-width: 900px) { .nav ul { display: none; } .nav .icon-btn { margin-left: auto; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; overflow: hidden; isolation: isolate; }
+  #graph { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; opacity: .9; }
+  .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background:
+      radial-gradient(60% 60% at 20% 40%, transparent 0%, var(--bg) 85%),
+      linear-gradient(to bottom, transparent 70%, var(--bg)); }
+  .pill { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 8px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 13px; color: var(--ink-2); background: var(--card); backdrop-filter: blur(6px); }
+  .pill b { background: var(--acc-soft); color: var(--acc); padding: 2px 8px; border-radius: 999px; font: 500 11px "JetBrains Mono", monospace; letter-spacing: .04em; }
+  .hero h1 { font: 800 clamp(44px, 7.4vw, 96px)/0.98 "Inter Tight", sans-serif; letter-spacing: -.035em; margin: 26px 0 22px; max-width: 980px; }
+  .grad { background: linear-gradient(100deg, var(--acc) 10%, var(--acc-2) 70%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.sub { font-size: clamp(17px, 1.6vw, 20px); color: var(--ink-2); max-width: 720px; margin: 0 0 34px; }
+  .hero p.sub b { color: var(--ink); font-weight: 600; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 20px; border-radius: 11px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid var(--line-2); color: var(--ink); background: var(--card); transition: transform .15s, border-color .2s; }
+  .btn:hover { transform: translateY(-1px); border-color: var(--acc); }
+  .btn.primary { background: var(--acc); color: var(--acc-ink); border-color: var(--acc); }
+  .btn svg { width: 16px; height: 16px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 46px; color: var(--muted); font-size: 13.5px; }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .hero-meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 10px var(--acc); }
+
+  /* ---------- sections ---------- */
+  section { padding: 110px 0; position: relative; }
+  .eyebrow { font: 500 12.5px "JetBrains Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--acc); margin: 0 0 16px; display: flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--acc); }
+  h2 { font: 700 clamp(32px, 4.4vw, 54px)/1.08 "Inter Tight", sans-serif; letter-spacing: -.025em; margin: 0 0 18px; max-width: 900px; }
+  .lede { font-size: 18px; color: var(--ink-2); max-width: 720px; margin: 0 0 54px; }
+  h3 { font: 650 21px/1.3 "Inter Tight", sans-serif; letter-spacing: -.005em; margin: 0 0 10px; }
+  .divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ---------- metrics ---------- */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--bg-1); }
+  .metric { padding: 30px 28px; border-right: 1px solid var(--line); }
+  .metric:last-child { border-right: 0; }
+  .metric .n { font: 700 42px/1 "Inter Tight", sans-serif; letter-spacing: -.03em; }
+  .metric .n small { font-size: 22px; color: var(--muted); font-weight: 600; }
+  .metric .l { color: var(--muted); font-size: 14px; margin-top: 10px; }
+  @media (max-width: 860px) { .metrics { grid-template-columns: 1fr 1fr; } .metric:nth-child(2) { border-right: 0; } .metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+  @media (max-width: 460px) { .metrics { grid-template-columns: 1fr; } .metric { border-right: 0; border-bottom: 1px solid var(--line); } .metric:last-child { border-bottom: 0; } }
+
+  /* ---------- pillars ---------- */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .pillar { padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(180deg, var(--bg-1), transparent); }
+  .pillar .ix { font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
+  .pillar svg { width: 40px; height: 40px; color: var(--acc); margin: 18px 0 18px; }
+  .pillar p { color: var(--ink-2); margin: 0 0 16px; font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: 500 12px "JetBrains Mono", monospace; color: var(--ink-2); border: 1px solid var(--line-2); padding: 3px 9px; border-radius: 7px; }
+  @media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
+
+  /* ---------- featured ---------- */
+  .feature { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center; margin-bottom: 96px; }
+  .feature.flip { grid-template-columns: 1fr 1.15fr; }
+  .feature.flip .media-frame { order: 2; }
+  .media-frame { border-radius: 18px; border: 1px solid var(--line-2); overflow: hidden; background: #fff; box-shadow: 0 30px 80px -30px var(--glow); }
+  .media-frame .bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg-2); border-bottom: 1px solid var(--line); font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
+  .media-frame .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+  .media-frame .bar span { margin-left: 8px; }
+  .tagline { font: 500 12px "JetBrains Mono", monospace; color: var(--acc); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+  .feature h3 { font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -.02em; margin-bottom: 14px; }
+  .feature p { color: var(--ink-2); }
+  .feature ul.points { list-style: none; padding: 0; margin: 20px 0 22px; display: grid; gap: 10px; }
+  .feature ul.points li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 15px; color: var(--ink-2); }
+  .feature ul.points li::before { content: "→"; color: var(--acc); font-family: "JetBrains Mono", monospace; }
+  .feature ul.points b { color: var(--ink); font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; }
+  .links a { color: var(--acc); text-decoration: none; font-weight: 600; font-size: 14.5px; border-bottom: 1px solid transparent; }
+  .links a:hover { border-bottom-color: var(--acc); }
+  @media (max-width: 960px) { .feature, .feature.flip { grid-template-columns: 1fr; gap: 30px; } .feature.flip .media-frame { order: 0; } }
+
+  .loop { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 22px 0; }
+  .loop div { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px; background: var(--bg-1); }
+  .loop b { display: block; font: 600 14px "Inter Tight", sans-serif; }
+  .loop span { font-size: 12.5px; color: var(--muted); }
+  .loop .k { font: 500 11px "JetBrains Mono", monospace; color: var(--acc); }
+  @media (max-width: 560px) { .loop { grid-template-columns: 1fr 1fr; } }
+
+  .stack { font: 13px/1.7 "JetBrains Mono", monospace; border: 1px solid var(--line); background: var(--bg-1); border-radius: 14px; padding: 18px 20px; overflow-x: auto; color: var(--ink-2); white-space: pre; }
+  .stack b { color: var(--acc); font-weight: 500; }
+
+  /* ---------- projects ---------- */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: -24px 0 34px; }
+  .filters button { font: 500 13px "Inter", sans-serif; color: var(--ink-2); background: transparent; border: 1px solid var(--line-2); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: all .2s; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .proj { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--bg-1); transition: transform .25s, border-color .25s; }
+  .proj:hover { transform: translateY(-3px); border-color: var(--line-2); }
+  .proj .thumb { aspect-ratio: 16/10; background: #fff; overflow: hidden; }
+  .proj .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .proj:hover .thumb img { transform: scale(1.04); }
+  .proj .body { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+  .proj .cat { font: 500 11.5px "JetBrains Mono", monospace; color: var(--acc); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+  .proj h3 { font-size: 18px; margin-bottom: 8px; }
+  .proj p { color: var(--ink-2); font-size: 14.5px; margin: 0 0 12px; }
+  .proj .result { font-size: 13.5px; color: var(--ink); border-left: 2px solid var(--acc); padding-left: 10px; margin: 2px 0 14px; }
+  .proj .chips { margin-top: auto; }
+  .proj .plinks { display: flex; gap: 14px; margin-top: 14px; }
+  .proj .plinks a { font-size: 13.5px; font-weight: 600; color: var(--acc); text-decoration: none; }
+  .proj[hidden] { display: none; }
+
+  /* ---------- ecosystem ---------- */
+  .eco { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .eco div { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 22px; min-height: 140px; }
+  .eco b { font: 650 18px "Inter Tight", sans-serif; letter-spacing: -.01em; display: block; margin-bottom: 6px; }
+  .eco span { color: var(--muted); font-size: 13.5px; }
+  @media (max-width: 860px) { .eco { grid-template-columns: 1fr 1fr; } }
+  .related { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 22px; }
+  .related a.card { display: block; text-decoration: none; padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-1); transition: border-color .2s; }
+  .related a.card:hover { border-color: var(--acc); }
+  .related .k { font: 500 11.5px "JetBrains Mono", monospace; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .related h3 { font-size: 18px; margin: 10px 0 8px; }
+  .related p { color: var(--ink-2); font-size: 14.5px; margin: 0; }
+  .related .rel { margin-top: 14px; font-size: 13px; color: var(--acc); }
+  @media (max-width: 900px) { .related { grid-template-columns: 1fr; } }
+
+  /* ---------- timeline ---------- */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  @media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+  .tl { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line-2); }
+  .tl li { position: relative; padding: 0 0 30px 26px; }
+  .tl li::before { content: ""; position: absolute; left: -5px; top: 7px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--acc); }
+  .tl .when { font: 500 12.5px "JetBrains Mono", monospace; color: var(--muted); }
+  .tl b { display: block; font: 650 17px "Inter Tight", sans-serif; margin: 2px 0 1px; }
+  .tl .org { color: var(--acc); font-size: 14px; font-weight: 500; }
+  .tl p { color: var(--ink-2); font-size: 14.5px; margin: 6px 0 0; }
+
+  /* ---------- publications ---------- */
+  .pubs { border-top: 1px solid var(--line); }
+  .pub { display: grid; grid-template-columns: 74px 1fr auto; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .pub[hidden] { display: none; }
+  .pub .yr { font: 500 14px "JetBrains Mono", monospace; color: var(--muted); }
+  .pub .t { font-weight: 600; font-size: 15.5px; line-height: 1.4; }
+  .pub .a { color: var(--muted); font-size: 13.5px; margin-top: 4px; }
+  .pub .a u { color: var(--ink); text-decoration: none; font-weight: 600; }
+  .pub .v { color: var(--ink-2); font-style: italic; }
+  .pub a.go { font: 500 12.5px "JetBrains Mono", monospace; color: var(--acc); text-decoration: none; white-space: nowrap; }
+  .pub .badge { font: 500 10.5px "JetBrains Mono", monospace; letter-spacing: .06em; padding: 2px 7px; border-radius: 5px; border: 1px solid var(--line-2); color: var(--muted); margin-left: 8px; vertical-align: 2px; }
+  @media (max-width: 640px) { .pub { grid-template-columns: 1fr; gap: 4px; } }
+  .more { margin-top: 22px; }
+  .more button { font: 600 14px "Inter", sans-serif; background: transparent; border: 1px solid var(--line-2); color: var(--ink); padding: 10px 18px; border-radius: 10px; cursor: pointer; }
+
+  /* ---------- awards ---------- */
+  .awards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .award { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--bg-1); }
+  .award b { font: 650 16px "Inter Tight", sans-serif; display: block; }
+  .award span { font-size: 13.5px; color: var(--muted); }
+  @media (max-width: 460px) { .awards { grid-template-columns: 1fr; } }
+
+  /* ---------- contact ---------- */
+  .contact { text-align: center; padding: 130px 0 120px; background: radial-gradient(50% 70% at 50% 100%, var(--glow), transparent 70%); }
+  .contact h2 { margin: 0 auto 18px; }
+  .contact .lede { margin: 0 auto 34px; }
+  .contact .cta { justify-content: center; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 13.5px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+</style>
 </head>
-
 <body>
 
-    <!-- Mobile menu toggle -->
-    <div id="mobile-menu-open">
-        <i class="fa fa-bars" aria-hidden="true"></i>
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><i>MR</i>Mahdi Rastegar</a>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#systems">Systems</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="icon-btn" id="theme" aria-label="Toggle light and dark theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="graph" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="pill"><b>NOW</b>AI Solutions Project Lead · Acceleration Consortium, University of Toronto</span>
+    <h1>Agentic AI that engineers can <span class="grad">trust.</span></h1>
+    <p class="sub">I build <b>digital twins, engineering agents and physics-informed ML</b> that run on real robotic systems, where language models propose, simulation measures, requirements written as code decide, and people approve.</p>
+    <div class="cta">
+      <a class="btn primary" href="#systems">Explore the systems
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="magna/demo/formulation_cell.html" target="_blank" rel="noopener">Live digital twin</a>
+      <a class="btn" href="https://github.com/mahdi-rstgr" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
     </div>
-    <!-- End #mobile-menu-toggle -->
-    
-    <header>
-        <div id="mobile-menu-close">
-            <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-        <ul id="menu" class="shadow">
-            <li><a href="#about">About</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#awards">Awards</a></li>
+    <div class="hero-meta">
+      <span>PhD, Mechanical Engineering · University of Toronto</span>
+      <span>Toronto, Canada</span>
+      <span>Collaborating with Vector Institute · Matter Lab · NVIDIA</span>
+    </div>
+  </div>
+</header>
+
+<section style="padding-top:20px">
+  <div class="wrap reveal">
+    <div class="metrics">
+      <div class="metric"><div class="n">12<small> tools</small></div><div class="l">behind one MCP-ready front door for my engineering agent</div></div>
+      <div class="metric"><div class="n">6s<small> / 14 min</small></div><div class="l">two-speed digital-twin evaluation driving Bayesian optimization</div></div>
+      <div class="metric"><div class="n">18</div><div class="l">journal and conference papers, including Nano Energy and ACS AMI</div></div>
+      <div class="metric"><div class="n">4<small> partners</small></div><div class="l">on my industry-funded self-driving lab: AC, Vector, Matter Lab, NVIDIA</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <p class="eyebrow reveal">Research focus</p>
+    <h2 class="reveal">Where physical engineering meets <span class="grad">autonomous intelligence</span></h2>
+    <p class="lede reveal">Three threads that run through everything I build, from robotic labs to vehicles.</p>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <span class="ix">01</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7l-5 9M13 7l5 9M7.2 18h9.6"/></svg>
+        <h3>Trustworthy engineering agents</h3>
+        <p>LLM agents that reason over engineering tools, not their own memory: every number traced to a measurement, requirements as executable checks, human sign-off, and tamper-evident audit logs.</p>
+        <div class="chips"><span class="chip">Claude</span><span class="chip">MCP</span><span class="chip">LangGraph</span><span class="chip">LiteLLM</span><span class="chip">guardrails</span></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="ix">02</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg>
+        <h3>Digital twins &amp; robotics</h3>
+        <p>From CAD to kinematics, motion planning and collision-checked schedules, then simulation-first orchestration of real robots through ROS 2 and SiLA 2 with interchangeable real and simulated devices.</p>
+        <div class="chips"><span class="chip">URDF</span><span class="chip">RRT-Connect</span><span class="chip">ROS 2</span><span class="chip">MoveIt 2</span><span class="chip">SiLA 2</span><span class="chip">MADSci</span></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="ix">03</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3-7 5-7 7-3s4 4 7-6"/><path d="M3 21h18M3 3v18"/></svg>
+        <h3>Physics-informed ML &amp; optimization</h3>
+        <p>Bayesian optimization, uncertainty quantification and physics-constrained inference on noisy sensor data, tuned for the small, expensive datasets that real engineering produces.</p>
+        <div class="chips"><span class="chip">Gaussian processes</span><span class="chip">BO</span><span class="chip">UQ</span><span class="chip">CFD</span><span class="chip">PyTorch</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="systems">
+  <div class="wrap">
+    <p class="eyebrow reveal">Flagship systems</p>
+    <h2 class="reveal">A self-driving formulation lab, <span class="grad">built twin-first</span></h2>
+    <p class="lede reveal">An industry-funded program with Sekisui, delivered with the Acceleration Consortium, Vector Institute, Matter Lab and NVIDIA. I own the project and its architecture, and I built the twin, the agents and the formulation compiler.</p>
+
+    <div class="feature reveal">
+      <div class="media-frame">
+        <div class="bar"><i></i><i></i><i></i><span>sdl5_formulation_cell.html</span></div>
+        <img src="images/ai/twin.gif" alt="Animated digital twin: UR3e arm opens the mixer lid and loads a container while the CNC dispenses" loading="lazy">
+      </div>
+      <div>
+        <div class="tagline">System 01 · Digital twin</div>
+        <h3>From CAD files to a collision-checked robot loop, in one web page</h3>
+        <p>Every machine in the cell (CNC dispenser with tool changer, balances, UR3e arm, planetary mixer) rebuilt from its CAD and moved with its real kinematics.</p>
+        <ul class="points">
+          <li><span><b>Pipeline:</b> STEP/STL → OpenCASCADE meshes → URDF → damped-least-squares IK → two-machine schedule → RRT-Connect paths</span></li>
+          <li><span><b>Payoff before the build:</b> it showed the CNC couldn't reach its tools, so the design changed before any hardware moved</span></li>
+          <li><span><b>Shipped as one file:</b> an interactive three.js page from a single command</span></li>
         </ul>
-    </header>
-    <!-- End header -->
-
-    <div id="lead">
-        <div id="lead-overlay"></div>
-        <div id="lead-content">
-            <h1>Mahdi Rastegar</h1>
-            <h2>PhD</h2>
-        </div>
-        <!-- End #lead-content -->
-
-        <div id="lead-down">
-            <span>
-                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-            </span>
-        </div>
-        <!-- End #lead-down -->
+        <div class="links"><a href="magna/demo/formulation_cell.html" target="_blank" rel="noopener">Open the live twin →</a></div>
+      </div>
     </div>
-    <!-- End #lead -->
 
-    <div id="about" class="background-alt">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="about-content">
-                        <div class="about-image">
-                            <img src="images/Mahdi_Rastegar.jpg" alt="Mahdi Rastegar" />
-                        </div>
-                        <div class="about-text">
-                            <h2 class="heading">About Me</h2>
-                            <p>
-                                I'm a Postdoctoral Fellow at
-                                <a href="https://acceleration.utoronto.ca/">Acceleration Consortium</a>.
-                                Prior to that, I obtained my Ph.D. in Mechanical Engineering at the University of Toronto co-supervised by
-                                <a href="https://mse.utoronto.ca/faculty-staff/professors/naguib/">Prof. Hani Naguib</a>
-                                and 
-                                <a href="https://www.mie.utoronto.ca/faculty_staff/park/">Prof. Chul Park</a>
-                                .
-                            </p>
-                            <p>
-                                My work spans mechanical engineering in solids and fluids, leveraging AI, machine learning, and data 
-                                science to tackle challenges in design, materials, and physics-informed modeling.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="feature flip reveal">
+      <div class="media-frame">
+        <div class="bar"><i></i><i></i><i></i><span>razi demo · SDL5 formulation cell</span></div>
+        <video src="magna/assets/razi_demo.mp4" poster="images/ai/razi_terminal.png" controls preload="none" playsinline aria-label="Recorded run of the Razi engineering agent"></video>
+      </div>
+      <div>
+        <div class="tagline">System 02 · Engineering agent</div>
+        <h3>Razi: doubt, measure, record</h3>
+        <p>Ask a design question in plain English. Razi runs the twin, searches for better layouts, checks results against written requirements and writes an evidence-backed memo. Its safety does not depend on the model behaving well.</p>
+        <div class="loop">
+          <div><span class="k">01</span><b>Agent proposes</b><span>Claude, 12 tools</span></div>
+          <div><span class="k">02</span><b>Twin measures</b><span>6 s screen · 14 min full check</span></div>
+          <div><span class="k">03</span><b>Rules decide</b><span>requirements as code</span></div>
+          <div><span class="k">04</span><b>Human approves</b><span>no approval tool for the agent</span></div>
         </div>
+        <ul class="points">
+          <li><span><b>Optimizer without the LLM:</b> a Gaussian-process Bayesian optimizer runs alone and hands back only on target, budget, stagnation or infeasibility</span></li>
+          <li><span><b>Finding:</b> the arm idles 46% of the loop and clearance is set by the gripper, not the layout. The lever is a design and process change.</span></li>
+          <li><span><b>Hash-chained journal</b> of every call, refusal and approval; MCP server for any client</span></li>
+        </ul>
+      </div>
     </div>
-    <!-- End #about -->
 
-    <div id="education">
-        <h2 class="heading">Education</h2>
-        <div class="education-block">
-            <div class="education-logo">
-                <img src="images/uoft-logo.png" alt="University of Toronto Logo" />
-            </div>
-            <div class="education-content">
-                <div class="education-header">
-                    <h3>University of Toronto</h3>
-                    <span class="education-date">Jan 2021 - Dec 2024</span>
-                </div>
-                <h4>Ph.D. in Mechanical Engineering</h4>
-                <ul>
-                    <li><strong>Thesis</strong>: Multifunctional Porous Fluoropolymer Films for Triboelectric Nanogenerator Applications</li>
-                    <li><strong>Supervisors</strong>: Prof. Hani Naguib 
-						<a href="https://scholar.google.com/citations?user=GoATyK0AAAAJ">
-							<i class="ai ai-google-scholar" aria-hidden="true"></i></a>
-						and Prof. Chul Park
-						<a href="https://scholar.google.ca/citations?user=nyUy9SgAAAAJ&hl=en">
-							<i class="ai ai-google-scholar" aria-hidden="true"></i></a>
-					</li>
-					<li><strong>CGPA</strong>: 3.8/4.0</li>
-                </ul>
-            </div>
-        </div>
-        <!-- End .education-block -->
-
-		<div class="education-block">
-            <div class="education-logo">
-                <img src="images/University_of_Tehran_logo.png" alt="University of Tehran Logo" />
-            </div>
-            <div class="education-content">
-                <div class="education-header">
-                    <h3>University of Tehran</h3>
-                    <span class="education-date">Sep 2016 - Mar 2018</span>
-                </div>
-                <h4>M.Sc. in Mechanical Engineering</h4>
-                <ul>
-                    <li><strong>Thesis</strong>: Inverse Heat Transfer Analysis of Pipelines for Estimating Liquid Thermal Properties via Non-Destructive Testing</li>
-                    <li><strong>Supervisors</strong>: Prof. Farshad Kowsary
-						<a href="https://scholar.google.ca/citations?user=MMXs8A8AAAAJ&hl=en">
-							<i class="ai ai-google-scholar" aria-hidden="true"></i></a>
-				</li>
-					<li><strong>CGPA</strong>: 3.7/4.0</li>
-                </ul>
-            </div>
-        </div>
-        <!-- End .education-block -->
-
-		<div class="education-block">
-            <div class="education-logo">
-                <img src="images/University_of_Tehran_logo.png" alt="University of Tehran Logo" />
-            </div>
-            <div class="education-content">
-                <div class="education-header">
-                    <h3>University of Tehran</h3>
-                    <span class="education-date">Sep 2012 - Mar 2016</span>
-                </div>
-                <h4>B.Sc. in Mechanical Engineering</h4>
-                <ul>
-                    <li><strong>Thesis</strong>: Zero-Dimensional Thermodynamic and Heat Transfer Assessment of Gas Turbine Engines</li>
-                    <li><strong>Supervisors</strong>: Prof. Farshad Kowsary
-						<a href="https://scholar.google.ca/citations?user=MMXs8A8AAAAJ&hl=en">
-							<i class="ai ai-google-scholar" aria-hidden="true"></i></a>
-				</li>
-					<li><strong>CGPA</strong>: 3.8/4.0</li>
-                </ul>
-            </div>
-        </div>
-        <!-- End .education-block -->
+    <div class="feature reveal" style="margin-bottom:0">
+      <div class="stack"><b>AGENTS</b>        Razi (Claude + MCP) · AG-1 (LangGraph + LiteLLM)
+              GP Bayesian optimization, no LLM in the loop
+<b>COMPILER</b>      FormulationSpec → 9 pure steps → process DAG
+              Pydantic v2 · FastAPI · mypy --strict · 90% CI
+<b>ORCHESTRATION</b> MADSci · 7 managers · 4 nodes · live dashboard
+<b>DEVICES</b>       SiLA 2 on Raspberry Pi 5 · ROS 2 Jazzy + MoveIt 2
+              Real / Fake pairs behind one API
+<b>HARDWARE</b>      UR3e · CNC + tool changer · balances
+              dispensers · planetary mixer</div>
+      <div>
+        <div class="tagline">System 03 · Platform</div>
+        <h3>Production engineering, not a notebook</h3>
+        <ul class="points">
+          <li><span><b>AG-1 campaign designer:</b> a LangGraph agent drafts experiment campaigns, dry-runs them through the compiler and stops for scientist approval; LLM calls are routed by data sensitivity to hosted or self-hosted models</span></li>
+          <li><span><b>Formulation compiler:</b> deterministic, typed and versioned, with property-based tests, a 250-case corpus, schema-compatibility checks and security scans in CI</span></li>
+          <li><span><b>Simulation first:</b> every device has a simulated twin with the same API; robot routes mature from twin-verified to hardware-verified with human approval</span></li>
+        </ul>
+      </div>
     </div>
-    <!-- End #education -->
+  </div>
+</section>
 
-    <div id="experience" class="background-alt">
-        <h2 class="heading">Experience</h2>
-        <div id="experience-timeline">
-            <div data-date="May. 2025 - Present">
-                <h3>Acceleration Consortium, Toronto, Canada</h3>
-                <h4>Postdoctoral Fellow</h4>
-                <p>
-                    Engineered a self-driving laboratory by integrating custom-fabricated hardware with machine learning optimization, utilizing advanced imaging and inverse heat transfer methods to automate high-throughput synthesis and characterization.
-                </p>
-            </div>
+<hr class="divider">
 
-            <div data-date="Jan. 2024 - Dec. 2024">
-                <h3>UHN-KITE, Toronto, Canada</h3>
-                <h4>Research Assistant</h4>
-                <p>
-                    Engineered clinical healthcare solutions by integrating solid/fluid mechanics and machine learning simulations for the autonomous optimization and translational development of advanced medical devices.
-                </p>
-            </div>
-
-            <div data-date="Jan 2021 - Dec. 2024">
-                <h3>Toronto Smart Materials, Toronto, Canada</h3>
-                <h4>Research Assistant</h4>
-                <p>
-                    Synthesized and processed advanced porous polymers and composites utilizing multi-modal characterization, FEA simulations, and data-driven modeling to predict and optimize mechanical and thermal performance.
-                </p>
-            </div>
-
-			<div data-date="Jan 2021 - Dec. 2024">
-                <h3>MIE Dept., University of Toronto, Toronto, Canada</h3>
-                <h4>Teaching Assistant</h4>
-                <p>
-                    Teaching MEMS Design and Microfabrication, Mechanics of Solids, Thermodynamics, and Quantum Mechanics courses for undergraduate and graduate students.
-                </p>
-				<p>
-                    Conducted tutorials on Physics I and II, Engineering Economics, and Calculus I and II.
-                </p>
-            </div>
-
-            <div data-date="Apr. 2013 - Dec. 2020">
-                <h3>Solar-Electrical Vehicle Design & Manufacturing Center, University of Tehran</h3>
-                <h4>Research Assistant</h4>
-                <p>
-                    Engineered vehicle chassis and suspension using 2D/3D CAD, integrating CFD/FEA simulations with ANN modeling and DOE data acquisition to optimize aerodynamics, heat transfer, and power consumption.
-                </p>
-            </div>
-        </div>
+<section id="projects">
+  <div class="wrap">
+    <p class="eyebrow reveal">Selected projects</p>
+    <h2 class="reveal">Instruments, simulations and machines</h2>
+    <p class="lede reveal">Self-driving test rigs, CFD and FEA, vehicles and functional materials: the physical grounding behind the AI work.</p>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button aria-pressed="true" data-f="all">All</button>
+      <button aria-pressed="false" data-f="ai">AI &amp; autonomy</button>
+      <button aria-pressed="false" data-f="sim">Simulation</button>
+      <button aria-pressed="false" data-f="veh">Vehicles</button>
+      <button aria-pressed="false" data-f="mat">Materials &amp; sensing</button>
     </div>
-    <!-- End #experience -->
+    <div class="grid" id="grid">
 
-    <div id="publications">
-        <h2 class="heading">Publications</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Add your publications here - Template format -->
-                    <div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Ultra-lightweight aerogel composites for sound-driven triboelectric nanogenerator</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Omid Tafreshi, Shahriar Ghaffari, Zia Saadatnia, Chul Park, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>Nano Energy</em>, 2025
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.nanoen.2025.110765" target="_blank">10.1016/j.nanoen.2025.110765</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1016/j.nanoen.2025.110765" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Insights into the crystallization, topographical, and tribological properties of sustainable PEO-mica based triboelectric nanogenerators</h3>
-                        <div class="pub-authors">Aliesha Johnson, <strong>M.M. Rastegardoost</strong>, Tobin Filleter, Zia Saadatnia, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>Smart Materials and Structures</em>, 2025
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1088/1361-665X/adb404" target="_blank">10.1088/1361-665X/adb404</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1088/1361-665X/adb404" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Polyimide aerogel fiber bundles for extreme thermal management systems in aerospace applications</h3>
-                        <div class="pub-authors">Omid Tafreshi, <strong>M.M. Rastegardoost</strong>, Zia Saadatnia, Shahriar Ghaffari, Chul B Park, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>ACS Applied Materials & Interfaces</em>, 2024
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1021/acsami.4c11236" target="_blank">10.1021/acsami.4c11236</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1021/acsami.4c11236" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">High performance flexible green triboelectric nanogenerator with polyethylene oxide/mica tribo-positive composite material</h3>
-                        <div class="pub-authors">Aliesha Johnson, <strong>M.M. Rastegardoost</strong>, Nima Barri, Tobin Filleter, Zia Saadatnia, Hani Naguib</div>
-						<div class="pub-journal">
-                            <em>Applied Materials Today</em>, 2024
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.apmt.2024.102321" target="_blank">10.1016/j.apmt.2024.102321</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1016/j.apmt.2024.102321" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Highly durable triboelectric nanogenerators based on fibrous fluoropolymer composite mats with enhanced mechanical and dielectric properties</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Omid Tafreshi, Zia Saadatnia, Shahriar Ghaffari, Peter Serles, Tobin Filleter, Chul Park, Hani Naguib</div>
-                        <div class="pub-journal">
-                            <em>Materials Today Energy</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.mtener.2023.101431" target="_blank">10.1016/j.mtener.2023.101431</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1016/j.mtener.2023.101431" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Flexible, Thermally Stable, and Ultralightweight Polyimide-CNT Aerogel Composite Films for Energy Storage Applications</h3>
-                        <div class="pub-authors">Omid Tafreshi, <strong>M.M. Rastegardoost</strong>, Zia Saadatnia, Shahriar Ghaffari, Chul Park, Hani Naguib</div>
-                        <div class="pub-journal">
-                            <em>Materials Today Energy</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1021/acsami.3c11539" target="_blank">10.1021/acsami.3c11539</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1021/acsami.3c11539" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Recent advances on porous materials and structures for high-performance triboelectric nanogenerators</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Omid Tafreshi, Zia Saadatnia, Shahriar Ghaffari, H. Naguib, C. Park</div>
-                        <div class="pub-journal">
-                            <em>Nano Energy</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.nanoen.2023.108365" target="_blank">10.1016/j.nanoen.2023.108365</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1016/j.nanoen.2023.108365" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Amphiphilic polyimide-graphene nanoplatelet aerogel composites with high mechanical stability and enhanced thermal insulation properties for oil sorption applications</h3>
-                        <div class="pub-authors">Omid Tafreshi, <strong>M.M. Rastegardoost</strong>, Shahriar Ghaffari, Zia Saadatnia, Chul Park, Hani Naguib</div>
-                        <div class="pub-journal">
-                            <em>Materials Today Sustainability</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.mtsust.2023.100403" target="_blank">10.1016/j.mtsust.2023.100403</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1016/j.mtsust.2023.100403" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-                    <div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Porous PVDF mats with significantly enhanced dielectric properties and novel dipole arrangement for high-performance triboelectric nanogenerators</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Omid Tafreshi, Zia Saadatnia, Shahriar Ghaffari, Chul Park, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>Applied Materials Today</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.apmt.2023.101732" target="_blank">10.1016/j.apmt.2023.101732</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1016/j.apmt.2023.101732" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Super-hydrophobic and resilient hybrid silica aerogels for thermal insulation, energy harvesting, and electrical applications in harsh environments</h3>
-                        <div class="pub-authors">Hosseinali Omranpour, <strong>M.M. Rastegardoost</strong>, Hani Naguib, Chul Park</div>
-                        <div class="pub-journal">
-                            <em>Royal Society of Chemistry</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.1039/D3TC02862C" target="_blank">10.1039/D3TC02862C</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.1039/D3TC02862C" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Thermo-economic analysis and optimization of cogeneration systems by considering economic parameters fluctuations</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong> ,Erfan Kosari, Soroush Habibi</div>
-                        <div class="pub-journal">
-                            <em>Energy Equipment and Systems</em>, 2020
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.22059/ees.2020.39013" target="_blank">10.22059/ees.2020.39013</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.22059/ees.2020.39013" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Simulation and Energy Performance Assessment of the Ghazal Solar-Electric Commercial vehicle in Tehran</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Sepehr Heydari, Pouria Ahmadi, Karen Abrinia</div>
-                        <div class="pub-journal">
-                            <em>International Journal of Automotive Engineering</em>, 2019
-                        </div>
-                        <div class="pub-doi">DOI: <a href="http:// tlx.doi.org/10.22068/ijae.9.4.3087" target="_blank">10.22068/ijae.9.4.3087</a></div>
-                        <div class="pub-actions">
-                            <a href="http:// tlx.doi.org/10.22068/ijae.9.4.3087" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Thermo-fluid simulation of the gas turbine performance based on the first law of thermodynamics</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Forooza Samadi</div>
-                        <div class="pub-journal">
-                            <em>Energy Equipment and Systems</em>, 2019
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.22059/ees.2019.34705" target="_blank">10.22059/ees.2019.34705</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.22059/ees.2019.34705" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block">
-                        <div class="pub-ribbon">JOURNAL</div>
-                        <h3 class="pub-title">Drag coefficient and strouhal number analysis of a rectangular probe in a two-phase cross flow</h3>
-                        <div class="pub-authors">Erfan Kosari, <strong>M.M. Rastegardoost</strong>, Ali Rahnama, Mahyar Momen, Pedram Hanafizadeh</div>
-                        <div class="pub-journal">
-                            <em>Energy Equipment and Systems</em>, 2019
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://doi.org/10.22059/ees.2018.30607" target="_blank">10.22059/ees.2018.30607</a></div>
-                        <div class="pub-actions">
-                            <a href="https://doi.org/10.22059/ees.2018.30607" target="_blank" class="btn btn-pub">View Article</a>
-                        </div>
-                    </div>
-
-                    <!-- Conference Proceedings -->
-                    <div class="publication-block conference">
-                        <div class="pub-ribbon conference">CONFERENCE</div>
-                        <h3 class="pub-title">Impact of Porous Material Morphology on the Sensitivity of Triboelectric Sound Sensors</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Zia Saadatnia, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>Fluid-Structure-Sound Interactions and Control</em>, 2025
-                        </div>
-                        <div class="pub-doi">DOI: <a href="http://www.fssic.com/" target="_blank">http://www.fssic.com/</a></div>
-                        <div class="pub-actions">
-                            <a href="http://www.fssic.com/" target="_blank" class="btn btn-pub">Conference Webpage</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block conference">
-                        <div class="pub-ribbon conference">CONFERENCE</div>
-                        <h3 class="pub-title">Fluoropolymer-Based Aerogel Composite with Ultra-Lightweight and Exceptional High Dielectric Properties for Acoustic Triboelectric Nanogenerator Sensor Applications</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Chul Park, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>European Regional Meeting of the Polymer Processing Society, PPS-2024</em>, 2024
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://pps2024ferrol.com/" target="_blank">https://pps2024ferrol.com/</a></div>
-                        <div class="pub-actions">
-                            <a href="https://pps2024ferrol.com/" target="_blank" class="btn btn-pub">Conference Webpage</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block conference">
-                        <div class="pub-ribbon conference">CONFERENCE</div>
-                        <h3 class="pub-title">Superior Effect of Fluoropolymers in Enhancing the Triboelectric Performance of the Polyimide Aerogels for Mechanical Energy Harvesting</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Chul Park, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>Internation Conference on Applied Nonlinear Dynamics, Vibration, and Control (ICANDVC)</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="http://www.icandvc.com/Contacts.html" target="_blank">http://www.icandvc.com/Contacts.html</a></div>
-                        <div class="pub-actions">
-                            <a href="http://www.icandvc.com/Contacts.html" target="_blank" class="btn btn-pub">Conference Webpage</a>
-                        </div>
-                    </div>
-
-					<div class="publication-block conference">
-                        <div class="pub-ribbon conference">CONFERENCE</div>
-                        <h3 class="pub-title">PVDF-Based Electrospun Mats with Exceptionally High Dielectric Properties for Triboelectric Nanogenerator (TENG) Energy Harvesting Applications</h3>
-                        <div class="pub-authors"><strong>M.M. Rastegardoost</strong>, Chul Park, H. Naguib</div>
-                        <div class="pub-journal">
-                            <em>Polymer Processing Society (PPS-38)</em>, 2023
-                        </div>
-                        <div class="pub-doi">DOI: <a href="https://www.pps-38.org/" target="_blank">https://www.pps-38.org/</a></div>
-                        <div class="pub-actions">
-                            <a href="https://www.pps-38.org/" target="_blank" class="btn btn-pub">Conference Webpage</a>
-                        </div>
-                    </div>
-
-                    <div class="publication-note">
-                        <p><i class="fa fa-info-circle"></i> <strong>Complete publication history and impact metrics are available on my <a href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&hl=en" target="_blank">Google Scholar profile</a>.</strong></p>
-                    </div>
-                </div>
-            </div>
+      <article class="proj reveal" data-c="ai">
+        <div class="thumb"><img src="images/ai/twin_path.jpg" alt="Robot arm path traced in the digital twin" loading="lazy"></div>
+        <div class="body"><div class="cat">AI · Optimization benchmark</div>
+          <h3>Real-world SDL benchmark for LLM optimizer agents</h3>
+          <p>For Agentoptimizer, a Vector hackathon team project, I built three optimization tasks from our lab: a 7-D formulation, a 26-D viscometer calibration on certified standards, and a 15-D robot-cell layout from my twin.</p>
+          <div class="result">The best of 9 optimizers flips between problems, which is the case for an agent that chooses the method</div>
+          <div class="chips"><span class="chip">CMA-ES</span><span class="chip">TuRBO</span><span class="chip">GP-BO</span><span class="chip">agents</span></div>
+          <div class="plinks"><a href="https://github.com/Mahyar-rajabi94/Cheapest_opt_lunch/tree/SDL_Real_Problem/SDL_Real_Problem" target="_blank" rel="noopener">GitHub →</a></div>
         </div>
-    </div>
-    <!-- End #publications -->
+      </article>
 
-    <div id="skills" class="background-alt">
-        <h2 class="heading">Skills & Expertise</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="skills-grid">
-                        <div class="skill-category">
-                            <h3 class="category-title">
-                                <i class="fa fa-code" aria-hidden="true"></i>
-                                Programming & Analysis
-                            </h3>
-                            <div class="skill-tags">
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">Python</span>
-                                </div>
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">MATLAB</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">NumPy</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Pandas</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Cad Query</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">PyMesh</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">PyVista/Fluidfoam</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Bayesian Optimization</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">TensorFlow</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Scikit-learn</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">PyTorch</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">Machine Learning</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">Deep Learning</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">Data Analysis</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Git</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Neural Networks</span>
-                                </div>
-                            </div>
-                        </div>
-
-						<div class="skill-category">
-                            <h3 class="category-title">
-                                <i class="fa fa-bolt" aria-hidden="true"></i>
-                                Energy & Innovation
-                            </h3>
-                            <div class="skill-tags">
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">Energy Harvesting</span>
-                                </div>
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">Triboelectric Nanogenerators</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">Research & Development</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Piezoelectric Nanogenerators</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Self-Powered Sensors</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Internet of Things (IoT)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="skill-category">
-                            <h3 class="category-title">
-                                <i class="fa fa-cog" aria-hidden="true"></i>
-                                Engineering & Simulation
-                            </h3>
-                            <div class="skill-tags">
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">COMSOL</span>
-                                </div>
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">ANSYS</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">SolidWorks</span>
-                                </div>
-                                <div class="skill-tag intermediate">
-                                    <span class="skill-name">Physics-informed modeling</span>
-                                </div>
-								<div class="skill-tag intermediate">
-                                    <span class="skill-name">Geometric Dimensioning and Tolerancing (GD&T)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Finite Element Analysis (FEA)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Computational Fluid Dynamics (CFD)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Design for Manufacturing (DFM) and Assembly (DFA)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Thermal Analysis</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Vibration and Fatigue Analysis</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">PipeStress</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">AutoPipe</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Piping and Instrumentation Diagram (P&ID)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Automation</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Robotics</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="skill-category">
-                            <h3 class="category-title">
-                                <i class="fa fa-flask" aria-hidden="true"></i>
-                                Materials & Research
-                            </h3>
-                            <div class="skill-tags">
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">Materials Science</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Material Discovery</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">Self-Driving Laboratory</span>
-                                </div>
-								<div class="skill-tag expert">
-                                    <span class="skill-name">High-Throughput Experimentation</span>
-                                </div>
-                                <div class="skill-tag expert">
-                                    <span class="skill-name">Nanofabrication</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">Polymer Processing</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Aerogels</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Hydrogels</span>
-                                </div>
-                                <div class="skill-tag advanced">
-                                    <span class="skill-name">Characterization</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Scanning Electron Microscopy (SEM)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Fourier-transform infrared spectroscopy (FTIR)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Differential Scanning Calorimetry (DSC)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Dynamic Mechanical Analysis (DMA)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">X-ray Diffraction (XRD)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Water Contact Angle (WCA)</span>
-                                </div>
-								<div class="skill-tag advanced">
-                                    <span class="skill-name">Thermogravimetric Analysis (TGA)</span>
-                                </div>
-							</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <article class="proj reveal" data-c="ai">
+        <div class="thumb"><img src="images/thumbs/project2.jpg" alt="Automated rheology platform on a CNC gantry" loading="lazy"></div>
+        <div class="body"><div class="cat">AI · Self-driving instrument</div>
+          <h3>AutoVisco: robotic viscometry as inference</h3>
+          <p>Viscosity inferred from the torque trace of a descending spindle: a lubrication-theory model, AIC/BIC model selection, bootstrap uncertainty and anomaly-based contact detection, run by a three-runtime control stack.</p>
+          <div class="result">6 chemistries, 1–125,000 cP, one calibration · 18 samples in 5 h with under 7% human time</div>
+          <div class="chips"><span class="chip">UQ</span><span class="chip">SciPy</span><span class="chip">ESP32</span><span class="chip">dashboard</span></div>
         </div>
-    </div>
-    <!-- End #skills -->
+      </article>
 
-    <div id="projects">
-        <h2 class="heading">Selected Projects</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">RheoPulse: Monitor Fluid Properties During the Pumping Pulse</h3>
-                            <div class="project-description">
-                                <p>Developed an advanced smart peristaltic pump with viscosity-measuring capabilities.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Physics-informed modeling</span>
-                                        <span class="tech-tag">Fluid Dynamics (CFD)</span>
-                                        <span class="tech-tag">Sensor integration</span>
-                                        <span class="tech-tag">Machine Learning</span>
-										<span class="tech-tag">Self-Driving Laboratory</span>
-										<span class="tech-tag">Automation</span>
-                                        <span class="tech-tag">Data Science</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Estimating viscosity of liquids in real-time within the range of 1.0 to 12,500 cP with accuracy of ±6%</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="#" class="btn btn-project">View Details</a>
-                                <a href="#" class="btn btn-project-secondary">GitHub</a>
-                            </div>
-                        </div>
-                        <div class="project-image wide">
-                            <img src="images/project1.png" alt="RheoPulse" />
-                        </div>
-                    </div>
-
-                    <div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">HTDA CFD Design: High-Throughput Dissolution Apparatus Analysis</h3>
-                            <div class="project-description">
-                                <p>Developed a comprehensive CFD simulation framework for High-Throughput Dissolution Apparatus (HTDA) block design. Utilized parametric geometry generation with Python and comparative analysis of flow characteristics between normal and partially closed sampling cell configurations.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">CFD Simulation</span>
-                                        <span class="tech-tag">ANSYS Workbench</span>
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">NumPy</span>
-                                        <span class="tech-tag">Matplotlib</span>
-                                        <span class="tech-tag">Jupyter Notebook</span>
-                                        <span class="tech-tag">Parametric Geometry</span>
-                                        <span class="tech-tag">Fluid Dynamics</span>
-                                        <span class="tech-tag">Flow Analysis</span>
-                                        <span class="tech-tag">Pharmaceutical Engineering</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Demonstrated significant differences in flow patterns, pressure distribution, and mixing characteristics between configurations, providing insights for optimizing HTDA cell geometry and dissolution efficiency</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://github.com/mahdi-rstgr/HTDA_CFD_Design" class="btn btn-project" target="_blank">View GitHub</a>
-                                <a href="#" class="btn btn-project-secondary">Technical Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image wide">
-                            <img src="images/HTDA.png" alt="HTDA CFD Design" />
-                        </div>
-                    </div>
-
-                    <div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Structural Integrity Modeling of 10" NPS Long Radius Elbow for CANDU Feeder Application</h3>
-                            <div class="project-description">
-                                <p>Comprehensive structural and thermal analysis of a nuclear-grade piping elbow using advanced finite element analysis. Designed for CANDU nuclear reactor feeder systems under severe operating conditions (10 MPa pressure, 280°C).</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">ANSYS APDL</span>
-                                        <span class="tech-tag">ANSYS Workbench</span>
-                                        <span class="tech-tag">Finite Element Analysis</span>
-                                        <span class="tech-tag">CFD Simulation</span>
-                                        <span class="tech-tag">Thermal-Structural Coupling</span>
-                                        <span class="tech-tag">Physics-informed modeling</span>
-                                        <span class="tech-tag">Nuclear Engineering</span>
-                                        <span class="tech-tag">Material Science</span>
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">ASME Standards</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Validated design with safety factor of 1.5, maximum von Mises stress of 185 MPa, ensuring compliance with nuclear safety standards</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://github.com/mahdi-rstgr/piping_elbow" class="btn btn-project" target="_blank">View GitHub</a>
-                                <a href="#" class="btn btn-project-secondary">Technical Report</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project_piping.png" alt="Structural Integrity Modeling of Piping Elbow" />
-                        </div>
-                    </div>
-
-                    <div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Data-Driven Rheology Analysis Platform for Self-Driving Laboratory Automation in Material Discovery</h3>
-                            <div class="project-description">
-                                <p>Developed a data-driven rheology analysis platform integrated with self-driving laboratory automation for accelerated material discovery in pharma applications.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Data Science</span>
-                                        <span class="tech-tag">Prototyping</span>
-										<span class="tech-tag">Automation</span>
-										<span class="tech-tag">Computer Vision</span>
-										<span class="tech-tag">Self-Driving Laboratory</span>
-                                        <span class="tech-tag">GD&T</span>
-                                        <span class="tech-tag">Embedded Systems (ESP32)</span>
-                                        <span class="tech-tag">Raspberry Pi</span>
-                                        <span class="tech-tag">Arduino</span>
-                                        <span class="tech-tag">3D-Printing</span>
-                                        <span class="tech-tag">Machine Learning</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Rheology analysis automation (18 samples per setup) and accelerated material discovery</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="#" class="btn btn-project">View Details</a>
-                                <a href="#" class="btn btn-project-secondary">GitHub</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project2.png" alt="Data-Driven Rheology Analysis Platform" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Dissolution Apparatus Cell</h3>
-                            <div class="project-description">
-                                <p>Designed and developed a box of cells and channels for flowing different fluids in a dissolution apparatus. 
-									Implemented CFD simulations to optimize flow characteristics and ensure uniform dissolution rates across samples.</p>
-								<div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Data Science</span>
-                                        <span class="tech-tag">CFD Simulation</span>
-										<span class="tech-tag">Fluid Dynamics</span>
-										<span class="tech-tag">ANSYS</span>
-										<span class="tech-tag">Self-Driving Laboratory</span>
-                                        <span class="tech-tag">CAD Design</span>
-										<span class="tech-tag">Automation</span>
-                                        <span class="tech-tag">Python (Cad Query - PyMesh - PyVista/Fluidfoam)</span>
-                                        <span class="tech-tag">Bayesian Optimization</span>
-                                        <span class="tech-tag">Prototyping</span>
-                                        <span class="tech-tag">3D-Printing</span>
-                                        <span class="tech-tag">Experimental Testing</span>
-                                    </div>
-                                </div>
-								<p><strong>Results:</strong> Achieved uniform flow distribution and enhanced dissolution efficiency in pharmaceutical testing.</p>
-							</div>
-							<div class="project-actions">
-								<a href="#" class="btn btn-project">View Details</a>
-								<a href="#" class="btn btn-project-secondary">GitHub</a>
-							</div>
-						</div>
-						<div class="project-image-gallery">
-							<div class="gallery-main">
-								<img src="images/project4_1.png" alt="Dissolution Apparatus Cell - Main View" />
-							</div>
-							<div class="gallery-row">
-								<div class="gallery-thumb">
-									<img src="images/project4_2.png" alt="CAD and mesh python" />
-								</div>
-								<div class="gallery-thumb">
-									<img src="images/project4_3.png" alt="CFD Simulation Results" />
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="project-block">
-						<div class="project-content">
-							<h3 class="project-title">Formulator: Self-Driving Liquid Handler and Powder Dispenser</h3>
-							<div class="project-description">
-								<p>Developed a self-driving lab for data-driven liquid/powder dispenser, integrating machine learning for 
-									optimization and uncertainty reduction in experimental parameter space. Implemented an ML-driven dispensing 
-									model using Python and TensorFlow to infer flow behavior for uncalibrated fluids. Utilized advanced imaging and inverse 
-									heat transfer methods to automate synthesis and characterization.
-								</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Machine Learning</span>
-                                        <span class="tech-tag">Computer Vision</span>
-                                        <span class="tech-tag">Liquid Handling</span>
-                                        <span class="tech-tag">Laboratory Automation</span>
-                                        <span class="tech-tag">Prototyping</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Liquid handling and powder dispenser with accuracy of ±0.1 gram. 5x faster synthesis formulation</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="#" class="btn btn-project">View Details</a>
-                                <a href="#" class="btn btn-project-secondary">Demo</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project3.png" alt="Formulator" />
-                        </div>
-                    </div>
-
-                    <div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Crack Detector Triboelectric Nanogenerator (CD-TENG)</h3>
-                            <div class="project-description">
-                                <p>Developed an ultra-lightweight aerogel-fibrous material with high thermal stability and boosted triboelectricity for crack detection in harsh environments.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Material Synthesis</span>
-                                        <span class="tech-tag">Porous Composite</span>
-                                        <span class="tech-tag">Fibrous Materials</span>
-                                        <span class="tech-tag">Aerogel</span>
-                                        <span class="tech-tag">Material Characterization</span>
-                                        <span class="tech-tag">SEM</span>
-                                        <span class="tech-tag">XRD</span>
-                                        <span class="tech-tag">FTIR</span>
-                                        <span class="tech-tag">DMA</span>
-                                        <span class="tech-tag">WCA</span>
-                                        <span class="tech-tag">TGA</span>
-                                        <span class="tech-tag">Dielectrics</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Single Droplet Output: 7.9 V and 0.79 μA (at 30 cm height / 70° incline). Peak Power Density: 33 mW/m² under optimized parameters. Optimized Conditions: 15 cm droplet height, 50° substrate slope, and 20 MΩ load. Primary Application: Lightweight, self-powered sensors for real-time crack detection in extreme environments.</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="#" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project5.png" alt="Crack Detector Triboelectric Nanogenerator" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Sound Aerogel-based Sensor Triboelectric Nanogenerator (SAS-TENG)</h3>
-                            <div class="project-description">
-                                <p>Developed a ultra-lightweight aerogel composites for sound-driven triboelectric nanogenerator.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Material Synthesis</span>
-                                        <span class="tech-tag">Porous Composite</span>
-                                        <span class="tech-tag">Sol-Gel Processing</span>
-                                        <span class="tech-tag">Aerogel</span>
-                                        <span class="tech-tag">Nanoparticle</span>
-                                        <span class="tech-tag">Helmholtz Resonator</span>
-                                        <span class="tech-tag">Self-Powered Sensing</span>
-                                        <span class="tech-tag">SEM</span>
-                                        <span class="tech-tag">XRD</span>
-                                        <span class="tech-tag">FTIR</span>
-                                        <span class="tech-tag">DMA</span>
-                                        <span class="tech-tag">WCA</span>
-                                        <span class="tech-tag">TGA</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Peak Power Density: 307.5 mW/m². Specific Power Output: 15.37 mW/g, enabled by an ultra-low density of 0.25 g/cm³. Acoustic Sensing Range: 40 dB to 120 dB. Voltage Response: 1.05 V to 4.85 V across its sensing range. Mechanism: Utilizes a contact-and-separation mode TENG activated by acoustic-induced mobilization of a lightweight, flexible aerogel.</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://doi.org/10.1016/j.nanoen.2025.110765" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project6.jpg" alt="Sound Aerogel-based Sensor Triboelectric Nanogenerator" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Aerogel Fiber Bundles for Extreme Thermal Management Systems in Aerospace Applications</h3>
-                            <div class="project-description">
-                                <p>Twisted Polyimide (PI) aerogel fiber bundles were developed using a sol-gel confined transition method to improve mechanical strength, flexibility, and thermal insulation for ultralightweight applications.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Material Synthesis</span>
-                                        <span class="tech-tag">Aerogel Fiber</span>
-                                        <span class="tech-tag">Material Characterization</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Ultra-low desnity fiber, Outstanding thermal stability, Superior flexibility, Enhanced Mechanical Strength, Unique wearability.</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://doi.org/10.1021/acsami.4c11236" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image Large">
-                            <img src="images/project10.png" alt="Aerogel Fiber Bundles" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Fibrous Composite with Carbon Nanoparticles</h3>
-                            <div class="project-description">
-                                <p>Highly durable PVDF composites were developed using carbon nanofillers (GnP, CNT, CNF) to overcome mechanical friction in TENGs, with 1 wt% GnP providing superior performance and structural longevity.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Material Synthesis</span>
-                                        <span class="tech-tag">Porous Composite</span>
-                                        <span class="tech-tag">Carbon Additives</span>
-                                        <span class="tech-tag">Graphene Nanoplatelets (GnPs)</span>
-                                        <span class="tech-tag">Carbon Nanotubes (CNTs)</span>
-                                        <span class="tech-tag">Carbon Nanofibers (CNFs)</span>
-                                        <span class="tech-tag">Electrospinning</span>
-                                        <span class="tech-tag">Nanoparticle</span>
-                                        <span class="tech-tag">Self-Powered Sensing</span>
-                                        <span class="tech-tag">Material Characterization</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Output: 134.4 V and 12.9 μA (using 1 wt% GnP). Durability: No deterioration after 350,000 cycles (a 35x increase in longevity over previous 10,000-cycle benchmarks). Optimization: 1 wt% GnP nanofiller significantly outperformed CNT and CNF variants.</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://doi.org/10.1016/j.mtener.2023.101431" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image Large">
-                            <img src="images/project9.png" alt="Fibrous Composite with Carbon Nanoparticles" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Triboelectric Porous Mat</h3>
-                            <div class="project-description">
-                                <p>Optimized additive-free porous PVDF mats with tuned dipoles and fiber alignment to achieve high TENG output and durability.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Material Synthesis</span>
-                                        <span class="tech-tag">Porous Composite</span>
-                                        <span class="tech-tag">Electrospinning</span>
-                                        <span class="tech-tag">Nanoparticle</span>
-                                        <span class="tech-tag">Self-Powered Sensing</span>
-                                        <span class="tech-tag">Material Characterization</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Output: 130 V and 12 μA (outperforming pristine PVDF). Dielectric Constant: Increased to 10 (comparable to non-porous film). Durability: Stable performance over 10,000 cycles.</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://doi.org/10.1016/j.apmt.2023.101732" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image wide">
-                            <img src="images/project8.png" alt="Triboelectric Porous Mat" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Porous Materials and Structures for High-Performance Triboelectric Nanogenerators</h3>
-                            <div class="project-description">
-                                <p>Research analyzed diverse porous materials (hydrogels, aerogels, foams, textiles) across nano-to-macro scales for TENG dielectrics and electrodes, specifically developing an ultra-lightweight aerogel composite for sound-driven energy harvesting.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Material Synthesis</span>
-                                        <span class="tech-tag">Porous Composite</span>
-                                        <span class="tech-tag">Sol-Gel Processing</span>
-                                        <span class="tech-tag">Aerogel</span>
-                                        <span class="tech-tag">Nanoparticle</span>
-                                        <span class="tech-tag">Helmholtz Resonator</span>
-                                        <span class="tech-tag">Self-Powered Sensing</span>
-                                        <span class="tech-tag">SEM</span>
-                                        <span class="tech-tag">XRD</span>
-                                        <span class="tech-tag">FTIR</span>
-                                        <span class="tech-tag">DMA</span>
-                                        <span class="tech-tag">WCA</span>
-                                        <span class="tech-tag">TGA</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Porous materials (aerogels, foams, textiles) enhance TENG performance and breathability for smart wearables and self-powered sensors.</p>
-                            </div>
-                            <div class="project-actions">
-                                <a href="https://doi.org/10.1016/j.nanoen.2023.108365" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image tall">
-                            <img src="images/project7.jpg" alt="Sound Aerogel-based Sensor Triboelectric Nanogenerator" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">AI-Driven Non-Destructive Thermal Profiling of In-Tube Fluids</h3>
-                            <div class="project-description">
-                                <p>A non-destructive sensor system featuring a localized band heater and temperature sensor mounted on a tube exterior.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">CFD</span>
-                                        <span class="tech-tag">Physics-Informed Neural Networks</span>
-                                        <span class="tech-tag">Random Forest</span>
-                                        <span class="tech-tag">XGBoost</span>
-                                        <span class="tech-tag">Feature Extraction</span>
-                                        <span class="tech-tag">Non-Invasive Clamping</span>
-                                        <span class="tech-tag">Interface Materials</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Non-Invasive Sensing, AI Accuracy, Real-Time Monitoring.</p>
-                            </div>
-
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project11.png" alt="AI-Driven Non-Destructive Thermal Profiling" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">First Law Simulation of Wet Compression in Gas Turbines</h3>
-                            <div class="project-description">
-                                <p>Uses the First Law of Thermodynamics to simulate wet compression. By modeling water droplet evaporation, it quantifies how cooling the working fluid reduces compression work and increases efficiency.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">CFD</span>
-                                        <span class="tech-tag">Physics-Informed Neural Networks</span>
-                                        <span class="tech-tag">XGBoost</span>
-                                        <span class="tech-tag">Thermoflow</span>
-                                        <span class="tech-tag">MATLAB</span>
-                                        <span class="tech-tag">ANSYS Fluent</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> simplified First Law model matches experimental data as accurately as complex Second Law analyses, validating the method for predicting power augmentation.</p>
-                            </div>
-							<div class="project-actions">
-                                <a href="https://doi.org/10.22059/ees.2019.34705" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project12.png" alt="First Law Simulation of Wet Compression in Gas Turbines" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Suspension and Chassis Design of a Light-Weight Electric Vehicle</h3>
-                            <div class="project-description">
-                                <p>Designed and prototyped a lightweight EV platform using SolidWorks and ANSYS. Applied DFM/GD&T to bridge the gap between high-fidelity FEA simulations and physical manufacturing.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">FEM</span>
-                                        <span class="tech-tag">SolidWorks</span>
-                                        <span class="tech-tag">ANSYS</span>
-                                        <span class="tech-tag">MATLAB</span>
-                                        <span class="tech-tag">GD&T</span>
-                                        <span class="tech-tag">DFM/DAM</span>
-                                        <span class="tech-tag">Troubleshooting</span>
-                                        <span class="tech-tag">Prototyping</span>
-                                        <span class="tech-tag">Manufacturing</span>
-                                        <span class="tech-tag">Assembly</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Achieved a 23% weight reduction while maintaining a 2.1 Factor of Safety. Boosted torsional rigidity by 12% (1,450 Nm/deg). Maintained assembly tolerances within ±0.5 mm for all hard-points.</p>
-                            </div>
-							<div class="project-actions">
-                                <a href="https://www.linkedin.com/company/persian-gazelle/?originalSubdomain=ir" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image wide">
-                            <img src="images/project14.png" alt="Suspension and Chassis Design" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Electrical and Solar Vehicle, Persian Gazelle Car IV</h3>
-                            <div class="project-description">
-                                <p>The Persian Gazelle IV (PGSC IV) is the first four-passenger, family-sized solar-electric vehicle in the Middle East, designed at the University of Tehran. A multidisciplinary team of 45 students engineered it to bridge the gap between high-efficiency race cars and practical city vehicles, focusing on aerodynamic optimization and lightweight composite structures.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">SolidWorks</span>
-                                        <span class="tech-tag">ANSYS</span>
-                                        <span class="tech-tag">CFD</span>
-                                        <span class="tech-tag">MATLAB</span>
-                                        <span class="tech-tag">Lithium-ion Battery</span>
-                                        <span class="tech-tag">Solar Cells</span>
-                                        <span class="tech-tag">Composite Materials</span>
-                                        <span class="tech-tag">Aerodynamic Optimization</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> Achieved a low drag coefficient (C_d) of 0.20 and energy consumption of 21 Wh/km (at 50 km/h). Maximum speed of 110 km/h with a solar-assisted range of up to 750 km on a full charge. Total weight of 620 kg (including 4 passengers) with a 1.1 kW solar array and a 16.1 kWh battery capacity.</p>
-                            </div>
-							<div class="project-actions">
-                                <a href="https://www.linkedin.com/company/persian-gazelle/?originalSubdomain=ir" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image large">
-                            <img src="images/project13.jpg" alt="Electrical and Solar Vehicle PGSC IV" />
-                        </div>
-                    </div>
-
-					<div class="project-block">
-                        <div class="project-content">
-                            <h3 class="project-title">Electrical and Solar Vehicle, Persian Gazelle Car III</h3>
-                            <div class="project-description">
-                                <p>A multidisciplinary project focused on building a two-passenger, four-wheeled solar car. This generation optimized racing performance with a low-budget, high-efficiency design to compete on the global stage.</p>
-                                <div class="project-technologies">
-                                    <h4>Technologies</h4>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">SolidWorks</span>
-                                        <span class="tech-tag">ANSYS</span>
-                                        <span class="tech-tag">CFD</span>
-                                        <span class="tech-tag">MATLAB</span>
-                                        <span class="tech-tag">Lithium-ion Battery</span>
-                                        <span class="tech-tag">Aerodynamics</span>
-                                        <span class="tech-tag">Vehicle Dynamics</span>
-                                        <span class="tech-tag">Power Systems Integration</span>
-                                        <span class="tech-tag">Lightweight Manufacturing</span>
-                                    </div>
-                                </div>
-                                <p><strong>Results:</strong> 3rd Place (Speed Race) and 7th Place (Distance Race) at Bridgeston World Solar Chalenge (BWSC), Darwin-to-Adelaide, Australia, 2015. Successfully competed against 42 teams from 20+ countries.</p>
-                            </div>
-							<div class="project-actions">
-                                <a href="https://www.linkedin.com/company/persian-gazelle/?originalSubdomain=ir" class="btn btn-project">View Details</a>
-                            </div>
-                        </div>
-                        <div class="project-image-gallery">
-                            <div class="gallery-row">
-                                <div class="gallery-wide">
-                                    <img src="images/PGSC_III_1.jpg" alt="Electrical and Solar Vehicle PGSC III - View 1" />
-                                </div>
-                                <div class="gallery-wide">
-                                    <img src="images/PGSC_III_2.jpg" alt="Electrical and Solar Vehicle PGSC III - View 2" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <article class="proj reveal" data-c="ai">
+        <div class="thumb"><img src="images/thumbs/project3.jpg" alt="Formulator CNC platform with dispensing pens" loading="lazy"></div>
+        <div class="body"><div class="cat">Automation · Dispensing</div>
+          <h3>Formulator &amp; Formulator-Pen</h3>
+          <p>A tool-changing CNC platform with modular pens for viscous liquids. Four delivery designs benchmarked; a density bias diagnosed and calibrated out; film retention identified as the residual error.</p>
+          <div class="result">±0.7% up to 30,000 cP · up to 4× faster · 19 s tool change · under US$1k per unit</div>
+          <div class="chips"><span class="chip">root cause</span><span class="chip">GRBL</span><span class="chip">build vs buy</span></div>
         </div>
-    </div>
-    <!-- End #projects -->
-    
+      </article>
 
-    <div id="awards" class="background-alt">
-        <h2 class="heading">Awards & Recognition</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="award-block">
-                        <h3>NSERC</h3>
-                        <h4>Canada Graduate Scholarship-Doctoral (CGS-D)</h4>
-                    </div>
-                    
-                    <div class="award-block">
-                        <h3>Grad Excellence Award</h3>
-                        <h4>Mechanical & Industrial Engineering (MIE) Department, University of Toronto</h4>
-                    </div>
-					
-					<div class="award-block">
-                        <h3>Ontario Graduate Scholarship (OGS)</h3>
-                        <h4>School of Graduate Studies, University of Toronto</h4>
-                    </div>
-
-					<div class="award-block">
-                        <h3>Doctoral Completion Award (DCA)</h3>
-                        <h4>School of Graduate Studies, University of Toronto</h4>
-                    </div>
-
-					<div class="award-block">
-                        <h3>Guest reviewer of scientific journals</h3>
-                        <h4>(i) Materials Today Communications, (ii) Materials Today, (iii) Materials Today Chemistry, and (iv) Journal of Electrostatics</h4>
-                    </div>
-
-					<div class="award-block">
-                        <h3>International World Solar Challenge (IWSC) - 2015 & 2019</h3>
-                        <h4>The world's greatest innovation and engineering challenge driving decarbonization through sustainable mobility.</h4>
-                    </div>
-
-					<div class="award-block">
-                        <h3>Iran's National Elites Foundation (INEF) - 2018</h3>
-                        <h4>INEF is an Iranian non-governmental organization. The main purpose of the foundation is to recognize, organize and support Iran's elite national talents.</h4>
-                    </div>
-                </div>
-            </div>
+      <article class="proj reveal" data-c="ai sim">
+        <div class="thumb"><img src="images/thumbs/project4_1.jpg" alt="High-throughput dissolution and permeation apparatus" loading="lazy"></div>
+        <div class="body"><div class="cat">Automation · CFD-driven design</div>
+          <h3>HTD/PA: high-throughput dissolution &amp; permeation</h3>
+          <p>Co-developed a parallel transport-testing platform: Ansys Fluent and NVIDIA Warp models for design, a 4-channel 20 Hz sensor network, OT-2 sampling and an ML-ready data schema.</p>
+          <div class="result">8 cells from one pump · median CV 3–8% · R² &gt; 0.97</div>
+          <div class="chips"><span class="chip">CFD</span><span class="chip">NVIDIA Warp</span><span class="chip">OT-2</span><span class="chip">data schema</span></div>
+          <div class="plinks"><a href="https://github.com/mahdi-rstgr/HTDA_CFD_Design" target="_blank" rel="noopener">CFD on GitHub →</a></div>
         </div>
-    </div>
-    <!-- End #awards -->
+      </article>
 
-    <div id="contact">
-        <!-- Contact section content removed -->
-    </div>
-    <!-- End #contact -->
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-5 copyright">
-                    <p>
-                        Copyright &copy; <span id="current-year">2026</span> Mahdi Rastegar
-                    </p>
-                </div>
-                <div class="col-sm-2 top">
-                    <span id="to-top">
-                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                    </span>
-                </div>
-                <div class="col-sm-5 social">
-                    <ul>
-                        <li>
-                            <a href="https://github.com/mahdi-rstgr" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://linkedin.com/in/mahdirstgr" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&hl=en" target="_blank"><i class="ai ai-google-scholar" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+      <article class="proj reveal" data-c="ai">
+        <div class="thumb"><img src="images/thumbs/project1.jpg" alt="Signal pipeline for a viscosity-sensing pump" loading="lazy"></div>
+        <div class="body"><div class="cat">AI · In development</div>
+          <h3>RheoPulse: viscosity from the pumping pulse</h3>
+          <p>A smart pump that measures the fluid it moves: fluid–structure simulation for design, Fourier features from the flow signal, and a regression model for real-time viscosity.</p>
+          <div class="chips"><span class="chip">FSI</span><span class="chip">signal features</span><span class="chip">ML regression</span></div>
         </div>
-    </footer>
-    <!-- End footer -->
+      </article>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>
-        /*
-            Scripts for Dev Portfolio Template
-        */
-        (function($) {
-            // Remove no-js class
-            $('html').removeClass('no-js');
+      <article class="proj reveal" data-c="ai sim">
+        <div class="thumb"><img src="images/thumbs/project11.jpg" alt="Non-destructive thermal test schematic" loading="lazy"></div>
+        <div class="body"><div class="cat">AI · Inverse problems</div>
+          <h3>AI-driven non-destructive thermal profiling</h3>
+          <p>A clamp-on band heater and temperature sensor infer in-tube fluid properties from the outside, combining inverse heat transfer, CFD and learned models.</p>
+          <div class="chips"><span class="chip">PINN</span><span class="chip">XGBoost</span><span class="chip">Random Forest</span><span class="chip">CFD</span></div>
+        </div>
+      </article>
 
-            // Animate to section when nav is clicked
-            $('header a').click(function(e) {
-                // Treat as normal link if no-scroll class
-                if ($(this).hasClass('no-scroll')) return;
-                e.preventDefault();
-                var heading = $(this).attr('href');
-                var scrollDistance = $(heading).offset().top;
-                $('html, body').animate({
-                    scrollTop: scrollDistance + 'px'
-                }, Math.abs(window.pageYOffset - $(heading).offset().top) / 1);
-                // Hide the menu once clicked if mobile
-                if ($('header').hasClass('active')) {
-                    $('header, body').removeClass('active');
-                }
-            });
+      <article class="proj reveal" data-c="sim">
+        <div class="thumb"><img src="images/thumbs/HTDA.jpg" alt="CFD velocity fields of dissolution cells" loading="lazy"></div>
+        <div class="body"><div class="cat">Simulation · CFD</div>
+          <h3>HTDA CFD design study</h3>
+          <p>Parametric Python geometry and Ansys comparisons of open versus partially closed sampling cells: flow patterns, pressure and mixing.</p>
+          <div class="chips"><span class="chip">Ansys</span><span class="chip">Python</span><span class="chip">parametric CAD</span></div>
+          <div class="plinks"><a href="https://github.com/mahdi-rstgr/HTDA_CFD_Design" target="_blank" rel="noopener">GitHub →</a></div>
+        </div>
+      </article>
 
-            // Scroll to top
-            $('#to-top').click(function() {
-                $('html, body').animate({
-                    scrollTop: 0
-                }, 500);
-            });
+      <article class="proj reveal" data-c="sim">
+        <div class="thumb"><img src="images/thumbs/project_piping.jpg" alt="FEA of a nuclear piping elbow" loading="lazy"></div>
+        <div class="body"><div class="cat">Simulation · FEA</div>
+          <h3>Structural integrity of a CANDU feeder elbow</h3>
+          <p>Thermal-structural FEA of a 10" NPS long-radius elbow at 10 MPa and 280 °C, checked against ASME criteria.</p>
+          <div class="result">Safety factor 1.5 · max von Mises 185 MPa</div>
+          <div class="chips"><span class="chip">ANSYS APDL</span><span class="chip">ASME</span></div>
+          <div class="plinks"><a href="https://github.com/mahdi-rstgr/piping_elbow" target="_blank" rel="noopener">GitHub →</a></div>
+        </div>
+      </article>
 
-            // Scroll to first element
-            $('#lead-down span').click(function() {
-                var scrollDistance = $('#lead').next().offset().top;
-                $('html, body').animate({
-                    scrollTop: scrollDistance + 'px'
-                }, 500);
-            });
+      <article class="proj reveal" data-c="sim">
+        <div class="thumb"><img src="images/thumbs/project12.jpg" alt="Gas turbine wet-compression schematic" loading="lazy"></div>
+        <div class="body"><div class="cat">Simulation · Thermodynamics</div>
+          <h3>Wet compression in gas turbines</h3>
+          <p>A first-law model of droplet evaporation that quantifies reduced compression work, matching experiments as well as second-law analyses.</p>
+          <div class="chips"><span class="chip">MATLAB</span><span class="chip">Thermoflow</span><span class="chip">Fluent</span></div>
+          <div class="plinks"><a href="https://doi.org/10.22059/ees.2019.34705" target="_blank" rel="noopener">Paper →</a></div>
+        </div>
+      </article>
 
-            // Open mobile menu
-            $('#mobile-menu-open').click(function() {
-                $('header, body').addClass('active');
-            });
+      <article class="proj reveal" data-c="veh">
+        <div class="thumb"><img src="images/thumbs/project13.jpg" alt="Persian Gazelle IV solar-electric vehicle" loading="lazy"></div>
+        <div class="body"><div class="cat">Vehicles · Solar-electric</div>
+          <h3>Persian Gazelle IV</h3>
+          <p>The first four-passenger solar-electric family car in the Middle East, built by a 45-student team around aerodynamics and lightweight composites.</p>
+          <div class="result">Cd 0.20 · 21 Wh/km at 50 km/h · 16.1 kWh battery, 1.1 kW solar array</div>
+          <div class="chips"><span class="chip">SolidWorks</span><span class="chip">CFD</span><span class="chip">Li-ion</span></div>
+        </div>
+      </article>
 
-            // Close mobile menu
-            $('#mobile-menu-close').click(function() {
-                $('header, body').removeClass('active');
-            });
+      <article class="proj reveal" data-c="veh">
+        <div class="thumb"><img src="images/thumbs/project14.jpg" alt="Lightweight EV chassis and suspension" loading="lazy"></div>
+        <div class="body"><div class="cat">Vehicles · Chassis</div>
+          <h3>Lightweight EV suspension &amp; chassis</h3>
+          <p>Designed and prototyped with SolidWorks and ANSYS, using DFM and GD&amp;T to connect FEA to manufacturing.</p>
+          <div class="result">−23% mass at FoS 2.1 · +12% torsional rigidity · ±0.5 mm hard points</div>
+          <div class="chips"><span class="chip">FEA</span><span class="chip">GD&amp;T</span><span class="chip">DFM</span></div>
+        </div>
+      </article>
 
-            // Create the timeline
-            $('#experience-timeline').each(function() {
-                $this = $(this);
-                $userContent = $this.children('div');
-                $userContent.each(function() {
-                    $(this).addClass('vtimeline-content').wrap('<div class="vtimeline-point"><div class="vtimeline-block"></div></div>');
-                });
-                $this.find('.vtimeline-point').each(function() {
-                    $(this).prepend('<div class="vtimeline-icon"><i class="fa fa-map-marker"></i></div>');
-                });
-                $this.find('.vtimeline-content').each(function() {
-                    var date = $(this).data('date');
-                    if (date) {
-                        $(this).parent().prepend('<span class="vtimeline-date">' + date + '</span>');
-                    }
-                });
-            });
+      <article class="proj reveal" data-c="veh">
+        <div class="thumb"><img src="images/thumbs/PGSC_III_1.jpg" alt="Persian Gazelle III solar race car" loading="lazy"></div>
+        <div class="body"><div class="cat">Vehicles · Racing</div>
+          <h3>Persian Gazelle III · World Solar Challenge</h3>
+          <p>A two-seat solar race car optimized on a small budget. Mechanical manager and energy strategist, Darwin to Adelaide.</p>
+          <div class="result">3rd in speed, 7th in distance among 42 teams from 20+ countries (2015)</div>
+          <div class="chips"><span class="chip">vehicle dynamics</span><span class="chip">energy strategy</span></div>
+        </div>
+      </article>
 
-        })(jQuery);
-    </script>
+      <article class="proj reveal" data-c="mat">
+        <div class="thumb"><img src="images/thumbs/project6.jpg" alt="Sound-driven aerogel triboelectric sensor" loading="lazy"></div>
+        <div class="body"><div class="cat">Materials · Acoustic sensing</div>
+          <h3>Sound-driven aerogel nanogenerator</h3>
+          <p>An ultra-light aerogel composite that harvests and senses sound through a Helmholtz-resonator design.</p>
+          <div class="result">307.5 mW/m² · 15.37 mW/g · 40–120 dB sensing range</div>
+          <div class="chips"><span class="chip">sol-gel</span><span class="chip">self-powered sensing</span></div>
+          <div class="plinks"><a href="https://doi.org/10.1016/j.nanoen.2025.110765" target="_blank" rel="noopener">Nano Energy →</a></div>
+        </div>
+      </article>
+
+      <article class="proj reveal" data-c="mat">
+        <div class="thumb"><img src="images/thumbs/project9.jpg" alt="Fibrous composite with carbon nanofillers" loading="lazy"></div>
+        <div class="body"><div class="cat">Materials · Durability</div>
+          <h3>Fibrous composites with carbon nanofillers</h3>
+          <p>PVDF mats reinforced with graphene nanoplatelets, nanotubes and nanofibers to survive triboelectric friction.</p>
+          <div class="result">134.4 V · 12.9 µA · no decay after 350,000 cycles</div>
+          <div class="chips"><span class="chip">electrospinning</span><span class="chip">GnP</span></div>
+          <div class="plinks"><a href="https://doi.org/10.1016/j.mtener.2023.101431" target="_blank" rel="noopener">Paper →</a></div>
+        </div>
+      </article>
+
+      <article class="proj reveal" data-c="mat">
+        <div class="thumb"><img src="images/thumbs/project5.jpg" alt="Crack-detection triboelectric sensor" loading="lazy"></div>
+        <div class="body"><div class="cat">Materials · Harsh environments</div>
+          <h3>Crack-detector nanogenerator</h3>
+          <p>A thermally stable aerogel-fibrous sensor that detects cracks from droplet-driven triboelectric signals.</p>
+          <div class="result">7.9 V per droplet · 33 mW/m² peak power</div>
+          <div class="chips"><span class="chip">aerogel</span><span class="chip">self-powered</span></div>
+        </div>
+      </article>
+
+      <article class="proj reveal" data-c="mat">
+        <div class="thumb"><img src="images/thumbs/project10.jpg" alt="Twisted polyimide aerogel fiber bundles" loading="lazy"></div>
+        <div class="body"><div class="cat">Materials · Aerospace thermal</div>
+          <h3>Aerogel fiber bundles for extreme thermal management</h3>
+          <p>Twisted polyimide aerogel fibers made by confined sol-gel transition: light, flexible and strong insulation.</p>
+          <div class="chips"><span class="chip">polyimide</span><span class="chip">aerospace</span></div>
+          <div class="plinks"><a href="https://doi.org/10.1021/acsami.4c11236" target="_blank" rel="noopener">ACS AMI →</a></div>
+        </div>
+      </article>
+
+      <article class="proj reveal" data-c="mat">
+        <div class="thumb"><img src="images/thumbs/project7.jpg" alt="Nano Energy cover art on porous triboelectric materials" loading="lazy" style="object-position:center 30%"></div>
+        <div class="body"><div class="cat">Materials · Review</div>
+          <h3>Porous materials for high-performance nanogenerators</h3>
+          <p>A first-author review of hydrogels, aerogels, foams and textiles as triboelectric dielectrics and electrodes, from nano to macro scale.</p>
+          <div class="chips"><span class="chip">review</span><span class="chip">Nano Energy</span></div>
+          <div class="plinks"><a href="https://doi.org/10.1016/j.nanoen.2023.108365" target="_blank" rel="noopener">Nano Energy →</a></div>
+        </div>
+      </article>
+
+      <article class="proj reveal" data-c="mat">
+        <div class="thumb"><img src="images/thumbs/project8.jpg" alt="Porous PVDF triboelectric mat" loading="lazy"></div>
+        <div class="body"><div class="cat">Materials · Dielectrics</div>
+          <h3>Additive-free porous PVDF mats</h3>
+          <p>Tuned dipole arrangement and fiber alignment give high triboelectric output without fillers.</p>
+          <div class="result">130 V · 12 µA · dielectric constant 10</div>
+          <div class="chips"><span class="chip">PVDF</span><span class="chip">electrospinning</span></div>
+          <div class="plinks"><a href="https://doi.org/10.1016/j.apmt.2023.101732" target="_blank" rel="noopener">Paper →</a></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="ecosystem">
+  <div class="wrap">
+    <p class="eyebrow reveal">Ecosystem</p>
+    <h2 class="reveal">Built with the people <span class="grad">defining the field</span></h2>
+    <p class="lede reveal">My work sits inside Toronto's self-driving-lab and AI community, alongside an industry partner that funds it.</p>
+    <div class="eco reveal">
+      <div><b>Acceleration Consortium</b><span>University of Toronto · my home program for self-driving labs</span></div>
+      <div><b>Vector Institute</b><span>AI research partner on the formulation lab and agent hackathons</span></div>
+      <div><b>Matter Lab</b><span>Prof. Alán Aspuru-Guzik's group · agents for science</span></div>
+      <div><b>NVIDIA</b><span>Simulation partner on the formulation lab</span></div>
+      <div><b>Sekisui</b><span>Industry sponsor of the self-driving formulation lab</span></div>
+      <div><b>Toronto Smart Materials</b><span>PhD with Prof. Hani Naguib and Prof. Chul Park</span></div>
+      <div><b>KITE · UHN</b><span>Translational research in advanced materials</span></div>
+      <div><b>University of Tehran</b><span>Solar-electric vehicle center · MSc and BSc</span></div>
+    </div>
+
+    <p class="eyebrow reveal" style="margin-top:64px">Research my systems build on</p>
+    <div class="related">
+      <a class="card reveal" href="https://arxiv.org/abs/2609.04564" target="_blank" rel="noopener">
+        <span class="k">Matter Lab · arXiv 2609.04564</span>
+        <h3>La Agente Óptima</h3>
+        <p>An LLM agent supervising Bayesian-optimization campaigns, with routine loops running without it.</p>
+        <div class="rel">In Razi: the optimizer runs without the LLM and hands back on explicit triggers →</div>
+      </a>
+      <a class="card reveal" href="https://self-building-labs.github.io/" target="_blank" rel="noopener">
+        <span class="k">Matter Lab · arXiv 2610.23826</span>
+        <h3>Self-Building Labs</h3>
+        <p>Agents that build a lab from a goal: layout, digital twin, robot skills, workflows and a safety agent.</p>
+        <div class="rel">In my cell: CAD-to-URDF twin, twin-verified motion, a fingerprinted release gate →</div>
+      </a>
+      <a class="card reveal" href="https://github.com/Mahyar-rajabi94/Cheapest_opt_lunch" target="_blank" rel="noopener">
+        <span class="k">Vector hackathon · team project</span>
+        <h3>Agentoptimizer</h3>
+        <p>An LLM as a sandboxed black-box optimizer, with a trusted evaluator holding the budget.</p>
+        <div class="rel">My contribution: the real-world SDL benchmark of three lab problems →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="publications">
+  <div class="wrap">
+    <p class="eyebrow reveal">Publications</p>
+    <h2 class="reveal">Selected publications</h2>
+    <p class="lede reveal">Journal and conference papers in energy materials, sensing and thermal systems. Full list and metrics on <a href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="color:var(--acc)">Google Scholar</a>.</p>
+    <div class="pubs">
+      <div class="pub"><div class="yr">2025</div><div><div class="t">Ultra-lightweight aerogel composites for sound-driven triboelectric nanogenerator</div><div class="a"><u>M.M. Rastegardoost</u>, O. Tafreshi, S. Ghaffari, Z. Saadatnia, C. Park, H. Naguib · <span class="v">Nano Energy</span></div></div><a class="go" href="https://doi.org/10.1016/j.nanoen.2025.110765" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2025</div><div><div class="t">Insights into the crystallization, topographical, and tribological properties of sustainable PEO-mica based triboelectric nanogenerators</div><div class="a">A. Johnson, <u>M.M. Rastegardoost</u>, T. Filleter, Z. Saadatnia, H. Naguib · <span class="v">Smart Materials and Structures</span></div></div><a class="go" href="https://doi.org/10.1088/1361-665X/adb404" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2024</div><div><div class="t">Polyimide aerogel fiber bundles for extreme thermal management systems in aerospace applications</div><div class="a">O. Tafreshi, <u>M.M. Rastegardoost</u>, Z. Saadatnia, S. Ghaffari, C.B. Park, H. Naguib · <span class="v">ACS Applied Materials &amp; Interfaces</span></div></div><a class="go" href="https://doi.org/10.1021/acsami.4c11236" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2024</div><div><div class="t">High performance flexible green triboelectric nanogenerator with polyethylene oxide/mica tribo-positive composite material</div><div class="a">A. Johnson, <u>M.M. Rastegardoost</u>, N. Barri, T. Filleter, Z. Saadatnia, H. Naguib · <span class="v">Applied Materials Today</span></div></div><a class="go" href="https://doi.org/10.1016/j.apmt.2024.102321" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2023</div><div><div class="t">Highly durable triboelectric nanogenerators based on fibrous fluoropolymer composite mats with enhanced mechanical and dielectric properties</div><div class="a"><u>M.M. Rastegardoost</u>, O. Tafreshi, Z. Saadatnia, S. Ghaffari, P. Serles, T. Filleter, C. Park, H. Naguib · <span class="v">Materials Today Energy</span></div></div><a class="go" href="https://doi.org/10.1016/j.mtener.2023.101431" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2023</div><div><div class="t">Recent advances on porous materials and structures for high-performance triboelectric nanogenerators</div><div class="a"><u>M.M. Rastegardoost</u>, O. Tafreshi, Z. Saadatnia, S. Ghaffari, H. Naguib, C. Park · <span class="v">Nano Energy</span></div></div><a class="go" href="https://doi.org/10.1016/j.nanoen.2023.108365" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2023</div><div><div class="t">Flexible, thermally stable, and ultralightweight polyimide-CNT aerogel composite films for energy storage applications</div><div class="a">O. Tafreshi, <u>M.M. Rastegardoost</u>, Z. Saadatnia, S. Ghaffari, C. Park, H. Naguib · <span class="v">ACS Applied Materials &amp; Interfaces</span></div></div><a class="go" href="https://doi.org/10.1021/acsami.3c11539" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2023</div><div><div class="t">Porous PVDF mats with significantly enhanced dielectric properties and novel dipole arrangement for high-performance triboelectric nanogenerators</div><div class="a"><u>M.M. Rastegardoost</u>, O. Tafreshi, Z. Saadatnia, S. Ghaffari, C. Park, H. Naguib · <span class="v">Applied Materials Today</span></div></div><a class="go" href="https://doi.org/10.1016/j.apmt.2023.101732" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2023</div><div><div class="t">Amphiphilic polyimide-graphene nanoplatelet aerogel composites with high mechanical stability and enhanced thermal insulation properties for oil sorption applications</div><div class="a">O. Tafreshi, <u>M.M. Rastegardoost</u>, S. Ghaffari, Z. Saadatnia, C. Park, H. Naguib · <span class="v">Materials Today Sustainability</span></div></div><a class="go" href="https://doi.org/10.1016/j.mtsust.2023.100403" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub"><div class="yr">2023</div><div><div class="t">Super-hydrophobic and resilient hybrid silica aerogels for thermal insulation, energy harvesting, and electrical applications in harsh environments</div><div class="a">H. Omranpour, <u>M.M. Rastegardoost</u>, H. Naguib, C. Park · <span class="v">Journal of Materials Chemistry C (RSC)</span></div></div><a class="go" href="https://doi.org/10.1039/D3TC02862C" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2020</div><div><div class="t">Thermo-economic analysis and optimization of cogeneration systems by considering economic parameters fluctuations</div><div class="a"><u>M.M. Rastegardoost</u>, E. Kosari, S. Habibi · <span class="v">Energy Equipment and Systems</span></div></div><a class="go" href="https://doi.org/10.22059/ees.2020.39013" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2019</div><div><div class="t">Simulation and energy performance assessment of the Ghazal solar-electric commercial vehicle in Tehran</div><div class="a"><u>M.M. Rastegardoost</u>, S. Heydari, P. Ahmadi, K. Abrinia · <span class="v">International Journal of Automotive Engineering</span></div></div><a class="go" href="https://doi.org/10.22068/ijae.9.4.3087" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2019</div><div><div class="t">Thermo-fluid simulation of the gas turbine performance based on the first law of thermodynamics</div><div class="a"><u>M.M. Rastegardoost</u>, F. Samadi · <span class="v">Energy Equipment and Systems</span></div></div><a class="go" href="https://doi.org/10.22059/ees.2019.34705" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2019</div><div><div class="t">Drag coefficient and Strouhal number analysis of a rectangular probe in a two-phase cross flow</div><div class="a">E. Kosari, <u>M.M. Rastegardoost</u>, A. Rahnama, M. Momen, P. Hanafizadeh · <span class="v">Energy Equipment and Systems</span></div></div><a class="go" href="https://doi.org/10.22059/ees.2018.30607" target="_blank" rel="noopener">DOI ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2025</div><div><div class="t">Impact of porous material morphology on the sensitivity of triboelectric sound sensors<span class="badge">CONF</span></div><div class="a"><u>M.M. Rastegardoost</u>, Z. Saadatnia, H. Naguib · <span class="v">Fluid-Structure-Sound Interactions and Control</span></div></div><a class="go" href="http://www.fssic.com/" target="_blank" rel="noopener">Site ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2024</div><div><div class="t">Fluoropolymer-based aerogel composite with ultra-lightweight and exceptional high dielectric properties for acoustic triboelectric nanogenerator sensor applications<span class="badge">CONF</span></div><div class="a"><u>M.M. Rastegardoost</u>, C. Park, H. Naguib · <span class="v">PPS-2024 European Regional Meeting</span></div></div><a class="go" href="https://pps2024ferrol.com/" target="_blank" rel="noopener">Site ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2023</div><div><div class="t">Superior effect of fluoropolymers in enhancing the triboelectric performance of the polyimide aerogels for mechanical energy harvesting<span class="badge">CONF</span></div><div class="a"><u>M.M. Rastegardoost</u>, C. Park, H. Naguib · <span class="v">ICANDVC</span></div></div><a class="go" href="http://www.icandvc.com/" target="_blank" rel="noopener">Site ↗</a></div>
+      <div class="pub" data-more hidden><div class="yr">2023</div><div><div class="t">PVDF-based electrospun mats with exceptionally high dielectric properties for triboelectric nanogenerator energy harvesting applications<span class="badge">CONF</span></div><div class="a"><u>M.M. Rastegardoost</u>, C. Park, H. Naguib · <span class="v">Polymer Processing Society (PPS-38)</span></div></div><a class="go" href="https://www.pps-38.org/" target="_blank" rel="noopener">Site ↗</a></div>
+    </div>
+    <div class="more"><button id="morePubs" aria-expanded="false">Show all 18 publications</button></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="experience">
+  <div class="wrap">
+    <p class="eyebrow reveal">Experience &amp; education</p>
+    <h2 class="reveal">From heavy machinery to autonomous labs</h2>
+    <div class="two" style="margin-top:46px">
+      <ul class="tl reveal">
+        <li><span class="when">2025 — now</span><b>Research Associate &amp; AI Solutions Project Lead</b><span class="org">Acceleration Consortium, University of Toronto</span>
+          <p>Own the Sekisui self-driving formulation lab: architecture, digital twin, engineering agents, formulation compiler and partner coordination with Vector, Matter Lab and NVIDIA.</p></li>
+        <li><span class="when">2024</span><b>Postdoctoral Fellow</b><span class="org">Acceleration Consortium, University of Toronto</span>
+          <p>Self-driving instruments for rheology, dispensing and transport testing, built from custom hardware, embedded control and Python orchestration.</p></li>
+        <li><span class="when">2024 — 2025</span><b>Research Appointee</b><span class="org">KITE Research Institute, University Health Network</span>
+          <p>Data-driven experimental programs for advanced porous composites and translational devices.</p></li>
+        <li><span class="when">2021 — 2024</span><b>Research &amp; Teaching Assistant</b><span class="org">Toronto Smart Materials · MIE, University of Toronto</span>
+          <p>Porous polymers and composites with multi-modal characterization, FEA and data-driven modeling; taught MEMS, solid mechanics, thermodynamics and more.</p></li>
+        <li><span class="when">2019 — 2020</span><b>Mechanical Engineer</b><span class="org">TECHNE KIROW GmbH</span>
+          <p>Commissioning and maintenance of thermal, pressure and hydraulic systems to code; chassis and hydraulic modifications of steel-plant slag-pot carriers.</p></li>
+        <li><span class="when">2015 — 2019</span><b>Research Assistant</b><span class="org">Solar-Electric Vehicle Center, University of Tehran</span>
+          <p>Chassis and suspension design with CFD/FEA, ANN modeling and DOE to optimize aerodynamics, heat transfer and power.</p></li>
+      </ul>
+      <div>
+        <ul class="tl reveal">
+          <li><span class="when">2021 — 2024</span><b>PhD, Mechanical Engineering</b><span class="org">University of Toronto</span>
+            <p>Multifunctional porous fluoropolymer films for triboelectric nanogenerators. Supervisors: Prof. Hani Naguib and Prof. Chul Park. CGPA 3.8/4.0.</p></li>
+          <li><span class="when">2016 — 2018</span><b>MSc, Mechanical Engineering</b><span class="org">University of Tehran</span>
+            <p>Inverse heat-transfer analysis of pipelines to estimate liquid thermal properties by non-destructive testing. Supervisor: Prof. Farshad Kowsary. CGPA 3.7/4.0.</p></li>
+          <li><span class="when">2012 — 2016</span><b>BSc, Mechanical Engineering</b><span class="org">University of Tehran</span>
+            <p>Zero-dimensional thermodynamic and heat-transfer assessment of gas turbine engines. CGPA 3.8/4.0.</p></li>
+        </ul>
+        <p class="eyebrow reveal" style="margin-top:20px">Awards</p>
+        <div class="awards reveal">
+          <div class="award"><b>NSERC CGS-D</b><span>Canada Graduate Scholarship, Doctoral</span></div>
+          <div class="award"><b>Ontario Graduate Scholarship</b><span>School of Graduate Studies, UofT</span></div>
+          <div class="award"><b>Doctoral Completion Award</b><span>School of Graduate Studies, UofT</span></div>
+          <div class="award"><b>Grad Excellence Award</b><span>MIE Department, UofT</span></div>
+          <div class="award"><b>World Solar Challenge</b><span>Competitor, 2015 &amp; 2019</span></div>
+          <div class="award"><b>Journal reviewer</b><span>Materials Today family · J. Electrostatics</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="justify-content:center">Contact</p>
+    <h2 class="reveal">Let's build AI that ships, <span class="grad">and holds up.</span></h2>
+    <p class="lede reveal">Open to roles and collaborations in agentic AI for engineering, digital twins and autonomous experimentation.</p>
+    <div class="cta reveal">
+      <a class="btn primary" href="mailto:m.rastegardoost@gmail.com">m.rastegardoost@gmail.com</a>
+      <a class="btn" href="https://www.linkedin.com/in/mahdirstgr/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/mahdi-rstgr" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>© 2026 Mahdi Rastegar</span><span class="mono">Toronto · Agentic AI for engineering</span></div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  // theme
+  var saved = get("mr-theme"); if (saved) root.setAttribute("data-theme", saved);
+  document.getElementById("theme").addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+    root.setAttribute("data-theme", next); set("mr-theme", next);
+  });
+
+  // nav background on scroll
+  var nav = document.getElementById("nav");
+  function onScroll() { nav.classList.toggle("solid", window.scrollY > 30); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  // reveal on scroll
+  var els = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    els.forEach(function (el) { io.observe(el); });
+  } else { els.forEach(function (el) { el.classList.add("in"); }); }
+
+  // project filters
+  var btns = document.querySelectorAll(".filters button"), cards = document.querySelectorAll("#grid .proj");
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      btns.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      var f = b.dataset.f;
+      cards.forEach(function (c) {
+        var show = f === "all" || c.dataset.c.split(" ").indexOf(f) >= 0;
+        c.hidden = !show; if (show) c.classList.add("in");
+      });
+    });
+  });
+
+  // publications toggle
+  var more = document.getElementById("morePubs"), extra = document.querySelectorAll("[data-more]");
+  more.addEventListener("click", function () {
+    var open = more.getAttribute("aria-expanded") === "true";
+    extra.forEach(function (p) { p.hidden = open; });
+    more.setAttribute("aria-expanded", open ? "false" : "true");
+    more.textContent = open ? "Show all 18 publications" : "Show fewer";
+  });
+
+  // hero: a slowly drifting graph of agents and tools
+  var cv = document.getElementById("graph"), ctx = cv.getContext("2d");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var nodes = [], W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function color(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+  function resize() {
+    W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var n = Math.round(Math.min(90, (W * H) / 16000)); nodes = [];
+    for (var i = 0; i < n; i++) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, hub: Math.random() < .12 });
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    var acc = color("--acc"), line = color("--line-2"), D = 150;
+    for (var i = 0; i < nodes.length; i++) {
+      var a = nodes[i];
+      if (!reduce) { a.x += a.vx; a.y += a.vy; if (a.x < 0 || a.x > W) a.vx *= -1; if (a.y < 0 || a.y > H) a.vy *= -1; }
+      for (var j = i + 1; j < nodes.length; j++) {
+        var b = nodes[j], dx = a.x - b.x, dy = a.y - b.y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < D) { ctx.globalAlpha = (1 - d / D) * ((a.hub || b.hub) ? .55 : .3); ctx.strokeStyle = (a.hub || b.hub) ? acc : line; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+    }
+    for (var k = 0; k < nodes.length; k++) {
+      var p = nodes[k]; ctx.globalAlpha = p.hub ? .95 : .55; ctx.fillStyle = p.hub ? acc : line;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.hub ? 2.6 : 1.6, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize", function () { resize(); if (reduce) frame(); });
+  resize(); frame();
+})();
+</script>
 </body>
-
 </html>

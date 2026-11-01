@@ -198,7 +198,7 @@
     <table class="fit">
       <thead><tr><th>The role</th><th>My evidence</th></tr></thead>
       <tbody>
-        <tr><td>ML, GenAI and agentic AI to improve engineering processes</td><td><a href="#razi">Razi</a>, an engineering agent that does a layout engineer's analysis legwork on a digital twin and writes an evidence-backed memo; <a href="#flagship">AG-1</a>, a LangGraph agent that drafts experiment campaigns for scientist approval.</td></tr>
+        <tr><td>ML, GenAI and agentic AI to improve engineering processes</td><td><a href="#razi">Razi</a>, an engineering agent that does a layout engineer's analysis legwork on a digital twin and writes an evidence-backed memo; <a href="#flagship">AG-1</a>, a LangGraph agent that drafts experiment campaigns for scientist approval, prototyped at zero cost with a LiteLLM gateway and local Ollama models.</td></tr>
         <tr><td>From assistants to end-to-end workflows</td><td>The same tool layer serves a human at the CLI, an autonomous agent and MCP clients. The optimizer runs on its own and hands control back to the agent only when judgement is needed.</td></tr>
         <tr><td>Evaluate different solution approaches</td><td>A Bayesian optimizer, not the LLM, runs the numeric search: faster, cheaper, reproducible. The LLM frames, interprets and explains.</td></tr>
         <tr><td>Concept → PoC → validation → deployment readiness</td><td>A <a href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener">20-ADR implementation specification</a> with acceptance tests and commissioning gates; typed contracts with schema versioning, deterministic compiler, Real/Fake device pairs, Docker Compose, CI with coverage gates, one-command demos and handover decks for non-programmers.</td></tr>
@@ -223,7 +223,7 @@
         <figcaption>The digital twin, generated from CAD by one command: CNC with three dispensing tools, two balances, UR3e arm, Thinky ARE-312 mixer. <a href="demo/formulation_cell.html" target="_blank" rel="noopener">Open it interactively →</a></figcaption>
       </figure>
       <div class="arch" aria-label="System architecture">
-        <div class="layer agent"><div class="name">Agents</div><div class="what">Razi (Claude + MCP), AG-1 (LangGraph + LiteLLM), Bayesian optimization with no LLM inside</div></div>
+        <div class="layer agent"><div class="name">Agents</div><div class="what">Razi (Claude + MCP), AG-1 (LangGraph), Bayesian optimization with no LLM inside; models through a LiteLLM gateway, prototyped on local Ollama at zero cost</div></div>
         <div class="arrow">↓ dry-run compile</div>
         <div class="layer"><div class="name">Compiler</div><div class="what"><code>FormulationSpec</code> → 9 pure steps → 13-step process DAG, or one of 11 reason codes with a remedy</div></div>
         <div class="arrow">↓ workflows</div>
@@ -254,7 +254,7 @@
         <ul>
           <li>Every device has a Fake twin with the same API; never a silent fallback</li>
           <li>Robot routes mature from twin-verified to hardware-verified, with human approval</li>
-          <li>LLM routing by data class: sensitive data only on self-hosted models</li>
+          <li>LiteLLM gateway routes by data class; prototyping on local Ollama models costs nothing and keeps data on the machine</li>
         </ul>
       </div>
     </div>
@@ -276,7 +276,7 @@
         <ul style="margin-top:16px">
           <li><b>20 architecture decisions</b>, each with the question, the decision and why</li>
           <li><b>10-stage pipeline</b> with a formulation compiler, CP-SAT scheduling, static and dynamic twin validation, and a per-action execution gate</li>
-          <li><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server, an LLM gateway that routes by data class, and evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</li>
+          <li><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server and a LiteLLM gateway (local Ollama models for zero-cost prototyping), with evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</li>
           <li><b>Delivery:</b> 18 acceptance tests, 7 commissioning and safety gates, a 6-milestone roadmap</li>
         </ul>
         <p style="margin-top:14px"><a href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener"><b>Read the specification →</b></a></p>

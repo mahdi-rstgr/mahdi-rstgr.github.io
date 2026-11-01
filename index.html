@@ -306,7 +306,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7l-5 9M13 7l5 9M7.2 18h9.6"/></svg>
         <h3>Trustworthy engineering agents</h3>
         <p>LLM agents that reason over engineering tools, not their own memory: every number traced to a measurement, requirements as executable checks, human sign-off, and tamper-evident audit logs.</p>
-        <div class="chips"><span class="chip">Claude</span><span class="chip">MCP</span><span class="chip">LangGraph</span><span class="chip">LiteLLM</span><span class="chip">guardrails</span></div>
+        <div class="chips"><span class="chip">Claude</span><span class="chip">MCP</span><span class="chip">LangGraph</span><span class="chip">LiteLLM</span><span class="chip">Ollama</span><span class="chip">guardrails</span></div>
       </div>
       <div class="pillar reveal">
         <span class="ix">02</span>
@@ -376,7 +376,8 @@
     </div>
 
     <div class="feature reveal">
-      <div class="stack"><b>AGENTS</b>        Razi (Claude + MCP) · AG-1 (LangGraph + LiteLLM)
+      <div class="stack"><b>AGENTS</b>        Razi (Claude + MCP) · AG-1 (LangGraph)
+<b>MODELS</b>        LiteLLM gateway → Ollama (local Llama, $0)
               GP Bayesian optimization, no LLM in the loop
 <b>COMPILER</b>      FormulationSpec → 9 pure steps → process DAG
               Pydantic v2 · FastAPI · mypy --strict · 90% CI
@@ -389,7 +390,8 @@
         <div class="tagline">System 03 · Platform</div>
         <h3>Production engineering, not a notebook</h3>
         <ul class="points">
-          <li><span><b>AG-1 campaign designer:</b> a LangGraph agent drafts experiment campaigns, dry-runs them through the compiler and stops for scientist approval; LLM calls are routed by data sensitivity to hosted or self-hosted models</span></li>
+          <li><span><b>AG-1 campaign designer:</b> a LangGraph agent drafts experiment campaigns, dry-runs them through the compiler and stops for scientist approval</span></li>
+          <li><span><b>Zero-cost prototyping:</b> every model call goes through a LiteLLM gateway; I prototype on Llama running locally in Ollama, so there is no API cost and no data leaves the machine. Moving to an enterprise model is a config change, and the gateway routes each request by data sensitivity.</span></li>
           <li><span><b>Formulation compiler:</b> deterministic, typed and versioned, with property-based tests, a 250-case corpus, schema-compatibility checks and security scans in CI</span></li>
           <li><span><b>Simulation first:</b> every device has a simulated twin with the same API; robot routes mature from twin-verified to hardware-verified with human approval</span></li>
         </ul>
@@ -407,7 +409,7 @@
         <p>My V3.1 implementation specification turns the lab into a buildable, verifiable system, with 20 architecture decisions, typed contracts, a delivery roadmap and acceptance tests. Its rule: <b style="color:var(--ink)">MADSci executes, sdl_dt thinks, agents assist, ROS 2 moves, the safety system protects.</b></p>
         <ul class="points">
           <li><span><b>10-stage pipeline:</b> specify → compile → schedule (OR-Tools CP-SAT) → reserve → validate in the twin → approve → per-action execution gate → execute → verify → learn</span></li>
-          <li><span><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server, an LLM gateway routing by data class, and evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</span></li>
+          <li><span><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server and a LiteLLM gateway (local Ollama models for zero-cost prototyping), with evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</span></li>
           <li><span><b>Constrained multi-objective BO:</b> BoTorch / Ax with qNEHVI, a feasibility classifier and the compiler dry run as a manufacturability constraint</span></li>
           <li><span><b>Delivery:</b> 18 acceptance tests, 7 commissioning and safety gates, a 6-milestone roadmap</span></li>
         </ul>
@@ -444,7 +446,7 @@
           <h3>Formulation cell implementation specification</h3>
           <p>The blueprint for the self-driving formulation lab: 20 ADRs, a formulation compiler, CP-SAT scheduling, a synchronized twin validation service, five guarded agents and constrained multi-objective BO.</p>
           <div class="result">10-stage pipeline · 18 acceptance tests · 7 safety and commissioning gates</div>
-          <div class="chips"><span class="chip">LangGraph</span><span class="chip">MCP</span><span class="chip">CP-SAT</span><span class="chip">qNEHVI</span></div>
+          <div class="chips"><span class="chip">LangGraph</span><span class="chip">MCP</span><span class="chip">LiteLLM</span><span class="chip">Ollama</span><span class="chip">CP-SAT</span></div>
           <div class="plinks"><a href="projects/formulation-cell-spec.html" target="_blank" rel="noopener">Read the spec →</a></div>
         </div>
       </article>

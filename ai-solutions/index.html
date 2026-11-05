@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahdi Rastegar · AI Solutions</title>
+<meta name="description" content="Mahdi Rastegar: trustworthy agentic AI for engineering. Digital twins, LLM agents with requirements-as-code, and physics-informed ML, from concept to deployment.">
+<meta name="author" content="Mahdi Rastegar">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --bg-2: #f4f5f7; --card: #ffffff; --ink: #1f2328; --muted: #5f6368;
+    --line: #e1e4e8; --red: #0b8a6a; --red-soft: #e6f5ef; --steel: #3e5c76; --steel-soft: #e8eef3;
+    --char: #26282e; --shadow: 0 1px 2px rgba(31,35,40,.06), 0 4px 16px rgba(31,35,40,.06);
+    --ui: "Inter", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15171b; --bg-2: #1c1f24; --card: #20242a; --ink: #e8eaed; --muted: #a9b0b8;
+      --line: #30353d; --red: #6cf0c2; --red-soft: #1d3329; --steel: #8fb3d1; --steel-soft: #23303b;
+      --char: #0e0f12; --shadow: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15171b; --bg-2: #1c1f24; --card: #20242a; --ink: #e8eaed; --muted: #a9b0b8;
+    --line: #30353d; --red: #6cf0c2; --red-soft: #1d3329; --steel: #8fb3d1; --steel-soft: #23303b;
+    --char: #0e0f12; --shadow: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--ui); -webkit-font-smoothing: antialiased; }
+  img, video { max-width: 100%; display: block; }
+  a { color: var(--steel); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 600px) { .wrap { padding: 0 16px; } }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
+        backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; gap: 20px; height: 56px; }
+  nav .brand { font-weight: 800; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+  nav .brand span { color: var(--red); }
+  nav .links { display: flex; gap: 18px; margin-left: auto; overflow-x: auto; }
+  nav .links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; }
+  nav .links a:hover { color: var(--ink); }
+  #theme { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px;
+           width: 34px; height: 34px; cursor: pointer; flex: none; }
+  @media (max-width: 760px) { nav .links { display: none; } nav #theme { margin-left: auto; } }
+
+  /* hero */
+  .hero { background: var(--char); color: #fff; padding: 64px 0 56px; }
+  .hero .wrap { display: grid; grid-template-columns: 180px 1fr; gap: 36px; align-items: center; }
+  .hero img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255,255,255,.12); }
+  .eyebrow { font: 600 13px var(--ui); letter-spacing: .12em; text-transform: uppercase; color: #6cf0c2; margin: 0 0 8px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.1; margin: 0 0 6px; letter-spacing: -.02em; }
+  .hero .role { font-size: 18px; color: #c9ccd1; margin: 0 0 16px; }
+  .hero .pitch { font-size: 19px; line-height: 1.5; max-width: 760px; margin: 0 0 22px; color: #eef0f2; }
+  .hero .pitch b { color: #fff; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; font-weight: 600;
+         font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,.25); color: #fff; }
+  .btn.primary { background: #6cf0c2; border-color: #6cf0c2; color: #04130d; }
+  .btn:hover { filter: brightness(1.1); }
+  @media (max-width: 700px) { .hero .wrap { grid-template-columns: 1fr; } .hero img { width: 120px; height: 120px; } }
+
+  /* sections */
+  section { padding: 64px 0; }
+  section.alt { background: var(--bg-2); }
+  h2 { font-size: clamp(26px, 3.4vw, 34px); line-height: 1.2; letter-spacing: -.02em; margin: 0 0 10px; }
+  .lead { color: var(--muted); font-size: 18px; max-width: 780px; margin: 0 0 32px; }
+  h3 { font-size: 19px; margin: 0 0 8px; letter-spacing: -.01em; }
+  .kicker { font: 700 12px var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--red); margin: 0 0 8px; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; box-shadow: var(--shadow); }
+  .stat .n { font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: var(--ink); line-height: 1.1; }
+  .stat .l { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  @media (max-width: 800px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .stats, .stats[style] { grid-template-columns: 1fr !important; } }
+
+  /* fit table */
+  .fit { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden;
+         box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .fit th, .fit td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 15px; }
+  .fit th { background: var(--steel-soft); color: var(--steel); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  .fit tr:last-child td { border-bottom: 0; }
+  .fit td:first-child { font-weight: 600; width: 34%; }
+  @media (max-width: 700px) { .fit, .fit tbody, .fit tr, .fit td { display: block; width: 100% !important; } .fit thead { display: none; }
+    .fit td:first-child { padding-bottom: 0; border-bottom: 0; } }
+
+  /* cards & grids */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; box-shadow: var(--shadow); }
+  .card img.cover { border-radius: 10px; margin: -6px 0 14px; aspect-ratio: 16/10; object-fit: cover; width: 100%; background: #fff; }
+  .card p { margin: 0 0 10px; }
+  .card ul { margin: 6px 0 0; padding-left: 18px; }
+  .card li { margin: 4px 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag { font: 500 12px var(--mono); background: var(--steel-soft); color: var(--steel); padding: 3px 8px; border-radius: 6px; }
+  figure { margin: 0; }
+  figcaption { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  .media { border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: #fff; }
+
+  /* four roles */
+  .roles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 26px 0; counter-reset: r; }
+  .role-step { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; position: relative; }
+  .role-step .num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+                    font-weight: 700; font-size: 14px; margin-bottom: 10px; background: var(--steel); }
+  .role-step:first-child .num { background: var(--red); }
+  .role-step:last-child .num { background: var(--char); border: 1px solid var(--line); }
+  .role-step b { display: block; font-size: 17px; }
+  .role-step span { color: var(--muted); font-size: 14px; }
+  @media (max-width: 800px) { .roles { grid-template-columns: 1fr 1fr; } }
+
+  /* architecture */
+  .arch { display: grid; gap: 10px; }
+  .layer { display: grid; grid-template-columns: 128px 1fr; gap: 14px; align-items: center; background: var(--card);
+           border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+  .layer .name { font-weight: 700; font-size: 14px; color: var(--steel); text-transform: uppercase; letter-spacing: .06em; }
+  .layer.agent .name { color: var(--red); }
+  .layer .what { font-size: 15px; }
+  .layer .what code { font: 500 13px var(--mono); background: var(--bg-2); padding: 1px 6px; border-radius: 4px; }
+  .arrow { text-align: center; color: var(--muted); font-size: 13px; line-height: 1; }
+  @media (max-width: 700px) { .layer { grid-template-columns: 1fr; gap: 4px; } }
+
+  .callout { background: var(--red-soft); border-radius: 12px; padding: 18px 20px; margin-top: 24px; }
+  .callout b { color: var(--red); }
+  .note { font-size: 13px; color: var(--muted); }
+  .plan { counter-reset: p; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .plan .card h3 span { color: var(--red); }
+  @media (max-width: 900px) { .plan { grid-template-columns: 1fr; } }
+
+  footer { background: var(--char); color: #c9ccd1; padding: 40px 0; }
+  footer a { color: #fff; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Mahdi Rastegar<span> · </span>AI Solutions</a>
+    <div class="links">
+      <a href="#fit">Fit</a><a href="#flagship">Flagship</a><a href="#razi">Razi agent</a>
+      <a href="#research">Agent research</a><a href="#ml">Physics-informed ML</a><a href="#apply">Applications</a>
+    </div>
+    <button id="theme" aria-label="Toggle dark mode" title="Toggle theme">◐</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <img src="assets/headshot.jpg" alt="Portrait of Mahdi Rastegar">
+    <div>
+      <p class="eyebrow">Agentic AI for engineering</p>
+      <h1>Mahdi Rastegar</h1>
+      <p class="role">PhD, Mechanical Engineering · AI Solutions Project Lead, Acceleration Consortium, University of Toronto</p>
+      <p class="pitch">I build <b>AI that engineers can trust</b>: agents that propose, simulations that measure,
+        requirements written as code that decide, and engineers who approve, taken from concept to running systems.</p>
+      <div class="btns">
+        <a class="btn primary" href="#razi">▶ Watch the agent work</a>
+        <a class="btn" href="../demo/formulation_cell.html" target="_blank" rel="noopener">Open the digital twin</a>
+        <a class="btn" href="assets/Mahdi_Rastegar_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+        <a class="btn" href="https://www.linkedin.com/in/mahdirstgr/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://mahdi-rstgr.github.io/">Full portfolio</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">At a glance</p>
+    <h2>Engineer first, AI builder second, both at once</h2>
+    <p class="lead">Mechanical engineering (vehicles, industrial machinery, CFD), embedded control and production-grade Python,
+      combined into agentic systems that work on real engineering problems with academic and industry partners.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">4</div><div class="l">partner organizations on my Sekisui-funded lab project: Acceleration Consortium, Vector Institute, Matter Lab, NVIDIA</div></div>
+      <div class="stat"><div class="n">6 s / 14 min</div><div class="l">two-speed digital-twin evaluation that lets Bayesian optimization spend the expensive check only where it matters</div></div>
+      <div class="stat"><div class="n">12 tools</div><div class="l">behind one front door for my engineering agent: CLI, Claude, or any app over MCP</div></div>
+      <div class="stat"><div class="n">90%</div><div class="l">coverage gate in CI on the formulation compiler I wrote (Pydantic, FastAPI, <code>mypy --strict</code>)</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="fit">
+  <div class="wrap">
+    <p class="kicker">Role fit</p>
+    <h2>What an AI solutions role asks for, and where I've done it</h2>
+    <p class="lead">Mapped to what senior AI engineering roles in industry ask for.</p>
+    <table class="fit">
+      <thead><tr><th>The role</th><th>My evidence</th></tr></thead>
+      <tbody>
+        <tr><td>ML, GenAI and agentic AI to improve engineering processes</td><td><a href="#razi">Razi</a>, an engineering agent that does a layout engineer's analysis legwork on a digital twin and writes an evidence-backed memo; <a href="#flagship">AG-1</a>, a LangGraph agent that drafts experiment campaigns for scientist approval, prototyped at zero cost with a LiteLLM gateway and local Ollama models.</td></tr>
+        <tr><td>From assistants to end-to-end workflows</td><td>The same tool layer serves a human at the CLI, an autonomous agent and MCP clients. The optimizer runs on its own and hands control back to the agent only when judgement is needed.</td></tr>
+        <tr><td>Evaluate different solution approaches</td><td>A Bayesian optimizer, not the LLM, runs the numeric search: faster, cheaper, reproducible. The LLM frames, interprets and explains.</td></tr>
+        <tr><td>Concept → PoC → validation → deployment readiness</td><td>A <a href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener">20-ADR implementation specification</a> with acceptance tests and commissioning gates; typed contracts with schema versioning, deterministic compiler, Real/Fake device pairs, Docker Compose, CI with coverage gates, one-command demos and handover decks for non-programmers.</td></tr>
+        <tr><td>System, mechanical, electrical and software domains</td><td>CAD → kinematics → collision planning; CFD (Ansys Fluent, NVIDIA Warp); ESP32 sensor networks and PCBs; ROS 2, SiLA 2, FastAPI services.</td></tr>
+        <tr><td>Technology evaluation: deep dive, manufacturability, cost</td><td>Sole-author review of material-handling technologies for autonomous labs: about 30 case studies and 8 commercial liquid handlers benchmarked on capability and price; build-vs-buy against Nordson, Musashi and ViscoTec.</td></tr>
+        <tr><td>Coordinate R&amp;D with universities and partners</td><td>Project owner on a Sekisui contract delivered with Vector Institute, Matter Lab, NVIDIA and the Acceleration Consortium.</td></tr>
+        <tr><td>Python, OOP, Git, Linux, Bash, ML frameworks</td><td>Six Python repositories (about 85k LOC across the team), abstract device interfaces with interchangeable backends, Linux/Docker deployment on Raspberry Pi 5, PyTorch and scikit-learn.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="flagship">
+  <div class="wrap">
+    <p class="kicker">Flagship · Sekisui contract · project owner</p>
+    <h2>A self-driving formulation lab, built twin-first</h2>
+    <p class="lead">Sekisui, the Japanese chemical manufacturer, needs autonomous formulation of viscous materials: dispense, weigh, mix, characterize.
+      I own the project and its architecture, and I built the digital twin, the agents and the formulation compiler myself; the device layer was built by my team to the interfaces we defined.</p>
+    <div class="grid2">
+      <figure>
+        <div class="media"><img src="assets/twin.gif" alt="Animated digital twin of the formulation cell: UR3e arm opens the mixer lid and loads a container while the CNC dispenses" loading="lazy"></div>
+        <figcaption>The digital twin, generated from CAD by one command: CNC with three dispensing tools, two balances, UR3e arm, Thinky ARE-312 mixer. <a href="../demo/formulation_cell.html" target="_blank" rel="noopener">Open it interactively →</a></figcaption>
+      </figure>
+      <div class="arch" aria-label="System architecture">
+        <div class="layer agent"><div class="name">Agents</div><div class="what">Razi (Claude + MCP), AG-1 (LangGraph), Bayesian optimization with no LLM inside; models through a LiteLLM gateway, prototyped on local Ollama at zero cost</div></div>
+        <div class="arrow">↓ dry-run compile</div>
+        <div class="layer"><div class="name">Compiler</div><div class="what"><code>FormulationSpec</code> → 9 pure steps → 13-step process DAG, or one of 11 reason codes with a remedy</div></div>
+        <div class="arrow">↓ workflows</div>
+        <div class="layer"><div class="name">Orchestration</div><div class="what">MADSci: 7 managers, 4 nodes, live dashboard; the <i>action</i> is the boundary between callers and devices</div></div>
+        <div class="arrow">↓ one API, Real or Fake</div>
+        <div class="layer"><div class="name">Devices</div><div class="what">SiLA 2 (gRPC) servers on Raspberry Pi 5 · ROS 2 Jazzy + MoveIt 2 for the UR3e, URSim as its twin</div></div>
+        <div class="arrow">↓</div>
+        <div class="layer"><div class="name">Hardware</div><div class="what">UR3e · CNC gantry + tool changer · balances · powder &amp; liquid dispensers · planetary mixer</div></div>
+      </div>
+    </div>
+
+    <div class="grid3" style="margin-top:28px">
+      <div class="card">
+        <h3>From CAD to a planned, safe loop</h3>
+        <p>STEP/STL → tessellation (OpenCASCADE) → URDF → damped-least-squares IK → two-machine schedule → RRT-Connect paths, every moment checked for clearance. Shipped as a single web page (three.js).</p>
+        <p class="note">It paid off before the build: the CNC could not reach its tools, so we fixed the design instead of the hardware.</p>
+      </div>
+      <div class="card">
+        <h3>Production engineering, not a notebook</h3>
+        <ul>
+          <li>Pydantic v2 contracts, JSON Schema, semver, breaking-change detection in CI</li>
+          <li>Purity test: no clock, network or file I/O in compiler steps; same inputs, same bytes</li>
+          <li><code>mypy --strict</code>, 90% / 85% coverage gates, Hypothesis property tests, pip-audit, gitleaks</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Safety by construction</h3>
+        <ul>
+          <li>Every device has a Fake twin with the same API; never a silent fallback</li>
+          <li>Robot routes mature from twin-verified to hardware-verified, with human approval</li>
+          <li>LiteLLM gateway routes by data class; prototyping on local Ollama models costs nothing and keeps data on the machine</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">The blueprint</p>
+    <h2>The whole cell, designed end to end</h2>
+    <p class="lead">My V3.1 implementation specification turns the lab into a buildable, verifiable system. It is the core work of an AI solutions engineer: evaluate solution approaches, record the decisions, and define how a concept is validated and handed over.</p>
+    <div class="grid2" style="align-items:center">
+      <figure>
+        <a class="media" href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener" style="display:block"><img src="../images/ai/spec_arch.jpg" alt="Target architecture: agent layer, sdl_dt, MADSci formulation cell, ROS 2 workspace, instruments and the independent machine safety system" loading="lazy"></a>
+        <figcaption>Target architecture: agents above the APIs, one execution gate to the hardware, machine safety independent of all software.</figcaption>
+      </figure>
+      <div>
+        <div class="callout" style="margin-top:0"><b>MADSci executes. sdl_dt thinks. Agents assist. ROS 2 moves. The safety system protects.</b></div>
+        <ul style="margin-top:16px">
+          <li><b>20 architecture decisions</b>, each with the question, the decision and why</li>
+          <li><b>10-stage pipeline</b> with a formulation compiler, CP-SAT scheduling, static and dynamic twin validation, and a per-action execution gate</li>
+          <li><b>Agentic layer:</b> five LangGraph agents behind one MCP tool server and a LiteLLM gateway (local Ollama models for zero-cost prototyping), with evaluation-gated CI. No tool reaches hardware, approvals or safety configuration.</li>
+          <li><b>Delivery:</b> 18 acceptance tests, 7 commissioning and safety gates, a 6-milestone roadmap</li>
+        </ul>
+        <p style="margin-top:14px"><a href="../projects/formulation-cell-spec.html" target="_blank" rel="noopener"><b>Read the specification →</b></a></p>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:24px">
+      <figure><a class="media" href="../projects/formulation-cell-spec.html#pipeline" target="_blank" rel="noopener" style="display:block"><img src="../images/ai/spec_pipeline.jpg" alt="Ten-stage execution pipeline" loading="lazy"></a><figcaption>Ten-stage execution pipeline; every stage can stop the run with a reason code.</figcaption></figure>
+      <figure><a class="media" href="../projects/formulation-cell-spec.html#agents" target="_blank" rel="noopener" style="display:block"><img src="../images/ai/spec_agents.jpg" alt="Agent layer with MCP server, LLM gateway and hard boundary" loading="lazy"></a><figcaption>Agents act only through MCP tools with the user's permissions; a hard boundary separates them from the machines.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="razi">
+  <div class="wrap">
+    <p class="kicker">Engineering agent</p>
+    <h2>Razi: doubt, measure, record</h2>
+    <p class="lead">You ask a design question in plain English. Razi runs the twin, searches for better layouts, checks the results against our written
+      requirements and writes a short memo. It is designed so that its safety does not depend on the model behaving well.</p>
+
+    <div class="roles">
+      <div class="role-step"><div class="num">1</div><b>Razi proposes</b><span>understands the question, decides what to try next, like a junior engineer</span></div>
+      <div class="role-step"><div class="num">2</div><b>The twin measures</b><span>every number in a report comes from a simulation result, with units</span></div>
+      <div class="role-step"><div class="num">3</div><b>Rules decide</b><span>requirements as executable checks, e.g. <code>arm clearance ≥ 8 mm</code>; <i>must</i> blocks, <i>should</i> warns</span></div>
+      <div class="role-step"><div class="num">4</div><b>A person approves</b><span>release needs a typed confirmation code; the agent has no approval tool</span></div>
+    </div>
+
+    <div class="grid2">
+      <figure>
+        <div class="media"><video src="../media/razi_demo.mp4" poster="assets/razi_terminal.png" controls preload="none" playsinline aria-label="Recorded run of the Razi agent investigating the formulation cell"></video></div>
+        <figcaption>A real 75-second run, replayed in 62 s. Razi doubts the obvious explanation, tests its own hunch with a search, and the safety gate refuses a release on its own.</figcaption>
+      </figure>
+      <div>
+        <h3>What it found on our real cell</h3>
+        <div class="stats" style="grid-template-columns:1fr 1fr">
+          <div class="stat"><div class="n">46%</div><div class="l">of the loop the arm waits; dispensing (~127 s per container) sets the pace</div></div>
+          <div class="stat"><div class="n">1.46 mm</div><div class="l">tightest clearance, set by the gripper body, not the layout, across every layout tried</div></div>
+          <div class="stat"><div class="n">2 musts fail</div><div class="l">on the full-loop check, so the gate refused release and said when and where</div></div>
+          <div class="stat"><div class="n">96 entries</div><div class="l">in a hash-chained logbook: every question, tool call, refusal and approval</div></div>
+        </div>
+        <div class="callout"><b>The layout is not the lever.</b> I expected to optimize the layout. The evidence pointed to a gripper
+          design change and a dispensing process change instead. It moved the engineering decision to the right place, with a trace.
+          And Razi flagged its own uncertainty: the twin uses box geometry, so some clashes may be artefacts.</div>
+      </div>
+    </div>
+
+    <div class="grid3" style="margin-top:28px">
+      <div class="card"><h3>Two-speed evaluation</h3><p>A 6-second screen (reach, room at key poses) and a 14-minute full-loop check, cached by layout fingerprint. Thousands of candidates in the optimizer's model, about 17 screened, 1–3 fully checked.</p></div>
+      <div class="card"><h3>Optimizer without the LLM</h3><p>A Gaussian-process Bayesian optimizer (ARD kernel, expected improvement) runs alone and calls the agent back only when the target is met, the budget is spent, progress stalls or nothing works.</p></div>
+      <div class="card"><h3>One tool layer, no side door</h3><p>The same 12 tools serve the engineer's CLI, the Claude agent and any MCP client. Adding a new front end, such as an IDE or a Copilot, does not change the safety story.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <p class="kicker">Collaborations</p>
+    <h2>Agentic-AI research I work alongside</h2>
+    <p class="lead">My lab work sits inside a community building agents for science, led by Prof. Alán Aspuru-Guzik's Matter Lab with the Vector Institute and NVIDIA.
+      These projects shaped Razi's design.</p>
+    <div class="grid3">
+      <div class="card">
+        <h3>Self-Building Labs</h3>
+        <p>Agents that take a scientific goal and build the lab: layout, digital twin, robot skills and workflows, with a safety agent guarding every command.</p>
+        <a href="https://self-building-labs.github.io/" target="_blank" rel="noopener">Project page</a> · <a href="https://arxiv.org/abs/2610.23826" target="_blank" rel="noopener">arXiv 2610.23826</a>
+      </div>
+      <div class="card">
+        <h3>La Agente Óptima</h3>
+        <p>An LLM agent that sets up and supervises Bayesian-optimization campaigns while routine loops run without it. Every decision is auditable.</p>
+        <a href="https://arxiv.org/abs/2609.04564" target="_blank" rel="noopener">arXiv 2609.04564</a>
+      </div>
+      <div class="card">
+        <h3>Agentoptimizer</h3>
+        <p>A Vector hackathon team project: an LLM as a sandboxed black-box optimizer, with a trusted evaluator holding the budget.</p>
+        <p><b>My contribution:</b> the real-world benchmark. Three optimization problems from our lab (7-D formulation, 26-D viscometer calibration on 23 certified standards, 15-D robot-cell layout from my digital twin) with 9 baseline optimizers. The best method flips between problems, which is the case for an agent that chooses the optimizer.</p>
+        <a href="https://github.com/Mahyar-rajabi94/Cheapest_opt_lunch/tree/SDL_Real_Problem/SDL_Real_Problem" target="_blank" rel="noopener">My benchmark on GitHub</a>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px">The shared lesson: let classic algorithms run the loop, let the language model do judgement, and make every decision auditable.</p>
+  </div>
+</section>
+
+<section class="alt" id="ml">
+  <div class="wrap">
+    <p class="kicker">Physics-informed ML on real hardware</p>
+    <h2>Automated test rigs that turn signals into decisions</h2>
+    <p class="lead">Before the agents came the instruments: self-driving test rigs where sensing, modeling and uncertainty had to be right.</p>
+    <div class="grid3">
+      <div class="card">
+        <img class="cover" src="assets/autovisco.jpg" alt="Signal-processing pipeline for automated viscometry" loading="lazy">
+        <h3>AutoVisco: robotic viscometry</h3>
+        <p>Reframed viscosity measurement as inference on the torque trace of a descending spindle: a lubrication-theory model, AIC/BIC model selection, bootstrap uncertainty, and contact detection by anomaly detection.</p>
+        <ul><li>6 chemistries, 1–125,000 cP, one calibration</li><li>18 samples in 5 h, under 7% human time</li></ul>
+        <div class="tags"><span class="tag">SciPy</span><span class="tag">UQ</span><span class="tag">ESP32</span><span class="tag">dashboard</span></div>
+      </div>
+      <div class="card">
+        <img class="cover" src="assets/htdpa.jpg" alt="High-throughput dissolution and permeation apparatus" loading="lazy">
+        <h3>HTD/PA: dissolution &amp; permeation</h3>
+        <p>Co-developed a parallel transport-testing platform: CFD (Ansys Fluent) and NVIDIA Warp FE models for design, a 4-channel 20 Hz sensor network, and an ML-ready data schema linking every condition to its results.</p>
+        <ul><li>8 cells in parallel from one pump</li><li>median CV 3–8%, R² &gt; 0.97</li></ul>
+        <div class="tags"><span class="tag">CFD</span><span class="tag">NVIDIA Warp</span><span class="tag">OT-2</span><span class="tag">data schema</span></div>
+      </div>
+      <div class="card">
+        <img class="cover" src="assets/formulator.jpg" alt="Formulator CNC platform with dispensing pens" loading="lazy">
+        <h3>Formulator-Pen: viscous dispensing</h3>
+        <p>A modular dispenser for viscous liquids on a tool-changing CNC. Four designs benchmarked; a density bias diagnosed and calibrated out; film retention identified as the residual error.</p>
+        <ul><li>±0.7% accuracy up to 30,000 cP</li><li>up to 4× faster, 19 s tool change, under US$1k/unit</li></ul>
+        <div class="tags"><span class="tag">root cause</span><span class="tag">build vs buy</span><span class="tag">GRBL</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap grid2" style="align-items:center">
+    <figure>
+      <div class="media"><img src="assets/solar_car.jpg" alt="Solar-electric race vehicle and team" loading="lazy"></div>
+      <figcaption>Mechanical manager and energy strategist, World Solar Challenge (Adelaide).</figcaption>
+    </figure>
+    <div>
+      <p class="kicker">Engineering foundation</p>
+      <h2>Vehicles, plants and the physics underneath</h2>
+      <ul>
+        <li><b>Mechanical Engineer, TECHNE KIROW GmbH</b>: commissioning and maintenance of pressure, thermal and hydraulic systems to code; chassis, suspension and hydraulic modifications of steel-plant slag-pot carriers; root-cause work with technicians and suppliers.</li>
+        <li><b>MSc, University of Tehran</b>: solar-electric vehicle energy simulation and battery thermal management; inverse heat-transfer analysis.</li>
+        <li><b>PhD, University of Toronto</b>: multifunctional porous polymer films; rigorous design of experiments, durability testing to 350,000+ cycles.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="apply">
+  <div class="wrap">
+    <p class="kicker">Applications</p>
+    <h2>The same pattern, on industrial engineering problems</h2>
+    <p class="lead">Swap the formulation cell for a robotic assembly cell, a motor housing or a structural part, and swap the twin for CAE, CAD and test data. The architecture holds.</p>
+    <table class="fit">
+      <thead><tr><th>Engineering process</th><th>Agent proposes → tools measure → rules decide → engineer approves</th></tr></thead>
+      <tbody>
+        <tr><td>Requirements &amp; test scenarios</td><td>Drafts decompositions and test cases; quality rules check ambiguity, testability and traceability; engineers accept each one.</td></tr>
+        <tr><td>DFMEA / design reviews</td><td>Retrieves past FMEAs, lessons learned and field issues; drafts failure modes, causes and controls for review, with citations.</td></tr>
+        <tr><td>CAE &amp; design-space exploration</td><td>Surrogates plus Bayesian optimization screen designs cheaply; the full solver runs only on the best candidates, as in Razi's two-speed twin.</td></tr>
+        <tr><td>Robotic workcell layout &amp; cycle time</td><td>Layouts and sequences proposed; reach, collision and takt time verified in simulation; release gated on requirements.</td></tr>
+        <tr><td>Test &amp; validation data</td><td>Anomaly detection and automated reports on rig and end-of-line data, every flag traceable to the signal.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin:36px 0 14px">How I start in a new team</h3>
+    <div class="plan">
+      <div class="card"><h3><span>Days 1–30</span> · Listen &amp; map</h3><p>Meet internal customers across domains, rank pain points by time × frequency × feasibility, learn the PLM, requirements, CAE and LLM platforms, and ship one small assistant to build trust.</p></div>
+      <div class="card"><h3><span>Days 31–60</span> · Prove</h3><p>One or two PoCs, each with a named internal customer and a metric. Build the evaluation set first, then demo weekly.</p></div>
+      <div class="card"><h3><span>Days 61–90</span> · Pilot &amp; platform</h3><p>Pilot with real engineers, measure, write the go/no-go, and keep the reusable pieces (MCP tool layer, eval harness, audit log) so the next PoC starts faster.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b style="color:#fff">Mahdi Rastegar</b> · Toronto, ON · <a href="mailto:m.rastegardoost@gmail.com">m.rastegardoost@gmail.com</a></div>
+    <div><a href="https://www.linkedin.com/in/mahdirstgr/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://scholar.google.ca/citations?user=tWmo_h0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://mahdi-rstgr.github.io/">Portfolio</a></div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById("theme");
+    try { var saved = localStorage.getItem("theme"); if (saved) root.setAttribute("data-theme", saved); } catch (e) {}
+    btn.addEventListener("click", function () {
+      var dark = root.getAttribute("data-theme") === "dark" ||
+        (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = dark ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
